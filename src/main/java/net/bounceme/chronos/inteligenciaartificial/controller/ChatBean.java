@@ -1,8 +1,10 @@
 package net.bounceme.chronos.inteligenciaartificial.controller;
 
+import java.io.Serializable;
+
 import org.springframework.stereotype.Component;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,8 +13,10 @@ import net.bounceme.chronos.inteligenciaartificial.util.JsfUtils;
 
 @Component
 @Named
-@RequestScoped
-public class ChatBean {
+@ViewScoped
+public class ChatBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Getter
 	@Setter
