@@ -28,8 +28,7 @@
 	              
 	         	<f:facet name="actions">
 		            <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" title="Enviar"
-		            	actionListener="#{chatBean.enviar}" process="mensaje @this" update="mensajes,respuesta"
-		            	ajax="true">
+		            	actionListener="#{chatBean.enviar}" process="mensaje @this" update="mensajes,respuesta">
 		                    <h:outputText styleClass="ui-icon pi pi-send"/>
 		            </p:commandLink>
 		            
