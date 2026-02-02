@@ -25,7 +25,7 @@ public class ChatBean implements Serializable {
 	@Getter
     private String htmlContent;
 	
-	private ChatService chatService;
+	private transient ChatService chatService;
 
 	public ChatBean(ChatService chatService) {
 		this.chatService = chatService;
