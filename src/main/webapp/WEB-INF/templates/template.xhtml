@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-us" xmlns:h="jakarta.faces.html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="jakarta.faces.facelets">
+
+<h:head>
+	<title>.:: JoinFaces Example ::.</title>
+	<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+	<link href="#{resource['images/favicon.ico']}" rel="shortcut icon" />
+	
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet"/>
+	<link rel="stylesheet"
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+	
+	<h:outputStylesheet library="css" name="layout-default.css" />
+	<h:outputStylesheet library="css" name="styles.css" />
+	<h:outputScript library="js" name="example.js" />
+</h:head>
+
+<h:body>
+	<pe:layout fullPage="true">
+		<pe:layoutPane id="mainLayoutPane" position="center">
+			<h:form id="contentForm" prependId="false"
+				enctype="multipart/form-data">
+				
+				<p:growl id="messages" showDetail="true" sticky="false" />  
+				
+				<p:ajaxStatus onstart="PF('statusDialog').show();"
+					onsuccess="PF('statusDialog').hide();" />
+				
+				<p:dialog widgetVar="statusDialog" showEffect="fade" modal="true"
+					draggable="false" resizable="false" closable="false"
+					showHeader="false">
+					<p:graphicImage value="#{resource['images/ajaxloading.gif']}" />
+				</p:dialog>
+				
+				<p:outputPanel id="layoutWrapper" layout="block"
+					styleClass="layout-wrapper">
+					<p:outputPanel layout="block" styleClass="topbar clearfix">
+						<p:outputPanel layout="block" styleClass="topbar-left">
+							<p:graphicImage
+								styleClass="icon64"
+					          	title="Spring Boot ${environment.getProperty('spring-boot.version')}"
+					          	alt="Spring Boot ${environment.getProperty('spring-boot.version')}"
+					          	value="#{resource['images/spring-boot.png']}"
+					        />
+							<div class="title">
+								<span class="description">
+									<strong><h:outputText value="#{res['app.descripcion']}"/></strong>
+								</span>
+								<span class="version">
+									<h:outputText value="#{res['app.version']}"/>
+								</span>
+							</div>	
+						</p:outputPanel>	
+						
+						<p:outputPanel layout="block" styleClass="topbar-right">
+							<ul class="topbar-items">
+								<li>
+									<h:commandLink action="secure-dashboard" immediate="true"
+										title="Inicio seguro">
+										<i class="topbar-icon pi pi-fw pi-lock"></i>
+									</h:commandLink>
+								</li>
+							</ul>	
+						</p:outputPanel>
+					</p:outputPanel>
+	
+					<p:outputPanel id="layoutMain" layout="block"
+						styleClass="layout-main">
+	
+						<ui:insert name="content"></ui:insert>
+						
+					</p:outputPanel>
+					
+					<ui:include src="footer.xhtml" />
+				</p:outputPanel>
+			</h:form>
+		</pe:layoutPane>
+	</pe:layout>
+</h:body>
+</html>

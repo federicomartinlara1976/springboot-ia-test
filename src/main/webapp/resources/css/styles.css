@@ -1,0 +1,206 @@
+/* .banners .banner {
+	padding: 1.5em;
+} */
+
+.box {
+	border-radius: 4px;
+	border: solid 1px rgba(67, 69, 96, 0.1);
+	background-color: #fff;	
+	padding: 0.5em;
+}
+
+.layout-menu {
+	margin-bottom: 1em;
+}
+
+.dashboardPanel {
+	margin-top: 1em;
+	margin-right: 2em; 
+	width: 320px;
+}
+
+.info {
+	color: #fff;
+	margin-right: 1em;
+}
+
+.info i {
+	margin-right: 0.5em;
+}
+
+.info .userName {
+	font-size: 12pt;
+}
+
+.info .userData {
+	font-size: 10pt;
+}
+
+.first {
+	float: left;
+}
+
+.last {
+	float: right;
+}
+
+.text-left {
+	text-align: left;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.banner {
+	width: 64px;
+}
+
+.icon32 {
+	width: 32px;
+	height: 32px;
+}
+
+.icon64 {
+	width: 64px;
+	height: 64px;
+}
+
+label, .layout-footer {
+	color: #cccccc;
+}
+
+.label {
+	color: #222;
+}
+
+.layout-footer {
+	width: 100%;
+	color: #bdbdbd;
+	text-align: right;
+	display: inline-block;
+}
+
+footer span {
+	margin-right: 1em;
+}
+
+.layout-footer a {
+	font-size: 14px;
+}
+
+.topbar-left h1 {
+	margin-top: 0.5em;
+}
+
+.topbar-left .title {
+	padding-left: 1rem;
+	float:left;
+}
+
+.topbar-left .title .description,
+.topbar-left .title .version {
+	color: #fff;
+	display:block
+}
+
+.topbar-left .title .version {
+	font-size: 12px;
+}
+
+.topbar-left img {
+	margin-top: -6px;
+	float:left;
+}
+
+.topbar-left button {
+	margin-right: 1.5em;
+    float: left;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+}
+
+.topbar-left button, .topbar-right button {
+	width: 48px;
+	margin-top: 1em;
+}
+
+.topbar-right h3 {
+	margin-top: 0.4em;
+    color: #eef2f6;
+    font-weight: bold;
+    float: right;
+    margin-right: 0em;
+    padding-right: 0.5em;
+    text-align: right;
+    text-shadow: 1px 1px #000;
+}
+
+.topbar-left button.ui-button, .topbar-right button.ui-button {
+	background: #0772B3;
+}
+
+.hddn {
+	display:none;
+}
+
+.error {
+ 	color: red;
+ }
+ 
+ .shadow {
+	box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);	
+}
+
+.toolbar button {
+	float: right;
+	margin: 0.5em;
+}
+
+.enConstruccion .content {
+	height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner .overview-box h3 i.fa {
+	margin-right: 0.5em;
+}
+
+.banner .overview-box .status strong {
+	margin-right: 0.5em;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.layout-footer .logo img {
+	width: 100px;
+}
+
+.layout-content {
+	margin-top: 1em;
+}
+
+.dashboard .ui-panel {
+	padding: 0.5rem;
+}
+
+.layout-wrapper .layout-footer {
+	background-color: #bbc7cd;
+}
+
+.logo.text-left {
+	color: dimgrey;
+}
+
+.pi {
+	margin-right: .5rem;
+	color: #10B981;
+}

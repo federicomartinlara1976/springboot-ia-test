@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:h="jakarta.faces.html"
+	xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="content">
+		<p:outputPanel styleClass="dashboard">
+			<!-- Tarjeta de bienvenida -->
+			<p:panel styleClass="ui-g-12 ui-md-12 ui-lg-12">
+				<f:facet name="header">
+					<i class="pi pi-star-fill"></i>
+	                    ¡Bienvenido a JSF con JoinFaces!
+	                </f:facet>
+	
+				<p class="p-m-0">Esta es una aplicación modular que demuestra la
+					integración de PrimeFaces en un microservicio spring-boot.</p>
+			</p:panel>
+			
+			<!-- Formulario de envío al chat -->
+			<p:panel styleClass="ui-g-6 ui-md-6 ui-lg-6">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	             	Pregunta a Mistral
+	       		</f:facet>
+	              
+	         	<f:facet name="actions">
+		            <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" title="Enviar"
+		            	actionListener="#{chatBean.enviar}" process="mensaje @this" update="mensajes,respuesta"
+		            	ajax="true">
+		                    <h:outputText styleClass="ui-icon pi pi-send"/>
+		            </p:commandLink>
+		            
+				</f:facet>
+	
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+						<p:inputTextarea id="mensaje" value="#{chatBean.mensaje}"
+							placeholder="Escribe el mensaje..." 
+							rows="10" cols="50" widgetVar="mensajeWidget" />
+					</div>
+				</div>
+	
+			</p:panel>
+			
+			<!-- Respuesta del chat -->
+			<p:panel id="respuesta" styleClass="ui-g-6 ui-md-6 ui-lg-6">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	                  Respuesta
+	              </f:facet>
+	
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+        				<h:outputText value="#{chatBean.htmlContent}" escape="false" />
+					</div>
+				</div>
+	
+			</p:panel>
+		</p:outputPanel>
+	</ui:define>
+</ui:composition>

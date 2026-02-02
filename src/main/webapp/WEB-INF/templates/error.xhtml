@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<ui:insert name="ads"></ui:insert>
+
+	<title>#{res['app.title']}</title>
+	<ui:include src="head.xhtml" />
+</h:head>
+
+<h:body role="document" styleClass="exception-body error">
+	<f:view>
+		<h:form prependId="false">
+			<div class="exception-text">
+				<div class="exception-box">
+					<span>500</span>
+				</div>
+			</div>
+
+
+			<div class="exception-panel">
+				<div class="exception-image">
+					<p:graphicImage
+						value="#{resource['images/ko.png']}" styleClass="icon72"/>
+				</div>
+
+				<div class="exception-panel-content">
+					<div class="information-text">
+						<ui:insert name="msg"></ui:insert>
+					</div>
+					<ui:insert name="footer"></ui:insert>
+				</div>
+			</div>
+		</h:form>
+	</f:view>
+</h:body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="layout-footer">
+
+		<div class="logo ui-g-6 ui-md-6 ui-lg-6 text-left">
+			<h:outputText value="#{res['app.copyright']}" escape="true" />
+			<br/>
+			Iconos diseñados por <a href="https://www.flaticon.es/autores/vectors-market" title="Vectors Market">Vectors Market</a> from <a href="https://www.flaticon.es/" title="Flaticon"> www.flaticon.es</a>
+		</div>
+
+		<div class="ui-g-6 ui-md-6 ui-lg-6 text-right">
+			<h:outputLink value="https://github.com/federicomartinlara1976/jboss-eap-example"
+				target="_blank">
+				<p:graphicImage styleClass="icon32"
+					value="#{resource['images/github-128.png']}"/>
+			</h:outputLink>
+		</div>
+	</div>
+
+</ui:composition>
