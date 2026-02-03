@@ -812,15 +812,15 @@
   margin: 0 auto;
   position: relative; }
   .exception-body.error {
-    background: url("#{resource['primefaces-Cervantes:images/computer-keyboard.jpg']}") no-repeat;
+    background: url("/resources/images/bg-error.png") no-repeat;
     background-size: cover;
     background-position: center; }
   .exception-body.access {
-    background: url("#{resource['primefaces-Cervantes:images/access-bg.jpg']}") no-repeat;
+    background: url("/resources/images/bg-access.png") no-repeat;
     background-size: cover;
     background-position: center; }
   .exception-body.notfound {
-    background: url("#{resource['primefaces-Cervantes:images/404-bg.jpg']}") no-repeat;
+    background: url("/resources/images/bg-404.png") no-repeat;
     background-size: cover;
     background-position: center; }
   .exception-body .exception-text {
