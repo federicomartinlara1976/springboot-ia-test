@@ -10,8 +10,8 @@ public class ChatServiceImpl implements ChatService {
 	
 	private final ChatClient chatClient;
 
-    public ChatServiceImpl(ChatClient.Builder chatClientBuilder) {
-        this.chatClient = chatClientBuilder.build();
+    public ChatServiceImpl(ChatClient chatClient) {
+        this.chatClient = chatClient;
     }
 
 	@Override
