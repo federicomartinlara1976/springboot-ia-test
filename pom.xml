@@ -164,6 +164,9 @@
 	</dependencies>
 
 	<build>
+	
+		<finalName>springboot-ia-test</finalName>
+	
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
