@@ -815,19 +815,19 @@
 }
 
 .exception-body.error {
-    background: url("/tera-jsf/resources/images/bg-error.png") no-repeat;
+    background: url("/resources/images/bg-error.png") no-repeat;
     background-size: cover;
     background-position: center
 }
 
 .exception-body.access {
-    background: url("/tera-jsf/resources/images/bg-access.png") no-repeat;
+    background: url("/resources/images/bg-access.png") no-repeat;
     background-size: cover;
     background-position: center
 }
 
 .exception-body.notfound {
-    background: url("/tera-jsf/resources/images/bg-404.png") no-repeat;
+    background: url("/resources/images/bg-404.png") no-repeat;
     background-size: cover;
     background-position: center
 }
