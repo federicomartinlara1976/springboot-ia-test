@@ -17,25 +17,15 @@
 	
 	<h:outputStylesheet library="css" name="layout-default.css" />
 	<h:outputStylesheet library="css" name="styles.css" />
-	<h:outputScript library="js" name="example.js" />
 </h:head>
 
-<h:body>
+<h:body id="mainbody">
 	<pe:layout fullPage="true">
 		<pe:layoutPane id="mainLayoutPane" position="center">
 			<h:form id="contentForm" prependId="false"
 				enctype="multipart/form-data">
 				
 				<p:growl id="messages" showDetail="true" sticky="false" />  
-				
-				<p:ajaxStatus onstart="PF('statusDialog').show();"
-					onsuccess="PF('statusDialog').hide();" />
-				
-				<p:dialog widgetVar="statusDialog" showEffect="fade" modal="true"
-					draggable="false" resizable="false" closable="false"
-					showHeader="false">
-					<p:graphicImage value="#{resource['images/ajaxloading.gif']}" />
-				</p:dialog>
 				
 				<p:outputPanel id="layoutWrapper" layout="block"
 					styleClass="layout-wrapper">
@@ -81,5 +71,20 @@
 			</h:form>
 		</pe:layoutPane>
 	</pe:layout>
+	
+	<!-- BlockUI de espera -->
+    <p:blockUI widgetVar="loadingIndicator" 
+               block="@(body)"  
+               styleClass="global-loader">
+        <div class="loading-content">
+            <p:graphicImage value="#{resource['images/ajaxloading.gif']}"/>
+            <p>Cargando...</p>
+        </div>
+    </p:blockUI>
+    
+    <!-- Ajax Status -->
+    <p:ajaxStatus onstart="PF('loadingIndicator').show()"
+                  onsuccess="PF('loadingIndicator').hide()"
+                  onerror="PF('loadingIndicator').hide()" />
 </h:body>
 </html>

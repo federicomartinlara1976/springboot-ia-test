@@ -2,6 +2,7 @@ package net.bounceme.chronos.inteligenciaartificial.controller;
 
 import java.io.Serializable;
 
+import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.stereotype.Component;
 
 import jakarta.faces.view.ViewScoped;
@@ -25,6 +26,9 @@ public class ChatBean implements Serializable {
 	@Getter
     private String htmlContent;
 	
+	@Getter
+	private ChatResponseMetadata chatResponseMetadata;
+	
 	private transient ChatService chatService;
 
 	public ChatBean(ChatService chatService) {
@@ -34,5 +38,6 @@ public class ChatBean implements Serializable {
 	public void enviar() {
 		String respuesta = chatService.generation(mensaje);
 		htmlContent = JsfUtils.markdown2Html(respuesta);
+		chatResponseMetadata = chatService.getChatResponseMetadata();
 	}
 }
