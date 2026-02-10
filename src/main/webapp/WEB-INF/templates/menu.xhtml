@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:menubar hideDelay="1000" >
+		<f:facet name="start">
+			<p:graphicImage
+				styleClass="icon48"
+	          	title="Spring Boot ${environment.getProperty('spring-boot.version')}"
+	          	alt="Spring Boot ${environment.getProperty('spring-boot.version')}"
+	          	value="#{resource['images/spring-boot.png']}"/>
+			<div class="title">
+				<span class="description">
+					<strong><h:outputText value="#{res['app.descripcion']}"/></strong>
+				</span>
+				<span class="version">
+					<h:outputText value="#{res['app.version']}"/>
+				</span>
+			</div>
+      	</f:facet>
+
+		<p:menuitem value="Inicio" action="index"
+			icon="pi pi-fw pi-home" />
+		
+	</p:menubar>
+
+</ui:composition>

@@ -30,33 +30,7 @@
 				<p:outputPanel id="layoutWrapper" layout="block"
 					styleClass="layout-wrapper">
 					<p:outputPanel layout="block" styleClass="topbar clearfix">
-						<p:outputPanel layout="block" styleClass="topbar-left">
-							<p:graphicImage
-								styleClass="icon64"
-					          	title="Spring Boot ${environment.getProperty('spring-boot.version')}"
-					          	alt="Spring Boot ${environment.getProperty('spring-boot.version')}"
-					          	value="#{resource['images/spring-boot.png']}"
-					        />
-							<div class="title">
-								<span class="description">
-									<strong><h:outputText value="#{res['app.descripcion']}"/></strong>
-								</span>
-								<span class="version">
-									<h:outputText value="#{res['app.version']}"/>
-								</span>
-							</div>	
-						</p:outputPanel>	
-						
-						<p:outputPanel layout="block" styleClass="topbar-right">
-							<ul class="topbar-items">
-								<li>
-									<h:commandLink action="secure-dashboard" immediate="true"
-										title="Inicio seguro">
-										<i class="topbar-icon pi pi-fw pi-lock"></i>
-									</h:commandLink>
-								</li>
-							</ul>	
-						</p:outputPanel>
+						<ui:include src="menu.xhtml" />
 					</p:outputPanel>
 	
 					<p:outputPanel id="layoutMain" layout="block"
