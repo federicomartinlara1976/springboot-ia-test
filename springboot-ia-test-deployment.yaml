@@ -2,9 +2,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: springboot-app
+  name: springboot-ia-test
 spec:
-  replicas: 3
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -12,14 +12,14 @@ spec:
       maxUnavailable: 0  # No dejar pods no disponibles durante la actualización
   selector:
     matchLabels:
-      app: springboot-app
+      app: springboot-ia-test
   template:
     metadata:
       labels:
-        app: springboot-app
+        app: springboot-ia-test
     spec:
       containers:
-      - name: springboot
+      - name: springboot-ia-test
         image: federicomartinlara1976/springboot-ia-test:latest  # Cambia esta etiqueta
         imagePullPolicy: Always  # Siempre extraer la imagen más reciente
         ports:
