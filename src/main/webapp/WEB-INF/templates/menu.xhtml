@@ -14,12 +14,16 @@
 	          	value="#{resource['images/spring-boot.png']}"/>
 			<div class="title">
 				<span class="description">
-					<strong><h:outputText value="#{res['app.descripcion']}"/></strong>
+					<strong><h:outputText value="#{appBean.appName}"/></strong>
 				</span>
 				<span class="version">
-					<h:outputText value="#{res['app.version']}"/>
+					<h:outputText value="#{appBean.appVersion}"/>
 				</span>
 			</div>
+      	</f:facet>
+      	
+      	<f:facet name="end">
+      		<h3>Nostromo</h3>
       	</f:facet>
 
 		<p:menuitem value="Inicio" action="index"

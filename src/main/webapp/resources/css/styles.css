@@ -360,3 +360,7 @@ footer span {
     margin-top: 10px;
     font-weight: bold;
 }
+
+.ui-menubar-start img {
+	float: left;
+}
