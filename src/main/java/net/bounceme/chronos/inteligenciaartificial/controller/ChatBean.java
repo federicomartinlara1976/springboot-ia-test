@@ -27,7 +27,7 @@ public class ChatBean implements Serializable {
     private String htmlContent;
 	
 	@Getter
-	private ChatResponseMetadata chatResponseMetadata;
+	private transient ChatResponseMetadata chatResponseMetadata;
 	
 	private transient ChatService chatService;
 

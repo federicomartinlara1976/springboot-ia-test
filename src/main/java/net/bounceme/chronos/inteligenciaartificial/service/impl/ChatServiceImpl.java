@@ -19,7 +19,7 @@ public class ChatServiceImpl implements ChatService {
 	private final ChatClient chatClient;
 	
 	@Getter
-	private transient ChatResponseMetadata chatResponseMetadata;
+	private ChatResponseMetadata chatResponseMetadata;
 
     public ChatServiceImpl(ChatClient chatClient) {
         this.chatClient = chatClient;
