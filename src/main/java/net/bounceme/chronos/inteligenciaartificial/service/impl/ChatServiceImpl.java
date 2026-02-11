@@ -1,5 +1,8 @@
 package net.bounceme.chronos.inteligenciaartificial.service.impl;
 
+import java.util.Objects;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -29,10 +32,14 @@ public class ChatServiceImpl implements ChatService {
 	            .call()
 	            .chatResponse();
 		
-		chatResponseMetadata = chatResponse.getMetadata();
-		log.info("Response metadata: {}", chatResponseMetadata.toString());
+		if (!Objects.isNull(chatResponse)) {
+			chatResponseMetadata = chatResponse.getMetadata();
+			log.info("Response metadata: {}", chatResponseMetadata.toString());
+			
+			return chatResponse.getResult().getOutput().getText();
+		}
 		
-		return chatResponse.getResult().getOutput().getText();
+		return StringUtils.EMPTY;
 	}
 
 }
