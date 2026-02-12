@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import net.bounceme.chronos.inteligenciaartificial.aspect.TrackTime;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
 
 @Service
@@ -26,6 +27,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
 	@Override
+	@TrackTime
 	public String generation(String userInput) {
 		ChatResponse chatResponse = chatClient.prompt()
 	            .user(userInput)
