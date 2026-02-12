@@ -14,9 +14,9 @@ public class AppBean {
 
 	@Getter
 	@Value("${spring.application.name}")
-	private transient String appName;
+	private String appName;
 	
 	@Getter
 	@Value("${spring.application.version}")
-	private transient String appVersion;
+	private String appVersion;
 }
