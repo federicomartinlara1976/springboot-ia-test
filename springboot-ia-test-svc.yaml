@@ -1,0 +1,14 @@
+# springboot-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-ia-test-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: springboot-ia-test
+  ports:
+  - name: http
+    port: 8084        # Puerto interno del servicio
+    targetPort: 8084  # Puerto del contenedor
+    nodePort: 8084    # Puerto externo - ¡AHORA SÍ PUEDES USAR 8084!

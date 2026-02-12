@@ -1,8 +1,11 @@
 package net.bounceme.chronos.inteligenciaartificial.controller;
 
+import java.io.Serializable;
+
+import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.stereotype.Component;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,8 +14,10 @@ import net.bounceme.chronos.inteligenciaartificial.util.JsfUtils;
 
 @Component
 @Named
-@RequestScoped
-public class ChatBean {
+@ViewScoped
+public class ChatBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Getter
 	@Setter
@@ -21,7 +26,10 @@ public class ChatBean {
 	@Getter
     private String htmlContent;
 	
-	private ChatService chatService;
+	@Getter
+	private transient ChatResponseMetadata chatResponseMetadata;
+	
+	private transient ChatService chatService;
 
 	public ChatBean(ChatService chatService) {
 		this.chatService = chatService;
@@ -30,5 +38,6 @@ public class ChatBean {
 	public void enviar() {
 		String respuesta = chatService.generation(mensaje);
 		htmlContent = JsfUtils.markdown2Html(respuesta);
+		chatResponseMetadata = chatService.getChatResponseMetadata();
 	}
 }

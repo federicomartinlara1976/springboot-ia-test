@@ -12,7 +12,7 @@
 	
 	<groupId>net.bounceme.chronos.inteligenciaartificial</groupId>
 	<artifactId>springboot-ia-test</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.3</version>
 	<name>springboot-ia-test</name>
 	<description>Servicio para probar funcionalidades de motores de IA</description>
 	<packaging>war</packaging>
@@ -76,6 +76,11 @@
 		</dependency>
 		
 		<dependency>
+		    <groupId>org.springframework.ai</groupId>
+		    <artifactId>spring-ai-starter-model-deepseek</artifactId>
+		</dependency>
+		
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter</artifactId>
 		</dependency>
@@ -88,6 +93,11 @@
 		<dependency>
     		<groupId>org.springframework.boot</groupId>
     		<artifactId>spring-boot-starter-logging</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 		
 		<dependency>
@@ -119,13 +129,6 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
 		</dependency>
 		
 		<dependency>
@@ -164,6 +167,9 @@
 	</dependencies>
 
 	<build>
+	
+		<finalName>springboot-ia-test</finalName>
+	
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -177,6 +183,13 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.4.0.905</version>
+			</plugin>
+			
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

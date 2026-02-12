@@ -1,0 +1,26 @@
+# deployment-with-update.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot-ia-test
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0  # No dejar pods no disponibles durante la actualización
+  selector:
+    matchLabels:
+      app: springboot-ia-test
+  template:
+    metadata:
+      labels:
+        app: springboot-ia-test
+    spec:
+      containers:
+      - name: springboot-ia-test
+        image: federicomartinlara1976/springboot-ia-test:1.0.3  # Cambia esta etiqueta
+        imagePullPolicy: Always  # Siempre extraer la imagen más reciente
+        ports:
+        - containerPort: 8084
