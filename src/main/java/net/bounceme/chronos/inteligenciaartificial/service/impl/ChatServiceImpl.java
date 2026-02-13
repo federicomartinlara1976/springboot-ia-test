@@ -1,16 +1,19 @@
 package net.bounceme.chronos.inteligenciaartificial.service.impl;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.inteligenciaartificial.aspect.TrackTime;
+import net.bounceme.chronos.inteligenciaartificial.model.ActorFilms;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
 
 @Service
@@ -42,6 +45,24 @@ public class ChatServiceImpl implements ChatService {
 		}
 		
 		return StringUtils.EMPTY;
+	}
+
+	@Override
+	@TrackTime
+	public ActorFilms getActorFilms(String message) {
+		return chatClient.prompt()
+				.user(message)
+				.call()
+				.entity(ActorFilms.class);
+	}
+
+	@Override
+	@TrackTime
+	public List<ActorFilms> getListActorFilms(String message) {
+		return chatClient.prompt()
+			    .user(message)
+			    .call()
+			    .entity(new ParameterizedTypeReference<List<ActorFilms>>() {});
 	}
 
 }
