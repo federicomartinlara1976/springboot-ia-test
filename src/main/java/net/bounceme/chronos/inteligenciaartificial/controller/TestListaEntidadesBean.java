@@ -21,7 +21,7 @@ public class TestListaEntidadesBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
-	private String mensaje = "Generate the filmography for 5 random actors.";
+	private String mensaje = "Generate the filmography of 5 movies for 5 random actors.";
 	
 	@Getter
 	@Setter
