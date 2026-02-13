@@ -28,7 +28,7 @@ public class TestListaEntidadesBean implements Serializable {
     private ActorFilms actorFilms;
 	
 	@Getter
-	List<ActorFilms> listActorFilms;
+	private List<ActorFilms> listActorFilms;
 	
 	private transient ChatService chatService;
 
