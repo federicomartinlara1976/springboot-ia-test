@@ -38,7 +38,7 @@
 	              
 				<div class="ui-g ui-fluid">
 					<div class="ui-g-12">
-						<h:outputText value="#{testEntidadBean.mensaje2}"/>
+						<h:outputText value="#{testListaEntidadesBean.mensaje}"/>
 					</div>
 				</div>
 	
@@ -53,7 +53,7 @@
 	
 				<div class="ui-g ui-fluid">
 					<div class="ui-g-12">
-        				<p:dataView var="actor" value="#{testEntidadBean.listActorFilms}" rows="5" paginator="true"
+        				<p:dataView var="actor" value="#{testListaEntidadesBean.listActorFilms}" rows="5" paginator="true"
 		                    rowsPerPageTemplate="5,10,15"
 		                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 		                    gridIcon="pi pi-th-large" listIcon="pi pi-bars">
@@ -70,7 +70,7 @@
 											styleClass="edit-button rounded-button ui-button-success"
 											process="@this">
 											<f:setPropertyActionListener value="#{actor}"
-												target="#{testEntidadBean.actorFilms}" />
+												target="#{testListaEntidadesBean.actorFilms}" />
 											<p:resetInput target="info-content" />
 										</p:commandButton>
 				                    </div>
@@ -93,11 +93,11 @@
 						<span><b>Actor</b></span>
 					</div>
 					<div class="ui-g-8">
-						<span><h:outputText value="#{testEntidadBean.actorFilms.actor}"/></span>
+						<span><h:outputText value="#{testListaEntidadesBean.actorFilms.actor}"/></span>
 					</div>
 				</div>
 				<div class="field ui-g-12">
-					<p:dataView var="pelicula" value="#{testEntidadBean.actorFilms.movies}" rows="5" paginator="true"
+					<p:dataView var="pelicula" value="#{testListaEntidadesBean.actorFilms.movies}" rows="5" paginator="true"
 	                    rowsPerPageTemplate="5,10,15"
 	                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 	                    gridIcon="pi pi-th-large" listIcon="pi pi-bars">

@@ -1,6 +1,7 @@
 package net.bounceme.chronos.inteligenciaartificial.controller;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -15,25 +16,28 @@ import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
 @Component
 @Named
 @ViewScoped
-public class TestEntidadBean implements Serializable {
+public class TestListaEntidadesBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Getter
-	private String mensaje = "Generate the filmography for a random actor.";
+	private String mensaje = "Generate the filmography for 5 random actors.";
 	
 	@Getter
 	@Setter
     private ActorFilms actorFilms;
 	
+	@Getter
+	List<ActorFilms> listActorFilms;
+	
 	private transient ChatService chatService;
 
-	public TestEntidadBean(ChatService chatService) {
+	public TestListaEntidadesBean(ChatService chatService) {
 		this.chatService = chatService;
 	}
 	
 	@PostConstruct
 	private void init() {
-		actorFilms = chatService.getActorFilms(mensaje); 
+		listActorFilms = chatService.getListActorFilms(mensaje);
 	}
 }
