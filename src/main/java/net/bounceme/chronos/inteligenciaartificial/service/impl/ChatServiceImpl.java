@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Objects;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.ai.chat.client.AdvisorParams;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -52,7 +51,6 @@ public class ChatServiceImpl implements ChatService {
 	@TrackTime
 	public ActorFilms getActorFilms(String message) {
 		return chatClient.prompt()
-				.advisors(AdvisorParams.ENABLE_NATIVE_STRUCTURED_OUTPUT)
 				.user(message)
 				.call()
 				.entity(ActorFilms.class);
@@ -62,8 +60,7 @@ public class ChatServiceImpl implements ChatService {
 	@TrackTime
 	public List<ActorFilms> getListActorFilms(String message) {
 		return chatClient.prompt()
-				.advisors(AdvisorParams.ENABLE_NATIVE_STRUCTURED_OUTPUT)
-			    .user(message)
+				.user(message)
 			    .call()
 			    .entity(new ParameterizedTypeReference<List<ActorFilms>>() {});
 	}
