@@ -11,7 +11,7 @@ import net.bounceme.chronos.inteligenciaartificial.util.JsfUtils;
 @Aspect
 public class ShowTimeAspect {
 	
-	private transient TimeTraceAspect timeTraceAspect;
+	private TimeTraceAspect timeTraceAspect;
 
 	public ShowTimeAspect(TimeTraceAspect timeTraceAspect) {
 		this.timeTraceAspect = timeTraceAspect;
