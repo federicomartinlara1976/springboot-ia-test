@@ -13,7 +13,7 @@ import lombok.experimental.UtilityClass;
 import net.bounceme.chronos.inteligenciaartificial.exceptions.AssertException;
 
 @UtilityClass
-public class JsfUtils {
+public class JsfHelper {
 	
 	@SneakyThrows(AssertException.class)
 	public void writeMessage(FacesMessage.Severity severity, String title, String detail) {

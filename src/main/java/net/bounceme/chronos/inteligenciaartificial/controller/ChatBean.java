@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.ShowTime;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
-import net.bounceme.chronos.inteligenciaartificial.util.JsfUtils;
+import net.bounceme.chronos.inteligenciaartificial.util.JsfHelper;
 
 @Component
 @Named
@@ -39,7 +39,7 @@ public class ChatBean implements Serializable {
 	@ShowTime
 	public void enviar() {
 		String respuesta = chatService.generation(mensaje);
-		htmlContent = JsfUtils.markdown2Html(respuesta);
+		htmlContent = JsfHelper.markdown2Html(respuesta);
 		chatResponseMetadata = chatService.getChatResponseMetadata();
 	}
 }

@@ -13,12 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Aspect
 @Slf4j
-public class TimeTraceAspect {
+public class LogTimeAspect {
 	
 	@Getter
 	private Long timeTaken;
 
-	@Around("net.bounceme.chronos.inteligenciaartificial.aspect.CommonJoinPointConfig.trackTimeAnnotation()")
+	@Around("net.bounceme.chronos.inteligenciaartificial.aspect.CommonJoinPointConfig.logTimeAnnotation()")
 	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
 		long startTime = System.currentTimeMillis();
 

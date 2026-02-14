@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.TrackTime;
+import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.LogTime;
 import net.bounceme.chronos.inteligenciaartificial.model.ActorFilms;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
 
@@ -30,7 +30,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
 	@Override
-	@TrackTime
+	@LogTime
 	public String generation(String userInput) {
 		ChatResponse chatResponse = chatClient.prompt()
 	            .user(userInput)
@@ -48,7 +48,7 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	@TrackTime
+	@LogTime
 	public ActorFilms getActorFilms(String message) {
 		return chatClient.prompt()
 				.user(message)
@@ -57,7 +57,7 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	@TrackTime
+	@LogTime
 	public List<ActorFilms> getListActorFilms(String message) {
 		return chatClient.prompt()
 				.user(message)
