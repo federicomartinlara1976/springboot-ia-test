@@ -5,14 +5,12 @@ import java.io.Serializable;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.stereotype.Component;
 
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 import net.bounceme.chronos.inteligenciaartificial.aspect.TimeTraceAspect;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
-import net.bounceme.chronos.inteligenciaartificial.util.Constants;
 import net.bounceme.chronos.inteligenciaartificial.util.JsfUtils;
 
 @Component
@@ -46,7 +44,8 @@ public class ChatBean implements Serializable {
 		htmlContent = JsfUtils.markdown2Html(respuesta);
 		chatResponseMetadata = chatService.getChatResponseMetadata();
 		
-		String sEllapsedTime = String.format(Constants.DURATION_FORMAT, timeTraceAspect.getTimeTaken());
-		JsfUtils.writeMessage(FacesMessage.SEVERITY_INFO, "Duración", sEllapsedTime);
+		JsfUtils.showDuration(timeTraceAspect.getTimeTaken());
 	}
+
+	
 }

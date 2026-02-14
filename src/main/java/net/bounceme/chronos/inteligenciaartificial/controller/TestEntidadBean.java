@@ -5,7 +5,6 @@ import java.io.Serializable;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import lombok.Getter;
@@ -13,7 +12,6 @@ import lombok.Setter;
 import net.bounceme.chronos.inteligenciaartificial.aspect.TimeTraceAspect;
 import net.bounceme.chronos.inteligenciaartificial.model.ActorFilms;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
-import net.bounceme.chronos.inteligenciaartificial.util.Constants;
 import net.bounceme.chronos.inteligenciaartificial.util.JsfUtils;
 
 @Component
@@ -47,7 +45,6 @@ public class TestEntidadBean implements Serializable {
 	public void request() {
 		actorFilms = chatService.getActorFilms(mensaje);
 		
-		String sEllapsedTime = String.format(Constants.DURATION_FORMAT, timeTraceAspect.getTimeTaken());
-		JsfUtils.writeMessage(FacesMessage.SEVERITY_INFO, "Duración", sEllapsedTime);
+		JsfUtils.showDuration(timeTraceAspect.getTimeTaken());
 	}
 }

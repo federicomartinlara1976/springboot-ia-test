@@ -40,4 +40,9 @@ public class JsfUtils {
         Document document = parser.parse(source);
         return renderer.render(document);
 	}
+	
+	public void showDuration(Long duration) {
+		String sEllapsedTime = String.format(Constants.DURATION_FORMAT, duration);
+		writeMessage(FacesMessage.SEVERITY_INFO, "Duración", sEllapsedTime);
+	}
 }
