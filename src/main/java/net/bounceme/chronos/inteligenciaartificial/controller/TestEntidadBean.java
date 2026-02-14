@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import org.springframework.stereotype.Component;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import lombok.Getter;
@@ -31,11 +30,6 @@ public class TestEntidadBean implements Serializable {
 
 	public TestEntidadBean(ChatService chatService) {
 		this.chatService = chatService;
-	}
-	
-	@PostConstruct
-	private void init() {
-		request();
 	}
 	
 	@ShowTime

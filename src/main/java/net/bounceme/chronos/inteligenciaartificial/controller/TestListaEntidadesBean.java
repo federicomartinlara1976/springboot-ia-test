@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import lombok.Getter;
@@ -35,11 +34,6 @@ public class TestListaEntidadesBean implements Serializable {
 
 	public TestListaEntidadesBean(ChatService chatService) {
 		this.chatService = chatService;
-	}
-	
-	@PostConstruct
-	private void init() {
-		request();
 	}
 
 	@ShowTime
