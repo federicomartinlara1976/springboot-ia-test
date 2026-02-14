@@ -9,7 +9,7 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
-import net.bounceme.chronos.inteligenciaartificial.aspect.TimeTraceAspect;
+import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.ShowTime;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
 import net.bounceme.chronos.inteligenciaartificial.util.JsfUtils;
 
@@ -31,21 +31,15 @@ public class ChatBean implements Serializable {
 	private transient ChatResponseMetadata chatResponseMetadata;
 	
 	private transient ChatService chatService;
-	
-	private transient TimeTraceAspect timeTraceAspect;
 
-	public ChatBean(ChatService chatService, TimeTraceAspect timeTraceAspect) {
+	public ChatBean(ChatService chatService) {
 		this.chatService = chatService;
-		this.timeTraceAspect = timeTraceAspect;
 	}
 	
+	@ShowTime
 	public void enviar() {
 		String respuesta = chatService.generation(mensaje);
 		htmlContent = JsfUtils.markdown2Html(respuesta);
 		chatResponseMetadata = chatService.getChatResponseMetadata();
-		
-		JsfUtils.showDuration(timeTraceAspect.getTimeTaken());
 	}
-
-	
 }

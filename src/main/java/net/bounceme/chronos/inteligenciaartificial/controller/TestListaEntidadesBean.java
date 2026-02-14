@@ -10,10 +10,9 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
-import net.bounceme.chronos.inteligenciaartificial.aspect.TimeTraceAspect;
+import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.ShowTime;
 import net.bounceme.chronos.inteligenciaartificial.model.ActorFilms;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
-import net.bounceme.chronos.inteligenciaartificial.util.JsfUtils;
 
 @Component
 @Named
@@ -34,11 +33,8 @@ public class TestListaEntidadesBean implements Serializable {
 	
 	private transient ChatService chatService;
 
-	private transient TimeTraceAspect timeTraceAspect;
-
-	public TestListaEntidadesBean(ChatService chatService, TimeTraceAspect timeTraceAspect) {
+	public TestListaEntidadesBean(ChatService chatService) {
 		this.chatService = chatService;
-		this.timeTraceAspect = timeTraceAspect;
 	}
 	
 	@PostConstruct
@@ -46,9 +42,8 @@ public class TestListaEntidadesBean implements Serializable {
 		request();
 	}
 
+	@ShowTime
 	public void request() {
 		listActorFilms = chatService.getListActorFilms(mensaje);
-		
-		JsfUtils.showDuration(timeTraceAspect.getTimeTaken());
 	}
 }

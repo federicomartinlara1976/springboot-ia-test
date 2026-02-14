@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import net.bounceme.chronos.inteligenciaartificial.aspect.TrackTime;
+import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.TrackTime;
 import net.bounceme.chronos.inteligenciaartificial.model.ActorFilms;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
 
