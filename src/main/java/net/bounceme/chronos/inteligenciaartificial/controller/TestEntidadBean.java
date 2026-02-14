@@ -34,6 +34,10 @@ public class TestEntidadBean implements Serializable {
 	
 	@PostConstruct
 	private void init() {
-		actorFilms = chatService.getActorFilms(mensaje); 
+		request();
+	}
+	
+	public void request() {
+		actorFilms = chatService.getActorFilms(mensaje);
 	}
 }

@@ -35,6 +35,13 @@
 					<i class="pi pi-send"></i>
 	             	Pregunta a Mistral
 	       		</f:facet>
+	       		
+	       		<f:facet name="actions">
+		            <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" title="Recargar"
+		            	actionListener="#{testEntidadBean.request}" update="respuesta">
+		           		<h:outputText styleClass="ui-icon pi pi-replay"/>
+		            </p:commandLink>		      
+				</f:facet>
 	              
 				<div class="ui-g ui-fluid">
 					<div class="ui-g-12">
