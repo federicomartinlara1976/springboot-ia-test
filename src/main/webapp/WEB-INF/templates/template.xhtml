@@ -25,7 +25,9 @@
 			<h:form id="contentForm" prependId="false"
 				enctype="multipart/form-data">
 				
-				<p:growl id="messages" showDetail="true" sticky="false" />  
+				<p:growl id="messages" showDetail="true" sticky="false">
+					<p:autoUpdate/>
+				</p:growl>  
 				
 				<p:outputPanel id="layoutWrapper" layout="block"
 					styleClass="layout-wrapper">
