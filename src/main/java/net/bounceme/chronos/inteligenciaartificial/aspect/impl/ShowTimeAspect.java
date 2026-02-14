@@ -4,12 +4,10 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 import net.bounceme.chronos.inteligenciaartificial.util.JsfUtils;
 
 @Configuration
-@Component
 @Aspect
 public class ShowTimeAspect {
 	
