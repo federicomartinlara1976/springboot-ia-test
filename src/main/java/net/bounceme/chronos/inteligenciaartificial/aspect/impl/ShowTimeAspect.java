@@ -1,7 +1,7 @@
-package net.bounceme.chronos.inteligenciaartificial.aspect;
+package net.bounceme.chronos.inteligenciaartificial.aspect.impl;
 
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
@@ -19,8 +19,9 @@ public class ShowTimeAspect {
 		this.timeTraceAspect = timeTraceAspect;
 	}
 
-	@After("net.bounceme.chronos.inteligenciaartificial.aspect.CommonJoinPointConfig.showTimeAnnotation()")
+	@Around("net.bounceme.chronos.inteligenciaartificial.aspect.CommonJoinPointConfig.showTimeAnnotation()")
 	public void after(ProceedingJoinPoint joinPoint) throws Throwable {
+		joinPoint.proceed();
 		JsfUtils.showDuration(timeTraceAspect.getTimeTaken());
 	}
 }

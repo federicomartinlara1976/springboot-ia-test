@@ -1,4 +1,4 @@
-package net.bounceme.chronos.inteligenciaartificial.aspect;
+package net.bounceme.chronos.inteligenciaartificial.aspect.impl;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
