@@ -41,7 +41,7 @@
 				<div class="ui-g ui-fluid">
 					<div class="ui-g-12">
         				<p:dataView var="actor" value="#{testListaEntidadesBean.listActorFilms}" rows="5" paginator="true"
-		                    rowsPerPageTemplate="5,10,15"
+		                    rowsPerPageTemplate="5,10,15" paginatorPosition="top"
 		                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 		                    gridIcon="pi pi-th-large" listIcon="pi pi-bars">
 
@@ -85,7 +85,7 @@
 				</div>
 				<div class="field ui-g-12">
 					<p:dataView var="pelicula" value="#{testListaEntidadesBean.actorFilms.movies}" rows="5" paginator="true"
-	                    rowsPerPageTemplate="5,10,15"
+	                    rowsPerPageTemplate="5,10,15"  paginatorPosition="top"
 	                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 	                    gridIcon="pi pi-th-large" listIcon="pi pi-bars">
 
