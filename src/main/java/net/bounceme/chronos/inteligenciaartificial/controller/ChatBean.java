@@ -9,6 +9,7 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.ShowTime;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
 import net.bounceme.chronos.inteligenciaartificial.util.JsfHelper;
@@ -37,6 +38,7 @@ public class ChatBean implements Serializable {
 	}
 	
 	@ShowTime
+	@SneakyThrows
 	public void enviar() {
 		String respuesta = chatService.generation(mensaje);
 		htmlContent = JsfHelper.markdown2Html(respuesta);

@@ -8,6 +8,7 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.ShowTime;
 import net.bounceme.chronos.inteligenciaartificial.model.ActorFilms;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
@@ -33,6 +34,7 @@ public class TestEntidadBean implements Serializable {
 	}
 	
 	@ShowTime
+	@SneakyThrows
 	public void request() {
 		actorFilms = chatService.getActorFilms(mensaje);
 	}

@@ -9,6 +9,7 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.ShowTime;
 import net.bounceme.chronos.inteligenciaartificial.model.ActorFilms;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
@@ -21,7 +22,7 @@ public class TestListaEntidadesBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
-	private String mensaje = "Generate the filmography of 5 movies for 5 random actors.";
+	private String mensaje = "Generate the filmography for 5 random actors.";
 	
 	@Getter
 	@Setter
@@ -37,6 +38,7 @@ public class TestListaEntidadesBean implements Serializable {
 	}
 
 	@ShowTime
+	@SneakyThrows
 	public void request() {
 		listActorFilms = chatService.getListActorFilms(mensaje);
 	}
