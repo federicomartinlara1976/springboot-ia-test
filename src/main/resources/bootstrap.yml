@@ -1,7 +1,7 @@
 spring:
   application:
     name: springboot-ia-test
-    version: 1.0.7
+    version: 1.0.8
 
   config.import: "optional:configserver:"
   cloud:
