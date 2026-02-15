@@ -5,6 +5,11 @@
 	xmlns:xsi="http:/faces//faces/www.w3.org/faces/2001/faces/XMLSchema-instance"
 	xsi:schemaLocation="http:/faces//faces/java.sun.com/faces/xml/faces/ns/faces/javaee http:/faces//faces/java.sun.com/faces/xml/faces/ns/faces/javaee/faces/web-facesconfig_2_1.xsd">
 	
+	<application>
+        <!-- Permite usar @Autowired en Beans JSF -->
+        <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+    </application>
+	
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>

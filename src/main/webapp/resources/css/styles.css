@@ -364,3 +364,7 @@ footer span {
 .ui-menubar-start img {
 	float: left;
 }
+
+.ui-growl {
+	margin-top: 10px;
+}
