@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.converter.BeanOutputConverter;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +23,14 @@ public class ChatServiceImpl implements ChatService {
 	
 	private final ChatClient chatClient;
 	
+	private BeanOutputConverter<ActorFilms> beanOutputConverter;
+		    
 	@Getter
 	private ChatResponseMetadata chatResponseMetadata;
 
     public ChatServiceImpl(ChatClient chatClient) {
         this.chatClient = chatClient;
+        beanOutputConverter = new BeanOutputConverter<>(ActorFilms.class);
     }
 
 	@Override
@@ -63,6 +67,23 @@ public class ChatServiceImpl implements ChatService {
 				.user(message)
 			    .call()
 			    .entity(new ParameterizedTypeReference<List<ActorFilms>>() {});
+	}
+
+	@Override
+	@LogTime
+	public ActorFilms getActorFilmsFormatted(String actor) {
+		String template = """
+		        Generate the filmography for {actor}.
+		        {format}
+		        """;
+		
+		return chatClient.prompt()
+			.user(u -> u
+				.text(template)
+				.param("actor", actor)
+				.param("format", beanOutputConverter.getFormat()))
+			.call()
+			.entity(ActorFilms.class);
 	}
 
 }

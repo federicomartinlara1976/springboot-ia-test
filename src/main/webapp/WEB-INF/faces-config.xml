@@ -37,6 +37,15 @@
 		</navigation-case>
 	</navigation-rule>
 	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>testEntidadFormato</from-outcome>
+			<to-view-id>/testEntidadFormato.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
 	<application>
 		<locale-config>
 			<default-locale>es</default-locale>

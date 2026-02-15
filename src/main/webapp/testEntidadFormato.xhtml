@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:h="jakarta.faces.html"
+	xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="content">
+		<p:outputPanel styleClass="dashboard">
+			
+			<!-- Formulario de envío al chat -->
+			<p:panel styleClass="ui-g-6 ui-md-6 ui-lg-6">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	             	Pregunta a Mistral
+	       		</f:facet>
+	       		
+	       		<f:facet name="actions">
+		            <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" title="Recargar"
+		            	actionListener="#{testEntidadFormatoBean.request}" process="actor,@this" update="respuesta">
+		           		<h:outputText styleClass="ui-icon pi pi-replay"/>
+		            </p:commandLink>		      
+				</f:facet>
+	              
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+						<p:outputLabel for="actor">Actor</p:outputLabel>
+						<p:inputText id="actor" value="#{testEntidadFormatoBean.actor}"/>
+					</div>
+				</div>
+	
+			</p:panel>
+			
+			<!-- Respuesta del chat -->
+			<p:panel id="respuesta" styleClass="ui-g-6 ui-md-6 ui-lg-6">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	                  <h:outputText value="#{testEntidadFormatoBean.actorFilms.actor}"/>
+	         	</f:facet>
+	
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+        				<p:dataView var="movie" value="#{testEntidadFormatoBean.actorFilms.movies}" rows="5" paginator="true"
+		                    rowsPerPageTemplate="5,10,15"  paginatorPosition="top"
+		                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		                    gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+
+				            <p:dataViewListItem>
+				                <div class="product-list-item">
+				                    <div class="product-list-detail">
+				                        <div class="product-name">#{movie}</div>
+				                    </div>
+				                </div>
+				            </p:dataViewListItem>
+				        </p:dataView>
+					</div>
+				</div>
+	
+			</p:panel>
+		</p:outputPanel>
+		
+	</ui:define>
+</ui:composition>

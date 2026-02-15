@@ -15,4 +15,6 @@ public interface ChatService {
 	ActorFilms getActorFilms(String message);
 
 	List<ActorFilms> getListActorFilms(String message);
+
+	ActorFilms getActorFilmsFormatted(String actor);
 }
