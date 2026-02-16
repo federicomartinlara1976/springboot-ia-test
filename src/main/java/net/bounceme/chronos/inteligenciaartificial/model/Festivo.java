@@ -1,5 +1,6 @@
 package net.bounceme.chronos.inteligenciaartificial.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -16,8 +17,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode
 @JsonPropertyOrder({"nombre", "fecha"})
-public class Festivo {
+public class Festivo implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Getter
 	@Setter
 	private String nombre;
