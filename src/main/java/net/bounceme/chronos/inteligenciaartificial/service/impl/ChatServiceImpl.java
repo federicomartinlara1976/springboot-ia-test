@@ -24,14 +24,17 @@ public class ChatServiceImpl implements ChatService {
 	
 	private final ChatClient chatClient;
 	
-	private BeanOutputConverter<ActorFilms> beanOutputConverter;
+	private BeanOutputConverter<ActorFilms> actorFilmsOutputConverter;
+	
+	private BeanOutputConverter<FestivosPais> festivosPaisOutputConverter;
 		    
 	@Getter
 	private ChatResponseMetadata chatResponseMetadata;
 
     public ChatServiceImpl(ChatClient chatClient) {
         this.chatClient = chatClient;
-        beanOutputConverter = new BeanOutputConverter<>(ActorFilms.class);
+        actorFilmsOutputConverter = new BeanOutputConverter<>(ActorFilms.class);
+        festivosPaisOutputConverter = new BeanOutputConverter<>(FestivosPais.class);
     }
 
 	@Override
@@ -82,7 +85,7 @@ public class ChatServiceImpl implements ChatService {
 			.user(u -> u
 				.text(template)
 				.param("actor", actor)
-				.param("format", beanOutputConverter.getFormat()))
+				.param("format", actorFilmsOutputConverter.getFormat()))
 			.call()
 			.entity(ActorFilms.class);
 	}
@@ -90,8 +93,19 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	@LogTime
 	public FestivosPais getFestivosPais(String pais, Integer year) {
-		// TODO Auto-generated method stub
-		return null;
+		String template = """
+		        Generar los festivos nacionales del país {pais} para el año {year}.
+		        {format}
+		        """;
+		
+		return chatClient.prompt()
+				.user(u -> u
+					.text(template)
+					.param("pais", pais)
+					.param("year", year)
+					.param("format", festivosPaisOutputConverter.getFormat()))
+				.call()
+				.entity(FestivosPais.class);
 	}
 
 }
