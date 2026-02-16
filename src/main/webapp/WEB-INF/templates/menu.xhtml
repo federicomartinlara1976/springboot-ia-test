@@ -35,8 +35,13 @@
 				icon="pi pi-fw pi-user" />
 			<p:menuitem value="Devolver una lista de entidades" action="testListEntidad" inmediate="true"
 				icon="pi pi-fw pi-list" />
-			<p:menuitem value="Devolver una entidad con entrada con formato" action="testEntidadFormato" inmediate="true"
-				icon="pi pi-fw pi-user" />
+			<p:submenu label="Prompts con formato"
+				icon="pi pi-fw pi-list">
+				<p:menuitem value="Lista de actores" action="testEntidadFormato" inmediate="true"
+					icon="pi pi-fw pi-user" />
+				<p:menuitem value="Lista de festivos" action="testListaFestivos" inmediate="true"
+					icon="pi pi-fw pi-calendar" />
+			</p:submenu>
 		</p:submenu>
 		
 	</p:menubar>

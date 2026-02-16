@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.LogTime;
 import net.bounceme.chronos.inteligenciaartificial.model.ActorFilms;
+import net.bounceme.chronos.inteligenciaartificial.model.FestivosPais;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
 
 @Service
@@ -84,6 +85,13 @@ public class ChatServiceImpl implements ChatService {
 				.param("format", beanOutputConverter.getFormat()))
 			.call()
 			.entity(ActorFilms.class);
+	}
+
+	@Override
+	@LogTime
+	public FestivosPais getFestivosPais(String pais, Integer year) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
