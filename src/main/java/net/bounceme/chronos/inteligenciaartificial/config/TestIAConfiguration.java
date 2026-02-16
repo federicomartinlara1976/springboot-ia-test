@@ -14,12 +14,12 @@ public class TestIAConfiguration {
 
 	@Bean
 	@Primary
-    ChatClient openAiChatClient(MistralAiChatModel chatModel) {
+    ChatClient mistralAiChatClient(MistralAiChatModel chatModel) {
         return buildChatClient(chatModel);
     }
 
     @Bean
-    ChatClient anthropicChatClient(DeepSeekChatModel chatModel) {
+    ChatClient deepseekChatClient(DeepSeekChatModel chatModel) {
         return buildChatClient(chatModel);
     }
     
