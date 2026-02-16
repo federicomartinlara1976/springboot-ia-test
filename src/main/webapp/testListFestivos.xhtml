@@ -18,7 +18,7 @@
 	       		
 	       		<f:facet name="actions">
 		            <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" title="Recargar"
-		            	actionListener="#{testListFestivosBean.request}" update="respuesta">
+		            	actionListener="#{testListFestivosBean.request}" process="@form" update="respuesta">
 		           		<h:outputText styleClass="ui-icon pi pi-replay"/>
 		            </p:commandLink>		      
 				</f:facet>
@@ -26,11 +26,15 @@
 				<div class="ui-g ui-fluid">
 					<div class="ui-g-6">
 						<p:outputLabel for="year" value="Año"/>
-                		<p:inputNumber id="year" value="#{testListFestivosBean.year}" minValue="1" decimalPlaces="0" />
+                		<p:inputNumber id="year" value="#{testListFestivosBean.year}" minValue="1" decimalPlaces="0">
+                			<f:validateBean for="year"/>
+                		</p:inputNumber>
 					</div>
 					<div class="ui-g-6">
 						<p:outputLabel for="pais" value="País"/>
-						<p:inputText id="pais" value="#{testListFestivosBean.pais}"/>
+						<p:inputText id="pais" value="#{testListFestivosBean.pais}">
+							<f:validateBean for="pais"/>
+						</p:inputText>
 					</div>
 				</div>
 	

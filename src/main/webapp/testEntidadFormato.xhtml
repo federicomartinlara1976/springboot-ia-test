@@ -18,7 +18,7 @@
 	       		
 	       		<f:facet name="actions">
 		            <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" title="Recargar"
-		            	actionListener="#{testEntidadFormatoBean.request}" process="actor,@this" update="respuesta">
+		            	actionListener="#{testEntidadFormatoBean.request}" process="@form" update="respuesta">
 		           		<h:outputText styleClass="ui-icon pi pi-replay"/>
 		            </p:commandLink>		      
 				</f:facet>
@@ -26,7 +26,9 @@
 				<div class="ui-g ui-fluid">
 					<div class="ui-g-12">
 						<p:outputLabel for="actor">Actor</p:outputLabel>
-						<p:inputText id="actor" value="#{testEntidadFormatoBean.actor}"/>
+						<p:inputText id="actor" value="#{testEntidadFormatoBean.actor}">
+							<f:validateBean for="actor"/>
+						</p:inputText>
 					</div>
 				</div>
 	

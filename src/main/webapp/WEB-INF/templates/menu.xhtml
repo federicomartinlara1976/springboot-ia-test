@@ -27,20 +27,20 @@
       	</f:facet>
 
 		<p:menuitem value="Inicio" action="index"
-			icon="pi pi-fw pi-home" />
+			icon="pi pi-fw pi-home" inmediate="true" process="@this" />
 			
 		<p:submenu label="Tests"
 			icon="pi pi-fw pi-cog">
 			<p:menuitem value="Devolver una entidad" action="testEntidad" inmediate="true"
-				icon="pi pi-fw pi-user" />
+				icon="pi pi-fw pi-user" process="@this" />
 			<p:menuitem value="Devolver una lista de entidades" action="testListEntidad" inmediate="true"
-				icon="pi pi-fw pi-list" />
+				icon="pi pi-fw pi-list" process="@this" />
 			<p:submenu label="Prompts con formato"
 				icon="pi pi-fw pi-list">
 				<p:menuitem value="Lista de actores" action="testEntidadFormato" inmediate="true"
-					icon="pi pi-fw pi-user" />
+					icon="pi pi-fw pi-user" process="@this" />
 				<p:menuitem value="Lista de festivos" action="testListaFestivos" inmediate="true"
-					icon="pi pi-fw pi-calendar" />
+					icon="pi pi-fw pi-calendar" process="@this" />
 			</p:submenu>
 		</p:submenu>
 		

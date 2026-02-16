@@ -22,29 +22,30 @@
 <h:body id="mainbody">
 	<pe:layout fullPage="true">
 		<pe:layoutPane id="mainLayoutPane" position="center">
-			<h:form id="contentForm" prependId="false"
-				enctype="multipart/form-data">
-				
-				<p:growl id="messages" showDetail="true" sticky="false">
-					<p:autoUpdate/>
-				</p:growl>  
-				
-				<p:outputPanel id="layoutWrapper" layout="block"
-					styleClass="layout-wrapper">
-					<p:outputPanel layout="block" styleClass="topbar clearfix">
-						<ui:include src="menu.xhtml" />
-					</p:outputPanel>
-	
-					<p:outputPanel id="layoutMain" layout="block"
-						styleClass="layout-main">
-	
-						<ui:insert name="content"></ui:insert>
-						
-					</p:outputPanel>
-					
-					<ui:include src="footer.xhtml" />
+			
+			<p:growl id="messages" showDetail="true" sticky="false">
+				<p:autoUpdate/>
+			</p:growl>  
+			
+			<p:outputPanel id="layoutWrapper" layout="block"
+				styleClass="layout-wrapper">
+				<p:outputPanel layout="block" styleClass="topbar clearfix">
+					<ui:include src="menu.xhtml" />
 				</p:outputPanel>
-			</h:form>
+
+				<p:outputPanel id="layoutMain" layout="block"
+					styleClass="layout-main">
+					
+					<h:form id="contentForm" prependId="false"
+						enctype="multipart/form-data">
+						<ui:insert name="content"></ui:insert>
+					</h:form>
+						
+				</p:outputPanel>
+				
+				<ui:include src="footer.xhtml" />
+			</p:outputPanel>
+			
 		</pe:layoutPane>
 	</pe:layout>
 	
