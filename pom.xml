@@ -12,7 +12,7 @@
 	
 	<groupId>net.bounceme.chronos.inteligenciaartificial</groupId>
 	<artifactId>springboot-ia-test</artifactId>
-	<version>1.0.9</version>
+	<version>1.0.10</version>
 	<name>springboot-ia-test</name>
 	<description>Servicio para probar funcionalidades de motores de IA</description>
 	<packaging>war</packaging>
