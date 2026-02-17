@@ -1,4 +1,6 @@
-# deployment-with-update.yaml
+###################
+# DEPLOYMENT
+###################
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -24,3 +26,21 @@ spec:
         imagePullPolicy: Always  # Siempre extraer la imagen más reciente
         ports:
         - containerPort: 8084
+---	
+###################
+# SERVICIO
+###################
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-ia-test-svc
+  labels:
+    app: springboot-ia-test
+spec:
+  type: NodePort
+  selector:
+    app: springboot-ia-test
+  ports:
+    - port: 8084
+      nodePort: 8084    
+      protocol: TCP
