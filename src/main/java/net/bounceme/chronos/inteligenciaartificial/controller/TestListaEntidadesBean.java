@@ -1,8 +1,8 @@
 package net.bounceme.chronos.inteligenciaartificial.controller;
 
 import java.io.Serializable;
+import java.util.List;
 
-import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.stereotype.Component;
 
 import jakarta.faces.view.ViewScoped;
@@ -11,37 +11,35 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.ShowTime;
+import net.bounceme.chronos.inteligenciaartificial.model.ActorFilms;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
-import net.bounceme.chronos.inteligenciaartificial.util.JsfHelper;
 
 @Component
 @Named
 @ViewScoped
-public class ChatBean implements Serializable {
+public class TestListaEntidadesBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Getter
+	private String mensaje = "Generate the filmography for 5 random actors.";
+	
+	@Getter
 	@Setter
-	private String mensaje;
+    private ActorFilms actorFilms;
 	
 	@Getter
-    private String htmlContent;
-	
-	@Getter
-	private transient ChatResponseMetadata chatResponseMetadata;
+	private List<ActorFilms> listActorFilms;
 	
 	private transient ChatService chatService;
 
-	public ChatBean(ChatService chatService) {
+	public TestListaEntidadesBean(ChatService chatService) {
 		this.chatService = chatService;
 	}
-	
+
 	@ShowTime
 	@SneakyThrows
-	public void enviar() {
-		String respuesta = chatService.generation(mensaje);
-		htmlContent = JsfHelper.markdown2Html(respuesta);
-		chatResponseMetadata = chatService.getChatResponseMetadata();
+	public void request() {
+		listActorFilms = chatService.getListActorFilms(mensaje);
 	}
 }

@@ -13,7 +13,7 @@ import lombok.experimental.UtilityClass;
 import net.bounceme.chronos.inteligenciaartificial.exceptions.AssertException;
 
 @UtilityClass
-public class JsfUtils {
+public class JsfHelper {
 	
 	@SneakyThrows(AssertException.class)
 	public void writeMessage(FacesMessage.Severity severity, String title, String detail) {
@@ -39,5 +39,10 @@ public class JsfUtils {
         // Convertir Markdown a HTML
         Document document = parser.parse(source);
         return renderer.render(document);
+	}
+	
+	public void showDuration(Long duration) {
+		String sEllapsedTime = String.format(Constants.DURATION_FORMAT, duration);
+		writeMessage(FacesMessage.SEVERITY_INFO, "Duración", sEllapsedTime);
 	}
 }

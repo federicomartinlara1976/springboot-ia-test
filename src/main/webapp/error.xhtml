@@ -6,12 +6,12 @@
 	template="/WEB-INF/templates/error.xhtml">
 
 	<ui:define name="msg">
-		<h3><h:outputText value="#{res['error.interno']}" /></h3>
+		<h3><h:outputText value="Error interno" /></h3>
 	</ui:define>
 
 	<ui:define name="footer">
 		<p:commandButton id="volver"
-			value="#{res['volver']}"
+			value="Volver"
 			action="index"
 			ajax="false"/>	
 	</ui:define>

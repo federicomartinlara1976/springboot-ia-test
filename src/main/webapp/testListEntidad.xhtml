@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:h="jakarta.faces.html"
+	xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="content">
+		<p:outputPanel styleClass="dashboard">
+			
+			<!-- Formulario de envío al chat -->
+			<p:panel styleClass="ui-g-6 ui-md-6 ui-lg-6">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	             	Pregunta a Mistral
+	       		</f:facet>
+	       		
+	       		<f:facet name="actions">
+		            <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" title="Recargar"
+		            	actionListener="#{testListaEntidadesBean.request}" update="respuesta">
+		           		<h:outputText styleClass="ui-icon pi pi-replay"/>
+		            </p:commandLink>		      
+				</f:facet>
+	              
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+						<h:outputText value="#{testListaEntidadesBean.mensaje}"/>
+					</div>
+				</div>
+	
+			</p:panel>
+			
+			<!-- Respuesta del chat -->
+			<p:panel id="respuesta" styleClass="ui-g-6 ui-md-6 ui-lg-6">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	                  <h:outputText value="Actores"/>
+	         	</f:facet>
+	
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+        				<p:dataView var="actor" value="#{testListaEntidadesBean.listActorFilms}" rows="5" paginator="true"
+		                    rowsPerPageTemplate="5,10,15" paginatorPosition="top"
+		                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		                    gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+
+				            <p:dataViewListItem>
+				                <div class="product-list-item">
+				                    <div class="product-list-detail">
+				                        <div class="product-name">#{actor.actor}</div>
+				                    </div>
+				                    
+				                    <div class="product-list-action">
+				                        <p:commandButton icon="pi pi-eye" update="info-content"
+											oncomplete="PF('actorDialog').show()"
+											styleClass="edit-button rounded-button ui-button-success"
+											process="@this">
+											<f:setPropertyActionListener value="#{actor}"
+												target="#{testListaEntidadesBean.actorFilms}" />
+											<p:resetInput target="info-content" />
+										</p:commandButton>
+				                    </div>
+				                </div>
+				            </p:dataViewListItem>
+				        </p:dataView>
+					</div>
+				</div>
+	
+			</p:panel>
+		</p:outputPanel>
+		
+		<p:dialog id="actorDialog" header="Actor info" showEffect="fade"
+			modal="true" widgetVar="actorDialog" responsive="true" position="center"
+			resizable="false"
+			appendTo="@(body)">
+			<p:outputPanel id="info-content" class="ui-fluid">
+				<div class="field ui-g-12">
+					<div class="ui-g-4">
+						<span><b>Actor</b></span>
+					</div>
+					<div class="ui-g-8">
+						<span><h:outputText value="#{testListaEntidadesBean.actorFilms.actor}"/></span>
+					</div>
+				</div>
+				<div class="field ui-g-12">
+					<p:dataView var="pelicula" value="#{testListaEntidadesBean.actorFilms.movies}" rows="5" paginator="true"
+	                    rowsPerPageTemplate="5,10,15"  paginatorPosition="top"
+	                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	                    gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+
+			            <p:dataViewListItem>
+			                <div class="product-list-item">
+			                    <div class="product-list-detail">
+			                        <div class="product-name">#{pelicula}</div>
+			                    </div>
+			                </div>
+			            </p:dataViewListItem>
+			        </p:dataView>	
+				</div>
+			</p:outputPanel>
+		</p:dialog>
+		
+	</ui:define>
+</ui:composition>

@@ -6,10 +6,17 @@
 	xmlns:p="http://primefaces.org/ui"
 	xml:lang="es">
 <h:head>
-	<ui:insert name="ads"></ui:insert>
-
-	<title>#{res['app.title']}</title>
-	<ui:include src="head.xhtml" />
+	<title>.:: Springboot IA test ::.</title>
+	
+	<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+	<link href="#{resource['images/favicon.ico']}" rel="shortcut icon" />
+	
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet"/>
+	<link rel="stylesheet"
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+	
+	<h:outputStylesheet library="css" name="layout-default.css" />
+	<h:outputStylesheet library="css" name="styles.css" />
 </h:head>
 
 <h:body role="document" styleClass="exception-body error">

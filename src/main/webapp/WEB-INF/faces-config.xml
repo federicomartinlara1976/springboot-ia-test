@@ -5,11 +5,52 @@
 	xmlns:xsi="http:/faces//faces/www.w3.org/faces/2001/faces/XMLSchema-instance"
 	xsi:schemaLocation="http:/faces//faces/java.sun.com/faces/xml/faces/ns/faces/javaee http:/faces//faces/java.sun.com/faces/xml/faces/ns/faces/javaee/faces/web-facesconfig_2_1.xsd">
 	
+	<application>
+        <!-- Permite usar @Autowired en Beans JSF -->
+        <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+    </application>
+	
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
 			<from-outcome>index</from-outcome>
 			<to-view-id>/index.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>testEntidad</from-outcome>
+			<to-view-id>/testEntidad.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>testListEntidad</from-outcome>
+			<to-view-id>/testListEntidad.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>testEntidadFormato</from-outcome>
+			<to-view-id>/testEntidadFormato.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>testListaFestivos</from-outcome>
+			<to-view-id>/testListFestivos.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>

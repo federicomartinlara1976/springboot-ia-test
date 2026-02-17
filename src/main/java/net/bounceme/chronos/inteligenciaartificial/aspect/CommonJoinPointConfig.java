@@ -11,7 +11,10 @@ public class CommonJoinPointConfig {
 	/**
 	 * 
 	 */
-	@Pointcut("@annotation(net.bounceme.chronos.inteligenciaartificial.aspect.TrackTime)")
-	public void trackTimeAnnotation(){}
+	@Pointcut("@annotation(net.bounceme.chronos.inteligenciaartificial.aspect.annotations.LogTime)")
+	public void logTimeAnnotation(){}
+	
+	@Pointcut("@annotation(net.bounceme.chronos.inteligenciaartificial.aspect.annotations.ShowTime)")
+	public void showTimeAnnotation(){}
 
 }
