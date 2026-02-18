@@ -33,7 +33,7 @@
 				<p:outputPanel layout="block" styleClass="topbar clearfix">
 					<p:outputPanel layout="block" styleClass="topbar-left">
 						<p:graphicImage
-							styleClass="icon48"
+							styleClass="topbar-logo"
 				          	title="Spring Boot ${environment.getProperty('spring-boot.version')}"
 				          	alt="Spring Boot ${environment.getProperty('spring-boot.version')}"
 				          	value="#{resource['images/spring-boot.png']}"/>
@@ -48,6 +48,9 @@
 					</p:outputPanel>
 
 					<p:outputPanel layout="block" styleClass="topbar-right">
+						<a id="menu-button" href="#" class="">
+                			<i class="pi pi-angle-left"></i>
+            			</a>
 						<h3>Nostromo</h3>
 					</p:outputPanel>	
 				</p:outputPanel>
