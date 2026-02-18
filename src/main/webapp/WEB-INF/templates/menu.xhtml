@@ -4,46 +4,52 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
+	
+	<p:outputPanel layout="block" styleClass="menu">
+		<ul class="list-group">
+			<li class="list-group-item">
+				<h:commandLink
+					action="index" inmediate="true" process="@this">
+					<i class="pi pi-fw pi-home"></i>
+					<span><h:outputText value="Inicio" /></span>
+				</h:commandLink>
+			</li>
+		</ul>
 
-	<p:menubar hideDelay="1000" >
-		<f:facet name="start">
-			<p:graphicImage
-				styleClass="icon48"
-	          	title="Spring Boot ${environment.getProperty('spring-boot.version')}"
-	          	alt="Spring Boot ${environment.getProperty('spring-boot.version')}"
-	          	value="#{resource['images/spring-boot.png']}"/>
-			<div class="title">
-				<span class="description">
-					<strong><h:outputText value="#{appBean.appName}"/></strong>
-				</span>
-				<span class="version">
-					<h:outputText value="#{appBean.appVersion}"/>
-				</span>
-			</div>
-      	</f:facet>
-      	
-      	<f:facet name="end">
-      		<h3>Nostromo</h3>
-      	</f:facet>
-
-		<p:menuitem value="Inicio" action="index"
-			icon="pi pi-fw pi-home" inmediate="true" process="@this" />
-			
-		<p:submenu label="Tests"
-			icon="pi pi-fw pi-cog">
-			<p:menuitem value="Devolver una entidad" action="testEntidad" inmediate="true"
-				icon="pi pi-fw pi-user" process="@this" />
-			<p:menuitem value="Devolver una lista de entidades" action="testListEntidad" inmediate="true"
-				icon="pi pi-fw pi-list" process="@this" />
-			<p:submenu label="Prompts con formato"
-				icon="pi pi-fw pi-list">
-				<p:menuitem value="Lista de actores" action="testEntidadFormato" inmediate="true"
-					icon="pi pi-fw pi-user" process="@this" />
-				<p:menuitem value="Lista de festivos" action="testListaFestivos" inmediate="true"
-					icon="pi pi-fw pi-calendar" process="@this" />
-			</p:submenu>
-		</p:submenu>
-		
-	</p:menubar>
+		<p:accordionPanel activeIndex="-1">
+			<p:tab title="Tests">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<h:commandLink
+							action="testEntidad" inmediate="true" process="@this">
+							<i class="pi pi-fw pi-user"></i>
+							<span><h:outputText value="Devolver una entidad" /></span>
+						</h:commandLink>
+					</li>
+					<li class="list-group-item">
+						<h:commandLink
+							action="testListEntidad" inmediate="true" process="@this">
+							<i class="pi pi-fw pi-list"></i>
+							<span><h:outputText value="Devolver una lista de entidades" /></span>
+						</h:commandLink>
+					</li>
+					<li class="list-group-item">
+						<h:commandLink
+							action="testEntidadFormato" inmediate="true" process="@this">
+							<i class="pi pi-fw pi-user"></i>
+							<span><h:outputText value="Lista de actores" /></span>
+						</h:commandLink>
+					</li>
+					<li class="list-group-item">
+						<h:commandLink
+							action="testListaFestivos" inmediate="true" process="@this">
+							<i class="pi pi-fw pi-calendar"></i>
+							<span><h:outputText value="Lista de festivos" /></span>
+						</h:commandLink>
+					</li>
+				</ul>
+			</p:tab>
+		</p:accordionPanel>
+	</p:outputPanel>
 
 </ui:composition>
