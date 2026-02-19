@@ -2,80 +2,95 @@
  * PrimeFaces Avalon Layout
  */
 $(document).ready(function() {
+	var $this = this;
+	
 	this.wrapper = $(document.body).children('.layout-wrapper');
     this.topbar = $('body > .layout-wrapper .topbar');
-    //this.menu = this.jq;
     this.menuContainer = this.wrapper.children('.layout-menu-container');
-    //this.menuWrapper = this.menu.closest('.layout-menu');
-    //this.menulinks = this.menu.find('a');
+	this.menuWrapper = $('.layout-menu-container');
     this.menuButton = $('#menu-button');
     this.topbarMenuButton = $('#topbar-menu-button');
     this.menuActive = false;
     this.topbarLinkClick = false;
     this.topbarMenuClick = false;
     this.menuButtonClick = false;
-    //this.isMobileDev = this.isMobileDevice();
+	this.isMobileDev = isMobileDevice();
 	
-    //this.configButton = $('#layout-config-button');
-    //this.configMenu = $('#layout-config');
-    //this.configMenuClose = this.configMenu.find('.layout-config-close');
-
+	this.menuButton.off('click.menuButton').on('click.menuButton', function(e) {
+		console.log("Menu show");
+		
+        $this.menuButton.removeClass('menu-button-rotate');
+        
+        $this.menuButtonClick = true;
+        
+        //overlay
+        if($this.wrapper.hasClass('menu-layout-overlay')) {
+            $this.wrapper.toggleClass('layout-menu-overlay-active');
+            
+            if($this.wrapper.hasClass('layout-menu-overlay-active')) {
+                enableSwipe();
+            }
+            else {
+                disableSwipe();
+                menuButton.addClass('menu-button-rotate');
+            }
+        }
+        //static
+        else {
+            if(isDesktop()) {
+                $this.wrapper.toggleClass('layout-menu-static-inactive')
+            }
+            else {
+                if($this.wrapper.hasClass('layout-menu-static-active')) {
+                    $this.wrapper.removeClass('layout-menu-static-active');
+                    disableSwipe();
+                }
+                else {
+                    $this.wrapper.addClass('layout-menu-static-active');
+                    $this.wrapper.removeClass('layout-menu-static-inactive');
+                    enableSwipe();
+                }
+            }
+            
+            if($this.wrapper.hasClass('layout-menu-static-inactive')) {
+                $this.menuButton.addClass('menu-button-rotate');
+            }
+        }
+            
+        e.preventDefault();
+	});
+	
     //this.restoreMenuState();
 	
-	console.log("Javascript iniciado");
+	console.log("Javascript iniciado. IsMobileDevice: " + this.isMobileDev);
 });
 
-/* 
-_bindEvents: function() {
+function isMobileDevice() {
+	return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(window.navigator.userAgent.toLowerCase());
+}
+
+function isDesktop() {
+	return window.innerWidth > 1024;
+}
+
+function enableSwipe() {
+    if(this.isMobileDev) {
         var $this = this;
-        
-        this.menuButton.off('click.menuButton').on('click.menuButton', function(e) {
-            $this.menuButton.removeClass('menu-button-rotate');
-            $this.topbarItems.removeClass('topbar-items-visible');
-            
-            $this.menuButtonClick = true;
-            
-            //overlay
-            if($this.wrapper.hasClass('menu-layout-overlay')) {
-                $this.wrapper.toggleClass('layout-menu-overlay-active');
-                
-                if($this.wrapper.hasClass('layout-menu-overlay-active')) {
-                    $this.enableModal();
-                    $this.enableSwipe();
-                }
-                else {
-                    $this.disableModal();
-                    $this.disableSwipe();
-                    $this.menuButton.addClass('menu-button-rotate');
-                }
+        this.menuWrapper.swipe({
+            swipeLeft: function() {
+                $this.menuButton.click();
             }
-            //static
-            else {
-                if($this.isDesktop()) {
-                    $this.wrapper.toggleClass('layout-menu-static-inactive')
-                }
-                else {
-                    if($this.wrapper.hasClass('layout-menu-static-active')) {
-                        $this.wrapper.removeClass('layout-menu-static-active');
-                        $this.disableModal();
-                        $this.disableSwipe();
-                    }
-                    else {
-                        $this.wrapper.addClass('layout-menu-static-active');
-                        $this.wrapper.removeClass('layout-menu-static-inactive');
-                        $this.enableModal();
-                        $this.enableSwipe();
-                    }
-                }
-                
-                if($this.wrapper.hasClass('layout-menu-static-inactive')) {
-                    $this.menuButton.addClass('menu-button-rotate');
-                }
-            }
-            
-            e.preventDefault();
-		}
-        
+        });
+    }
+}
+    
+function disableSwipe() {
+    if(this.isMobileDev) {
+        this.menuWrapper.swipe('destroy');
+    }
+}
+
+		/*
         this.topbarMenuButton.off('click.topbarButton').on('click.topbarButton', function(e) {
             $this.topbarMenuClick = true;
             $this.topbarItems.find('ul').removeClass('fadeInDown fadeOutUp');
