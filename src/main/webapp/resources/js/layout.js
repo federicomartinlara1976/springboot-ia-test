@@ -1,39 +1,32 @@
 /** 
  * PrimeFaces Avalon Layout
  */
-PrimeFaces.widget.Avalon = PrimeFaces.widget.BaseWidget.extend({
-    
-    init: function(cfg) {
-        this._super(cfg);
-        this.wrapper = $(document.body).children('.layout-wrapper');
-        this.topbar = $('body > .layout-wrapper .topbar');
-        this.menu = this.jq;
-        this.menuContainer = this.wrapper.children('.layout-menu-container');
-        this.menuWrapper = this.menu.closest('.layout-menu');
-        this.menulinks = this.menu.find('a');
-        this.profileButton = $('#profile-options');
-        this.profileMenu = $('#profile-menu');
-        this.topbarItems = this.topbar.find('.topbar-items');
-        this.topbarLinks = this.topbarItems.find('> li > a');
-        this.menuButton = $('#menu-button');
-        this.topbarMenuButton = $('#topbar-menu-button');
-        this.menuActive = false;
-        this.topbarLinkClick = false;
-        this.topbarMenuClick = false;
-        this.menuButtonClick = false;
-        this.isMobileDev = this.isMobileDevice();
+$(document).ready(function() {
+	this.wrapper = $(document.body).children('.layout-wrapper');
+    this.topbar = $('body > .layout-wrapper .topbar');
+    //this.menu = this.jq;
+    this.menuContainer = this.wrapper.children('.layout-menu-container');
+    //this.menuWrapper = this.menu.closest('.layout-menu');
+    //this.menulinks = this.menu.find('a');
+    this.menuButton = $('#menu-button');
+    this.topbarMenuButton = $('#topbar-menu-button');
+    this.menuActive = false;
+    this.topbarLinkClick = false;
+    this.topbarMenuClick = false;
+    this.menuButtonClick = false;
+    //this.isMobileDev = this.isMobileDevice();
+	
+    //this.configButton = $('#layout-config-button');
+    //this.configMenu = $('#layout-config');
+    //this.configMenuClose = this.configMenu.find('.layout-config-close');
 
+    //this.restoreMenuState();
+	
+	console.log("Javascript iniciado");
+});
 
-        this.configButton = $('#layout-config-button');
-        this.configMenu = $('#layout-config');
-        this.configMenuClose = this.configMenu.find('.layout-config-close');
-
-        this._bindEvents();
-        
-        this.restoreMenuState();
-    },
-    
-    _bindEvents: function() {
+/* 
+_bindEvents: function() {
         var $this = this;
         
         this.menuButton.off('click.menuButton').on('click.menuButton', function(e) {
@@ -81,7 +74,7 @@ PrimeFaces.widget.Avalon = PrimeFaces.widget.BaseWidget.extend({
             }
             
             e.preventDefault();
-        });
+		}
         
         this.topbarMenuButton.off('click.topbarButton').on('click.topbarButton', function(e) {
             $this.topbarMenuClick = true;
@@ -569,5 +562,6 @@ PrimeFaces.AvalonConfigurator = {
         }
     }
 };
+*/
 
 
