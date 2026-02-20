@@ -20,6 +20,7 @@
 </h:head>
 
 <h:body id="mainbody">
+	<h:form id="contentForm" prependId="false" enctype="multipart/form-data">
 	<pe:layout fullPage="true">
 		<pe:layoutPane id="mainLayoutPane" position="center">
 			
@@ -27,7 +28,7 @@
 				<p:autoUpdate/>
 			</p:growl>  
 			
-			<h:form id="contentForm" prependId="false" enctype="multipart/form-data">
+			
 			<p:outputPanel id="layoutWrapper" layout="block"
 				styleClass="layout-wrapper menu-layout-static">
 				<p:outputPanel layout="block" styleClass="topbar clearfix">
@@ -48,9 +49,7 @@
 					</p:outputPanel>
 
 					<p:outputPanel layout="block" styleClass="topbar-right">
-						<a id="menu-button" href="#" onclick="PF('sidebar').show()">
-                			<i class="pi pi-bars"></i>
-            			</a>
+						<p:commandButton type="button" icon="pi pi-bars" onclick="PF('sidebar').show()" title="Menú"/>
 						<h3>Nostromo</h3>
 					</p:outputPanel>	
 				</p:outputPanel>
@@ -69,18 +68,15 @@
 				<ui:include src="footer.xhtml" />
 				
 			</p:outputPanel>
-			</h:form>
 		</pe:layoutPane>
 	</pe:layout>
 	
 	<p:sidebar widgetVar="sidebar">
      	<h3>Menu</h3>
-     	<h:form id="menuForm" prependId="false" enctype="multipart/form-data">
-    	<p:outputPanel id="layoutMenuContainer" layout="block"
+     	<p:outputPanel id="layoutMenuContainer" layout="block"
 			styleClass="layout-menu-container">
 			<ui:include src="menu.xhtml" />
 		</p:outputPanel>
-		</h:form>
 	</p:sidebar>
 	
 	<!-- BlockUI de espera -->
@@ -97,5 +93,6 @@
     <p:ajaxStatus onstart="PF('loadingIndicator').show()"
                   onsuccess="PF('loadingIndicator').hide()"
                   onerror="PF('loadingIndicator').hide()" />
+	</h:form>
 </h:body>
 </html>
