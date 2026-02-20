@@ -20,7 +20,7 @@
 </h:head>
 
 <h:body id="mainbody">
-	<h:form id="contentForm" prependId="false" enctype="multipart/form-data">
+	
 	<pe:layout fullPage="true">
 		<pe:layoutPane id="mainLayoutPane" position="center">
 			
@@ -59,8 +59,9 @@
 
 					<p:outputPanel id="layoutContent" layout="block"
 						styleClass="layout-content">
-						
+						<h:form id="contentForm" prependId="false" enctype="multipart/form-data">
 						<ui:insert name="content"></ui:insert>
+						</h:form>
 					</p:outputPanel>
 
 				</p:outputPanel>
@@ -75,7 +76,9 @@
      	<h3>Menu</h3>
      	<p:outputPanel id="layoutMenuContainer" layout="block"
 			styleClass="layout-menu-container">
+			<h:form id="menuForm" prependId="false" enctype="multipart/form-data">
 			<ui:include src="menu.xhtml" />
+			</h:form>
 		</p:outputPanel>
 	</p:sidebar>
 	
@@ -93,6 +96,5 @@
     <p:ajaxStatus onstart="PF('loadingIndicator').show()"
                   onsuccess="PF('loadingIndicator').hide()"
                   onerror="PF('loadingIndicator').hide()" />
-	</h:form>
 </h:body>
 </html>
