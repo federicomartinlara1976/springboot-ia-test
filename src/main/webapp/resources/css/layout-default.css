@@ -1421,7 +1421,7 @@ body {
         top: 5px;
         right: 10px;
         font-size: 18px; }
-.layout-wrapper .layout-menu-container {
+.layout-menu-container {
   overflow: auto;
   position: fixed;
   width: 235px;
@@ -1802,9 +1802,9 @@ body {
   .layout-wrapper.menu-layout-static .layout-menu-container {
     margin-left: 0; }
   .layout-wrapper.menu-layout-static .layout-main {
-    margin-left: 235px; }
+    margin-left: 0px; }
   .layout-wrapper.menu-layout-static .layout-footer {
-    margin-left: 235px;
+    margin-left: 0px;
     width: -webkit-fill-available; }
   .layout-wrapper.menu-layout-static.layout-menu-static-inactive .layout-menu-container {
     margin-left: -235px; }

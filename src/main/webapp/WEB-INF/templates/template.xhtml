@@ -50,16 +50,11 @@
 					</p:outputPanel>
 
 					<p:outputPanel layout="block" styleClass="topbar-right">
-						<a id="menu-button" href="#" class="">
-                			<i class="pi pi-angle-left"></i>
+						<a id="menu-button" href="#" onclick="PF('sidebar').show()">
+                			<i class="pi pi-bars"></i>
             			</a>
 						<h3>Nostromo</h3>
 					</p:outputPanel>	
-				</p:outputPanel>
-				
-				<p:outputPanel id="layoutMenuContainer" layout="block"
-					styleClass="layout-menu-container">
-					<ui:include src="menu.xhtml" />
 				</p:outputPanel>
 
 				<p:outputPanel id="layoutMain" layout="block"
@@ -79,6 +74,16 @@
 			</h:form>
 		</pe:layoutPane>
 	</pe:layout>
+	
+	<p:sidebar widgetVar="sidebar">
+     	<h3>Menu</h3>
+     	<h:form id="menuForm" prependId="false" enctype="multipart/form-data">
+    	<p:outputPanel id="layoutMenuContainer" layout="block"
+			styleClass="layout-menu-container">
+			<ui:include src="menu.xhtml" />
+		</p:outputPanel>
+		</h:form>
+	</p:sidebar>
 	
 	<!-- BlockUI de espera -->
     <p:blockUI widgetVar="loadingIndicator" 

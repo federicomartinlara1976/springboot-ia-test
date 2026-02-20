@@ -17,42 +17,50 @@ $(document).ready(function() {
 	this.isMobileDev = isMobileDevice();
 	
 	this.menuButton.off('click.menuButton').on('click.menuButton', function(e) {
-		console.log("Menu show");
-		
-        $this.menuButton.removeClass('menu-button-rotate');
+		$this.menuButton.removeClass('menu-button-rotate');
         
         $this.menuButtonClick = true;
         
         //overlay
         if($this.wrapper.hasClass('menu-layout-overlay')) {
+			console.log($this.wrapper + " .layout-menu-overlay-active");
             $this.wrapper.toggleClass('layout-menu-overlay-active');
             
             if($this.wrapper.hasClass('layout-menu-overlay-active')) {
+				console.log("enableSwipe");
                 enableSwipe();
             }
             else {
+				console.log("disableSwipe");
                 disableSwipe();
+				console.log("#menu-button .menu-button-rotate");
                 menuButton.addClass('menu-button-rotate');
             }
         }
         //static
         else {
             if(isDesktop()) {
-                $this.wrapper.toggleClass('layout-menu-static-inactive')
+				console.log($this.wrapper + " .layout-menu-static-inactive");
+                $this.wrapper.addClass('layout-menu-static-inactive')
             }
             else {
                 if($this.wrapper.hasClass('layout-menu-static-active')) {
+					console.log(".layout-wrapper -.layout-menu-static-active");
                     $this.wrapper.removeClass('layout-menu-static-active');
                     disableSwipe();
                 }
                 else {
+					console.log(".layout-wrapper .layout-menu-static-active");
                     $this.wrapper.addClass('layout-menu-static-active');
+					console.log(".layout-wrapper -.layout-menu-static-inactive");
                     $this.wrapper.removeClass('layout-menu-static-inactive');
+					console.log("enableSwipe");
                     enableSwipe();
                 }
             }
             
             if($this.wrapper.hasClass('layout-menu-static-inactive')) {
+				console.log("#menu-button .menu-button-rotate");
                 $this.menuButton.addClass('menu-button-rotate');
             }
         }
