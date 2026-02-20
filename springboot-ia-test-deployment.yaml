@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: springboot-ia-test
-        image: federicomartinlara1976/springboot-ia-test:1.0.10  # Cambia esta etiqueta
+        image: federicomartinlara1976/springboot-ia-test:1.0.11  # Cambia esta etiqueta
         imagePullPolicy: Always  # Siempre extraer la imagen más reciente
         ports:
         - containerPort: 8084
