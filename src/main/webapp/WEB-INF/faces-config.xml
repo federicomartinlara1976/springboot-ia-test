@@ -64,6 +64,15 @@
 		</navigation-case>
 	</navigation-rule>
 	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>temaProgramacion</from-outcome>
+			<to-view-id>/programacion/index.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
 	<application>
 		<locale-config>
 			<default-locale>es</default-locale>
