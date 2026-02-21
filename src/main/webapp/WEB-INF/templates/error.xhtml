@@ -1,48 +1,46 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-us" xmlns:h="jakarta.faces.html"
 	xmlns:p="http://primefaces.org/ui"
-	xml:lang="es">
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="jakarta.faces.facelets" xml:lang="es">
 <h:head>
 	<title>.:: Springboot IA test ::.</title>
-	
+
 	<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
 	<link href="#{resource['images/favicon.ico']}" rel="shortcut icon" />
-	
-	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet"/>
+
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed"
+		rel="stylesheet" />
 	<link rel="stylesheet"
-		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
-	
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+
 	<h:outputStylesheet library="css" name="layout-default.css" />
 	<h:outputStylesheet library="css" name="styles.css" />
 </h:head>
 
 <h:body role="document" styleClass="exception-body error">
-	<f:view>
-		<h:form prependId="false">
-			<div class="exception-text">
-				<div class="exception-box">
-					<span>500</span>
-				</div>
+	<h:form prependId="false">
+		<div class="exception-text">
+			<div class="exception-box">
+				<span>500</span>
+			</div>
+		</div>
+
+
+		<div class="exception-panel">
+			<div class="exception-image">
+				<p:graphicImage value="#{resource['images/ko.png']}"
+					styleClass="icon72" />
 			</div>
 
-
-			<div class="exception-panel">
-				<div class="exception-image">
-					<p:graphicImage
-						value="#{resource['images/ko.png']}" styleClass="icon72"/>
+			<div class="exception-panel-content">
+				<div class="information-text">
+					<ui:insert name="msg"></ui:insert>
 				</div>
-
-				<div class="exception-panel-content">
-					<div class="information-text">
-						<ui:insert name="msg"></ui:insert>
-					</div>
-					<ui:insert name="footer"></ui:insert>
-				</div>
+				<ui:insert name="footer"></ui:insert>
 			</div>
-		</h:form>
-	</f:view>
+		</div>
+	</h:form>
 </h:body>
 </html>

@@ -20,6 +20,7 @@
 </h:head>
 
 <h:body id="mainbody">
+	
 	<pe:layout fullPage="true">
 		<pe:layoutPane id="mainLayoutPane" position="center">
 			
@@ -27,27 +28,59 @@
 				<p:autoUpdate/>
 			</p:growl>  
 			
+			
 			<p:outputPanel id="layoutWrapper" layout="block"
-				styleClass="layout-wrapper">
+				styleClass="layout-wrapper menu-layout-static">
 				<p:outputPanel layout="block" styleClass="topbar clearfix">
-					<ui:include src="menu.xhtml" />
+					<p:outputPanel layout="block" styleClass="topbar-left">
+						<p:graphicImage
+							styleClass="topbar-logo"
+				          	title="Spring Boot ${environment.getProperty('spring-boot.version')}"
+				          	alt="Spring Boot ${environment.getProperty('spring-boot.version')}"
+				          	value="#{resource['images/spring-boot.png']}"/>
+						<div class="title">
+							<span class="description">
+								<strong><h:outputText value="#{appBean.appName}"/></strong>
+							</span>
+							<span class="version">
+								<h:outputText value="#{appBean.appVersion}"/>
+							</span>
+						</div>
+					</p:outputPanel>
+
+					<p:outputPanel layout="block" styleClass="topbar-right">
+						<p:commandButton type="button" icon="pi pi-bars" onclick="PF('sidebar').show()" title="Menú"/>
+						<h3>Nostromo</h3>
+					</p:outputPanel>	
 				</p:outputPanel>
 
 				<p:outputPanel id="layoutMain" layout="block"
 					styleClass="layout-main">
-					
-					<h:form id="contentForm" prependId="false"
-						enctype="multipart/form-data">
+
+					<p:outputPanel id="layoutContent" layout="block"
+						styleClass="layout-content">
+						<h:form id="contentForm" prependId="false" enctype="multipart/form-data">
 						<ui:insert name="content"></ui:insert>
-					</h:form>
-						
+						</h:form>
+					</p:outputPanel>
+
 				</p:outputPanel>
-				
+
 				<ui:include src="footer.xhtml" />
+				
 			</p:outputPanel>
-			
 		</pe:layoutPane>
 	</pe:layout>
+	
+	<p:sidebar widgetVar="sidebar">
+     	<h3>Menu</h3>
+     	<p:outputPanel id="layoutMenuContainer" layout="block"
+			styleClass="layout-menu-container">
+			<h:form id="menuForm" prependId="false" enctype="multipart/form-data">
+			<ui:include src="menu.xhtml" />
+			</h:form>
+		</p:outputPanel>
+	</p:sidebar>
 	
 	<!-- BlockUI de espera -->
     <p:blockUI widgetVar="loadingIndicator" 

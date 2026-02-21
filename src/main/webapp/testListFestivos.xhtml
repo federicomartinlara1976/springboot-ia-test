@@ -10,7 +10,7 @@
 		<p:outputPanel styleClass="dashboard">
 			
 			<!-- Formulario de envío al chat -->
-			<p:panel styleClass="ui-g-6 ui-md-6 ui-lg-6">
+			<p:panel styleClass="ui-g-12 ui-md-12 ui-lg-6">
 				<f:facet name="header">
 					<i class="pi pi-send"></i>
 	             	Festivos de un país
@@ -24,13 +24,13 @@
 				</f:facet>
 	              
 				<div class="ui-g ui-fluid">
-					<div class="ui-g-6">
+					<div class="field ui-g-12 ui-md-12 ui-lg-6">
 						<p:outputLabel for="year" value="Año"/>
                 		<p:inputNumber id="year" value="#{testListFestivosBean.year}" minValue="1" decimalPlaces="0">
                 			<f:validateBean for="year"/>
                 		</p:inputNumber>
 					</div>
-					<div class="ui-g-6">
+					<div class="field ui-g-12 ui-md-12 ui-lg-6">
 						<p:outputLabel for="pais" value="País"/>
 						<p:inputText id="pais" value="#{testListFestivosBean.pais}">
 							<f:validateBean for="pais"/>
@@ -41,7 +41,7 @@
 			</p:panel>
 			
 			<!-- Respuesta del chat -->
-			<p:panel id="respuesta" styleClass="ui-g-6 ui-md-6 ui-lg-6">
+			<p:panel id="respuesta" styleClass="ui-g-12 ui-md-12 ui-lg-6">
 				<f:facet name="header">
 					<i class="pi pi-send"></i>
 	                  <h:outputText value="#{testListFestivosBean.festivosPais.pais}"/>
