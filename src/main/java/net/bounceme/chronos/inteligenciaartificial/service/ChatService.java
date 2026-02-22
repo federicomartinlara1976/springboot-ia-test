@@ -4,7 +4,7 @@ import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 
 public interface ChatService {
 	
-	String generation(String userInput);
+	String generation(String userInput, String chatModel);
 	
 	ChatResponseMetadata getChatResponseMetadata();
 }

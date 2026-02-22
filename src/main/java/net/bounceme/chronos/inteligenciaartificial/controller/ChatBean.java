@@ -40,7 +40,7 @@ public class ChatBean implements Serializable {
 	@ShowTime
 	@SneakyThrows
 	public void enviar() {
-		String respuesta = chatService.generation(mensaje);
+		String respuesta = chatService.generation(mensaje, "deepseekChatModel");
 		htmlContent = JsfHelper.markdown2Html(respuesta);
 		chatResponseMetadata = chatService.getChatResponseMetadata();
 	}
