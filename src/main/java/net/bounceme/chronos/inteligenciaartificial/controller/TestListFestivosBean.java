@@ -15,7 +15,7 @@ import lombok.SneakyThrows;
 import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.ShowTime;
 import net.bounceme.chronos.inteligenciaartificial.model.Festivo;
 import net.bounceme.chronos.inteligenciaartificial.model.FestivosPais;
-import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
+import net.bounceme.chronos.inteligenciaartificial.service.FestivosService;
 
 @Component
 @Named
@@ -42,15 +42,15 @@ public class TestListFestivosBean implements Serializable {
     @Min(value = 1, message = "El año debe ser mayor que 0")
 	private Integer year;
 	
-	private transient ChatService chatService;
+	private transient FestivosService festivosService;
 
-	public TestListFestivosBean(ChatService chatService) {
-		this.chatService = chatService;
+	public TestListFestivosBean(FestivosService festivosService) {
+		this.festivosService = festivosService;
 	}
 	
 	@ShowTime
 	@SneakyThrows
 	public void request() {
-		festivosPais = chatService.getFestivosPais(pais, year);
+		festivosPais = festivosService.getFestivosPais(pais, year);
 	}
 }
