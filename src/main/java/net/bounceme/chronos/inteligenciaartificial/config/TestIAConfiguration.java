@@ -12,13 +12,13 @@ import org.springframework.context.annotation.Primary;
 @Configuration
 public class TestIAConfiguration {
 
-	@Bean(name="mistralAiChatModel")
+	@Bean
 	@Primary
     ChatClient mistralAiChatClient(MistralAiChatModel chatModel) {
         return buildChatClient(chatModel);
     }
 
-    @Bean(name="deepseekChatModel")
+    @Bean
     ChatClient deepseekChatClient(DeepSeekChatModel chatModel) {
         return buildChatClient(chatModel);
     }

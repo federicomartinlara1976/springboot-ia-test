@@ -13,7 +13,6 @@ import lombok.SneakyThrows;
 import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.ShowTime;
 import net.bounceme.chronos.inteligenciaartificial.model.ActorFilms;
 import net.bounceme.chronos.inteligenciaartificial.service.ActorFilmsService;
-import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
 
 @Component
 @Named
