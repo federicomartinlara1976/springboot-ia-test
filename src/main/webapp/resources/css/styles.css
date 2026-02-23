@@ -216,7 +216,7 @@ footer span {
 	background-color: #bbc7cd;
 }
 
-.logo.text-left {
+.logo.text {
 	color: dimgrey;
 }
 
@@ -364,4 +364,8 @@ footer span {
 
 .ui-menubar-start img {
 	float: left;
+}
+
+.ui-panel-actions > label, .ui-panel-actions > div {
+	margin-right: 1em;
 }

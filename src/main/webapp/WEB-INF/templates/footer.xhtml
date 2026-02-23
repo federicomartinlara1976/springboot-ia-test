@@ -6,13 +6,31 @@
 
 	<div class="layout-footer">
 
-		<div class="logo ui-g-6 ui-md-6 ui-lg-6 text-left">
-			<h:outputText value="#{res['app.copyright']}" escape="true" />
-			<br/>
-			Iconos diseñados por <a href="https://www.flaticon.es/autores/vectors-market" title="Vectors Market">Vectors Market</a> from <a href="https://www.flaticon.es/" title="Flaticon"> www.flaticon.es</a>
+		<div class="ui-g-12 ui-md-4 ui-lg-4">
+			<span class="logo text first">
+				Iconos diseñados por <a href="https://www.flaticon.es/autores/vectors-market" title="Vectors Market">Vectors Market</a> from <a href="https://www.flaticon.es/" title="Flaticon"> www.flaticon.es</a>
+			</span>
+		</div>
+		
+		<div class="ui-g-12 ui-md-4 ui-lg-4">
+			<div class="ui-g-12">
+				<span class="logo first text"><h:outputText value="Powered by" escape="true" /></span>
+			</div>
+			<div class="ui-g-3">
+				<p:graphicImage styleClass="icon48 first" title="Mistral AI"
+					value="#{resource['images/mistral-color.png']}"/>
+			</div>
+			<div class="ui-g-3">
+				<p:graphicImage styleClass="icon48 first" title="DeepSeek"
+					value="#{resource['images/deepseek-color.png']}"/>
+			</div>
+			<div class="ui-g-3">
+			</div>
+			<div class="ui-g-3">
+			</div>
 		</div>
 
-		<div class="ui-g-6 ui-md-6 ui-lg-6 text-right">
+		<div class="ui-g-12 ui-md-4 ui-lg-4 text-right">
 			<h:outputLink value="https://github.com/federicomartinlara1976/jboss-eap-example"
 				target="_blank">
 				<p:graphicImage styleClass="icon"

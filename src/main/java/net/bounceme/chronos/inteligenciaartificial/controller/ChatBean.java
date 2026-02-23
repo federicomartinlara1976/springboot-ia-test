@@ -17,7 +17,7 @@ import net.bounceme.chronos.inteligenciaartificial.util.JsfHelper;
 @Component
 @Named
 @ViewScoped
-public class ChatBean implements Serializable {
+public class ChatBean extends ChatSelectorBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,7 +40,7 @@ public class ChatBean implements Serializable {
 	@ShowTime
 	@SneakyThrows
 	public void enviar() {
-		String respuesta = chatService.generation(mensaje);
+		String respuesta = chatService.generation(mensaje, chatClient);
 		htmlContent = JsfHelper.markdown2Html(respuesta);
 		chatResponseMetadata = chatService.getChatResponseMetadata();
 	}

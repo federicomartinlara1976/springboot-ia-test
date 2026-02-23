@@ -12,12 +12,12 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.ShowTime;
 import net.bounceme.chronos.inteligenciaartificial.model.ActorFilms;
-import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
+import net.bounceme.chronos.inteligenciaartificial.service.ActorFilmsService;
 
 @Component
 @Named
 @ViewScoped
-public class TestListaEntidadesBean implements Serializable {
+public class TestListaEntidadesBean extends ChatSelectorBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,15 +31,15 @@ public class TestListaEntidadesBean implements Serializable {
 	@Getter
 	private List<ActorFilms> listActorFilms;
 	
-	private transient ChatService chatService;
+	private transient ActorFilmsService actorFilmsService;
 
-	public TestListaEntidadesBean(ChatService chatService) {
-		this.chatService = chatService;
+	public TestListaEntidadesBean(ActorFilmsService actorFilmsService) {
+		this.actorFilmsService = actorFilmsService;
 	}
 
 	@ShowTime
 	@SneakyThrows
 	public void request() {
-		listActorFilms = chatService.getListActorFilms(mensaje);
+		listActorFilms = actorFilmsService.getListActorFilms(mensaje, chatClient);
 	}
 }

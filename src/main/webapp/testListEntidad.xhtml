@@ -13,14 +13,25 @@
 			<p:panel styleClass="ui-g-12 ui-md-12 ui-lg-6">
 				<f:facet name="header">
 					<i class="pi pi-send"></i>
-	             	Pregunta a Mistral
+	             	Pregunta
 	       		</f:facet>
 	       		
-	       		<f:facet name="actions">
-		            <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" title="Recargar"
-		            	actionListener="#{testListaEntidadesBean.request}" update="respuesta">
-		           		<h:outputText styleClass="ui-icon pi pi-replay"/>
-		            </p:commandLink>		      
+				<f:facet name="actions">
+	         		<p:outputLabel for="models" >Modelos</p:outputLabel>
+					<p:selectOneMenu id="models"
+						value="#{chatBean.selectedChatModel}">
+
+						<f:selectItems value="#{chatBean.options}"/>
+
+						<p:ajax event="valueChange"
+							listener="#{chatBean.modelChanged}"/>
+
+					</p:selectOneMenu>
+		            
+		            <p:commandButton icon="pi pi-replay" update="respuesta"
+		            	actionListener="#{testListaEntidadesBean.request}"
+						styleClass="edit-button rounded-button ui-button-success"/>
+		            
 				</f:facet>
 	              
 				<div class="ui-g ui-fluid">
