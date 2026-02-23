@@ -15,7 +15,6 @@ spec:
   selector:
     matchLabels:
       app: springboot-ia-test
-      version: 1.0.12
   template:
     metadata:
       labels:
