@@ -13,7 +13,7 @@ import net.bounceme.chronos.inteligenciaartificial.service.ChatServiceSelector;
 
 public class ChatSelectorBean {
 	
-	protected transient ChatClient chatClient;
+	protected ChatClient chatClient;
 	
 	@Autowired
 	private ChatClient mistralAiChatClient;
