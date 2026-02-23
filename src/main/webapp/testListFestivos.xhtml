@@ -17,10 +17,21 @@
 	       		</f:facet>
 	       		
 	       		<f:facet name="actions">
-		            <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" title="Recargar"
-		            	actionListener="#{testListFestivosBean.request}" process="@form" update="respuesta">
-		           		<h:outputText styleClass="ui-icon pi pi-replay"/>
-		            </p:commandLink>		      
+	         		<p:outputLabel for="models" >Modelos</p:outputLabel>
+					<p:selectOneMenu id="models"
+						value="#{chatBean.selectedChatModel}">
+
+						<f:selectItems value="#{chatBean.options}"/>
+
+						<p:ajax event="valueChange"
+							listener="#{chatBean.modelChanged}"/>
+
+					</p:selectOneMenu>
+		            
+		            <p:commandButton icon="pi pi-replay" process="@form" update="respuesta"
+		            	actionListener="#{testListFestivosBean.request}"
+						styleClass="edit-button rounded-button ui-button-success"/>
+		            
 				</f:facet>
 	              
 				<div class="ui-g ui-fluid">

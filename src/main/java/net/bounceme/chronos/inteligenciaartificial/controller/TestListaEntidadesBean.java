@@ -17,7 +17,7 @@ import net.bounceme.chronos.inteligenciaartificial.service.ActorFilmsService;
 @Component
 @Named
 @ViewScoped
-public class TestListaEntidadesBean implements Serializable {
+public class TestListaEntidadesBean extends ChatSelectorBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,6 +40,6 @@ public class TestListaEntidadesBean implements Serializable {
 	@ShowTime
 	@SneakyThrows
 	public void request() {
-		listActorFilms = actorFilmsService.getListActorFilms(mensaje);
+		listActorFilms = actorFilmsService.getListActorFilms(mensaje, chatClient);
 	}
 }

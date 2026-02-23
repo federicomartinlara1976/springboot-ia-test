@@ -13,10 +13,7 @@ import net.bounceme.chronos.inteligenciaartificial.service.FestivosService;
 @Slf4j
 public class FestivosServiceImpl implements FestivosService {
 	
-	private final ChatClient chatClient;
-
-	public FestivosServiceImpl(ChatClient chatClient) {
-		this.chatClient = chatClient;
+	public FestivosServiceImpl() {
 		festivosPaisOutputConverter = new BeanOutputConverter<>(FestivosPais.class);
 	}
 
@@ -24,7 +21,7 @@ public class FestivosServiceImpl implements FestivosService {
 	
 	@Override
 	@LogTime
-	public FestivosPais getFestivosPais(String pais, Integer year) {
+	public FestivosPais getFestivosPais(String pais, Integer year, ChatClient chatClient) {
 		String template = """
 				  Generar los festivos nacionales del país {pais} para el año {year}.
 				  {format}

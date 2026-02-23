@@ -16,31 +16,28 @@ import net.bounceme.chronos.inteligenciaartificial.service.ActorFilmsService;
 @Slf4j
 public class ActorFilmsServiceImpl implements ActorFilmsService {
 	
-	private final ChatClient chatClient;
-	
 	private BeanOutputConverter<ActorFilms> actorFilmsOutputConverter;
 
-	public ActorFilmsServiceImpl(ChatClient chatClient) {
-		this.chatClient = chatClient;
+	public ActorFilmsServiceImpl() {
 		actorFilmsOutputConverter = new BeanOutputConverter<>(ActorFilms.class);
 	}
 
 	@Override
 	@LogTime
-	public ActorFilms getActorFilms(String message) {
+	public ActorFilms getActorFilms(String message, ChatClient chatClient) {
 		return chatClient.prompt().user(message).call().entity(ActorFilms.class);
 	}
 
 	@Override
 	@LogTime
-	public List<ActorFilms> getListActorFilms(String message) {
+	public List<ActorFilms> getListActorFilms(String message, ChatClient chatClient) {
 		return chatClient.prompt().user(message).call().entity(new ParameterizedTypeReference<List<ActorFilms>>() {
 		});
 	}
 
 	@Override
 	@LogTime
-	public ActorFilms getActorFilmsFormatted(String actor) {
+	public ActorFilms getActorFilmsFormatted(String actor, ChatClient chatClient) {
 		String template = """
 				  Generate the filmography for {actor}.
 				  {format}

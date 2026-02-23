@@ -20,7 +20,7 @@ import net.bounceme.chronos.inteligenciaartificial.service.FestivosService;
 @Component
 @Named
 @ViewScoped
-public class TestListFestivosBean implements Serializable {
+public class TestListFestivosBean extends ChatSelectorBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -51,6 +51,6 @@ public class TestListFestivosBean implements Serializable {
 	@ShowTime
 	@SneakyThrows
 	public void request() {
-		festivosPais = festivosService.getFestivosPais(pais, year);
+		festivosPais = festivosService.getFestivosPais(pais, year, chatClient);
 	}
 }
