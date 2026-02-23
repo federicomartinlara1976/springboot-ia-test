@@ -365,3 +365,7 @@ footer span {
 .ui-menubar-start img {
 	float: left;
 }
+
+.ui-panel-actions > label, .ui-panel-actions > div {
+	margin-right: 1em;
+}
