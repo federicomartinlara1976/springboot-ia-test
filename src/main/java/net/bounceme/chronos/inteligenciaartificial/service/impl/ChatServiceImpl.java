@@ -13,14 +13,14 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.LogTime;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
-import net.bounceme.chronos.inteligenciaartificial.service.ChatServiceFacade;
+import net.bounceme.chronos.inteligenciaartificial.service.ChatServiceSelector;
 
 @Service
 @Slf4j
 public class ChatServiceImpl implements ChatService {
 
 	@Autowired
-	private ChatServiceFacade chatServiceFacade;
+	private ChatServiceSelector chatServiceFacade;
 	
 	private ChatClient chatClient;
 

@@ -4,10 +4,10 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import net.bounceme.chronos.inteligenciaartificial.service.ChatServiceFacade;
+import net.bounceme.chronos.inteligenciaartificial.service.ChatServiceSelector;
 
 @Service
-public class ChatServiceFacadeImpl implements ChatServiceFacade {
+public class ChatServiceSelectorImpl implements ChatServiceSelector {
 
 	@Autowired
 	private ChatClient mistralAiChatModel;
