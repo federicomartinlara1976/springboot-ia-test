@@ -17,12 +17,18 @@
 				<span class="logo first text"><h:outputText value="Powered by" escape="true" /></span>
 			</div>
 			<div class="ui-g-3">
-				<p:graphicImage styleClass="icon48 first" title="Mistral AI"
-					value="#{resource['images/mistral-color.png']}"/>
+				<h:outputLink value="https://mistral.ai/"
+					target="_blank">
+					<p:graphicImage styleClass="icon48 first" title="Mistral AI"
+						value="#{resource['images/mistral-color.png']}"/>
+				</h:outputLink>
 			</div>
 			<div class="ui-g-3">
-				<p:graphicImage styleClass="icon48 first" title="DeepSeek"
-					value="#{resource['images/deepseek-color.png']}"/>
+				<h:outputLink value="https://www.deepseek.com/"
+					target="_blank">
+					<p:graphicImage styleClass="icon48 first" title="DeepSeek"
+						value="#{resource['images/deepseek-color.png']}"/>
+				</h:outputLink>
 			</div>
 			<div class="ui-g-3">
 			</div>
@@ -31,7 +37,7 @@
 		</div>
 
 		<div class="ui-g-12 ui-md-4 ui-lg-4 text-right">
-			<h:outputLink value="https://github.com/federicomartinlara1976/jboss-eap-example"
+			<h:outputLink value="https://github.com/federicomartinlara1976/springboot-ia-test"
 				target="_blank">
 				<p:graphicImage styleClass="icon"
 					value="#{resource['images/github-128.png']}"/>
