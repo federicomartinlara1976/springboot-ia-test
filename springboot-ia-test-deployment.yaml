@@ -1,3 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: springboot-ia-test
+---
 ###################
 # DEPLOYMENT
 ###################
@@ -5,6 +10,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: springboot-ia-test
+  namespace: springboot-ia-test
 spec:
   replicas: 1
   strategy:
@@ -34,6 +40,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: springboot-ia-test-svc
+  namespace: springboot-ia-test
   labels:
     app: springboot-ia-test
 spec:
