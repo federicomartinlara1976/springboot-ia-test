@@ -6,32 +6,55 @@
 
 	<div class="layout-footer">
 
-		<div class="ui-g-12 ui-md-4 ui-lg-4">
+		<div class="ui-g-12 ui-md-6 ui-lg-4">
 			<span class="logo text first">
 				Iconos diseñados por <a href="https://www.flaticon.es/autores/vectors-market" title="Vectors Market">Vectors Market</a> from <a href="https://www.flaticon.es/" title="Flaticon"> www.flaticon.es</a>
 			</span>
 		</div>
 		
-		<div class="ui-g-12 ui-md-4 ui-lg-4">
+		<div class="ui-g-12 ui-md-6 ui-lg-4">
 			<div class="ui-g-12">
 				<span class="logo first text"><h:outputText value="Powered by" escape="true" /></span>
 			</div>
 			<div class="ui-g-3">
-				<p:graphicImage styleClass="icon48 first" title="Mistral AI"
-					value="#{resource['images/mistral-color.png']}"/>
+				<h:outputLink value="https://mistral.ai/"
+					target="_blank">
+					<p:graphicImage styleClass="icon64 first" title="Mistral AI"
+						value="#{resource['images/mistral-color.png']}"/>
+				</h:outputLink>
 			</div>
 			<div class="ui-g-3">
-				<p:graphicImage styleClass="icon48 first" title="DeepSeek"
-					value="#{resource['images/deepseek-color.png']}"/>
+				<h:outputLink value="https://www.deepseek.com/"
+					target="_blank">
+					<p:graphicImage styleClass="icon64 first" title="DeepSeek"
+						value="#{resource['images/deepseek-color.png']}"/>
+				</h:outputLink>
 			</div>
 			<div class="ui-g-3">
+				<h:outputLink value="https://www.primefaces.org/"
+					target="_blank">
+					<p:graphicImage styleClass="icon64w first" title="Primefaces"
+						value="#{resource['images/primefaces.png']}"/>
+				</h:outputLink>
 			</div>
 			<div class="ui-g-3">
+				<h:outputLink value="https://spring.io/ai"
+					target="_blank">
+					<p:graphicImage styleClass="icon64w first" title="Spring AI"
+						value="#{resource['images/spring-ai.png']}"/>
+				</h:outputLink>
+			</div>
+			<div class="ui-g-3">
+				<h:outputLink value="https://tomcat.apache.org"
+					target="_blank">
+					<p:graphicImage styleClass="icon64w first" title="Tomcat"
+						value="#{resource['images/tomcat.png']}"/>
+				</h:outputLink>
 			</div>
 		</div>
 
-		<div class="ui-g-12 ui-md-4 ui-lg-4 text-right">
-			<h:outputLink value="https://github.com/federicomartinlara1976/jboss-eap-example"
+		<div class="ui-g-12 ui-md-6 ui-lg-4 text-right">
+			<h:outputLink value="https://github.com/federicomartinlara1976/springboot-ia-test"
 				target="_blank">
 				<p:graphicImage styleClass="icon"
 					value="#{resource['images/github-128.png']}"/>

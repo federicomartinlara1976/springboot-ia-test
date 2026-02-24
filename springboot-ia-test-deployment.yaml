@@ -15,7 +15,6 @@ spec:
   selector:
     matchLabels:
       app: springboot-ia-test
-      version: 1.0.12
   template:
     metadata:
       labels:
@@ -23,7 +22,7 @@ spec:
     spec:
       containers:
       - name: springboot-ia-test
-        image: federicomartinlara1976/springboot-ia-test:1.0.12  # Cambia esta etiqueta
+        image: federicomartinlara1976/springboot-ia-test:1.0.13  # Cambia esta etiqueta
         imagePullPolicy: Always  # Siempre extraer la imagen más reciente
         ports:
         - containerPort: 8084
