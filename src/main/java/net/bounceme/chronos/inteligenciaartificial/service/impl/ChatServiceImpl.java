@@ -37,10 +37,10 @@ public class ChatServiceImpl implements ChatService {
 	}
 	
 	// Este método NO es bloqueante. Devuelve un Flux (un stream reactivo).
-    public Flux<String> generationStream(String userInput, ChatClient chatClient) {
+    public Flux<ChatResponse> generationStream(String userInput, ChatClient chatClient) {
         return chatClient.prompt()
                 .user(userInput)
                 .stream()
-                .content(); // <--- ESTO DEVUELVE UN FLUX, no un String
+                .chatResponse(); // <--- ESTO DEVUELVE UN FLUX de chatResponse
     }
 }

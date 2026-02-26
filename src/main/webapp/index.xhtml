@@ -91,7 +91,8 @@
 			<!-- Poll que cada 1 segundo actualiza el panel de respuesta -->
     		<p:poll interval="1" update="respuesta,info-content,messages" 
             	listener="#{chatBean.checkUpdates}" 
-            	autoStart="true" />
+            	autoStart="true" 
+            	active="#{chatBean.pollActive}" />
             	
 		</p:outputPanel>
 		
