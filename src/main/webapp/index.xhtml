@@ -48,7 +48,7 @@
 
 					</p:selectOneMenu>
 		            
-		            <p:commandButton icon="pi pi-send" process="mensaje @this" update="respuesta,info-content"
+		            <p:commandButton icon="pi pi-send" process="mensaje @this" update="respuesta"
 		            	actionListener="#{chatBean.enviar}"
 						styleClass="edit-button rounded-button ui-button-success"/>
 		            
@@ -87,6 +87,12 @@
 				</div>
 	
 			</p:panel>
+			
+			<!-- Poll que cada 1 segundo actualiza el panel de respuesta -->
+    		<p:poll interval="1" update="respuesta,info-content,messages" 
+            	listener="#{chatBean.checkUpdates}" 
+            	autoStart="true" />
+            	
 		</p:outputPanel>
 		
 		<p:dialog id="infoDialog" header="Response info" showEffect="fade"
