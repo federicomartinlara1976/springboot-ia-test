@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.LogTime;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
+import reactor.core.publisher.Flux;
 
 @Service
 @Slf4j
@@ -34,4 +35,12 @@ public class ChatServiceImpl implements ChatService {
 
 		return StringUtils.EMPTY;
 	}
+	
+	// Este método NO es bloqueante. Devuelve un Flux (un stream reactivo).
+    public Flux<ChatResponse> generationStream(String userInput, ChatClient chatClient) {
+        return chatClient.prompt()
+                .user(userInput)
+                .stream()
+                .chatResponse(); // <--- ESTO DEVUELVE UN FLUX de chatResponse
+    }
 }

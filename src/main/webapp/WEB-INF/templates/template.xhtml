@@ -82,19 +82,5 @@
 		</p:outputPanel>
 	</p:sidebar>
 	
-	<!-- BlockUI de espera -->
-    <p:blockUI widgetVar="loadingIndicator" 
-               block="@(body)"  
-               styleClass="global-loader">
-        <div class="loading-content">
-            <p:graphicImage value="#{resource['images/ajaxloading.gif']}"/>
-            <p>Cargando...</p>
-        </div>
-    </p:blockUI>
-    
-    <!-- Ajax Status -->
-    <p:ajaxStatus onstart="PF('loadingIndicator').show()"
-                  onsuccess="PF('loadingIndicator').hide()"
-                  onerror="PF('loadingIndicator').hide()" />
 </h:body>
 </html>

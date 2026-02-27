@@ -381,3 +381,7 @@ footer span {
 .ui-panel-actions > label, .ui-panel-actions > div {
 	margin-right: 1em;
 }
+
+.overflow {
+	overflow: auto;
+}
