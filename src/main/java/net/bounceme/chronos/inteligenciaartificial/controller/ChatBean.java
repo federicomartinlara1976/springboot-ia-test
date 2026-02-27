@@ -3,7 +3,6 @@ package net.bounceme.chronos.inteligenciaartificial.controller;
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.stereotype.Component;
@@ -41,7 +40,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	
 	private transient ChatService chatService;
 	
-	private volatile String respuesta = StringUtils.EMPTY;
+	private StringBuilder respuesta = new StringBuilder();
 	
 	private transient Disposable subscription; // para poder cancelar si es necesario
 	
@@ -64,7 +63,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
         }
 		
 		// Antes de enviar, limpiar la respuesta
-		respuesta = StringUtils.EMPTY;
+		respuesta.setLength(0);
 		status = "INICIADA";
 		pollActive = true;
         completionMessageShown = false;
@@ -74,8 +73,8 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 				.doOnNext(chatResponse -> {
                     // Este código se ejecuta en el hilo reactivo por cada fragmento
                     String chunk = chatResponse.getResult().getOutput().getText();
-                    respuesta += chunk;
-                    htmlContent = JsfHelper.markdown2Html(respuesta);
+                    respuesta.append(chunk);
+                    htmlContent = JsfHelper.markdown2Html(respuesta.toString());
                     
                     // Guardamos la última respuesta para usarla al final
                     lastChatResponse.set(chatResponse);
@@ -90,8 +89,8 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
                     pollActive = false;
                 })
                 .doOnError(error -> {
-                    respuesta += "\n[Error: " + error.getMessage() + "]";
-                    htmlContent = JsfHelper.markdown2Html(respuesta);
+                    respuesta.append("\n[Error: " + error.getMessage() + "]");
+                    htmlContent = JsfHelper.markdown2Html(respuesta.toString());
                     status = "ERROR";
                     pollActive = false;
                 })
