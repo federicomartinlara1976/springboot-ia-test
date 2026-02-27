@@ -48,6 +48,9 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	
 	private volatile boolean completionMessageShown = false;
 	
+	@Getter
+	private transient Long ellapsedTime;
+	
 	// Para guardar el último ChatResponse y extraer metadatos al final
     private transient AtomicReference<ChatResponse> lastChatResponse = new AtomicReference<>();
 
@@ -57,10 +60,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	
 	@SneakyThrows
 	public void enviar() {
-		// Cancelar suscripción anterior
-        if (subscription != null && !subscription.isDisposed()) {
-            subscription.dispose();
-        }
+		cancelSubscription();
 		
 		// Antes de enviar, limpiar la respuesta
 		respuesta.setLength(0);
@@ -69,6 +69,8 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
         completionMessageShown = false;
         lastChatResponse.set(null);
 		
+        Long startTime = System.currentTimeMillis();
+        
 		subscription = chatService.generationStream(mensaje, chatClient)
 				.doOnNext(chatResponse -> {
                     // Este código se ejecuta en el hilo reactivo por cada fragmento
@@ -87,12 +89,16 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
                     }
                     status = "COMPLETADA";
                     pollActive = false;
+                    
+                    ellapsedTime = System.currentTimeMillis() - startTime;
                 })
                 .doOnError(error -> {
                     respuesta.append("\n[Error: " + error.getMessage() + "]");
                     htmlContent = JsfHelper.markdown2Html(respuesta.toString());
                     status = "ERROR";
                     pollActive = false;
+                    
+                    ellapsedTime = System.currentTimeMillis() - startTime;
                 })
                 .subscribe();
 	}
@@ -102,18 +108,22 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     public void checkUpdates() {
     	if ("COMPLETADA".equals(status) && !completionMessageShown) {
 			completionMessageShown = true;
-        	JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Completada", "Respuesta completada");
+			JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Completada", "Respuesta completada");
         } else if ("ERROR".equals(status) && !completionMessageShown) {
             completionMessageShown = true;
-            JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error en la generación");
+            JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error");
         }
     }
     
     // Opcional: cancelar la suscripción al destruir la vista
     @PreDestroy
     public void cleanup() {
-        if (subscription != null && !subscription.isDisposed()) {
+        cancelSubscription();
+    }
+
+	private void cancelSubscription() {
+		if (subscription != null && !subscription.isDisposed()) {
             subscription.dispose();
         }
-    }
+	}
 }
