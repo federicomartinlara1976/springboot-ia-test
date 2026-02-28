@@ -32,7 +32,7 @@
 		<from-view-id>*</from-view-id>
 		<navigation-case>
 			<from-outcome>testEntidad</from-outcome>
-			<to-view-id>/testEntidad.xhtml</to-view-id>
+			<to-view-id>/tests/testEntidad.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>
@@ -41,7 +41,7 @@
 		<from-view-id>*</from-view-id>
 		<navigation-case>
 			<from-outcome>testListEntidad</from-outcome>
-			<to-view-id>/testListEntidad.xhtml</to-view-id>
+			<to-view-id>/tests/testListEntidad.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>
@@ -50,7 +50,7 @@
 		<from-view-id>*</from-view-id>
 		<navigation-case>
 			<from-outcome>testEntidadFormato</from-outcome>
-			<to-view-id>/testEntidadFormato.xhtml</to-view-id>
+			<to-view-id>/tests/testEntidadFormato.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>
@@ -59,7 +59,7 @@
 		<from-view-id>*</from-view-id>
 		<navigation-case>
 			<from-outcome>testListaFestivos</from-outcome>
-			<to-view-id>/testListFestivos.xhtml</to-view-id>
+			<to-view-id>/tests/testListFestivos.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>
