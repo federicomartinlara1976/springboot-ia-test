@@ -44,7 +44,8 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	
 	private transient Disposable subscription; // para poder cancelar si es necesario
 	
-	private volatile String status = "READY";
+	@Getter
+	private String status;
 	
 	private volatile boolean completionMessageShown = false;
 	
@@ -80,6 +81,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
                     
                     // Guardamos la última respuesta para usarla al final
                     lastChatResponse.set(chatResponse);
+                    status = "RUNNING";
                 })
                 .doOnComplete(() -> {
                     // Al completarse, extraemos los metadatos de la última respuesta

@@ -48,9 +48,10 @@
 
 					</p:selectOneMenu>
 		            
-		            <p:commandButton icon="pi pi-send" process="mensaje @this" update="respuesta"
+		            <p:commandButton id="send" icon="pi pi-send" process="mensaje @this" update="respuesta"
 		            	actionListener="#{chatBean.enviar}"
-						styleClass="edit-button rounded-button ui-button-success"/>
+						styleClass="edit-button rounded-button ui-button-success"
+						disabled="#{chatBean.status eq 'RUNNING'}" />
 		            
 				</f:facet>
 	
@@ -74,6 +75,7 @@
 				<f:facet name="actions">
 		            <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" title="Info"
 		            	rendered="#{not empty chatBean.htmlContent}"
+		            	disabled="#{chatBean.status eq 'RUNNING'}"
 		            	oncomplete="PF('infoDialog').show()">
 		                    <h:outputText styleClass="ui-icon pi pi-info-circle"/>
 		            </p:commandLink>
@@ -87,7 +89,7 @@
 				</div>
 	
 				<!-- Poll que cada 1 segundo actualiza el panel de respuesta -->
-	    		<p:poll interval="1" update="respuesta,info-content,messages" 
+	    		<p:poll interval="1" update="send,respuesta,info-content,messages" 
 	            	listener="#{chatBean.checkUpdates}" 
 	            	autoStart="true" 
 	            	stop="#{not chatBean.pollActive}" />
