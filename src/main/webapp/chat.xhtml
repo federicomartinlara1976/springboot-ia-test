@@ -8,6 +8,21 @@
 
 	<ui:define name="content">
 		<p:outputPanel styleClass="dashboard">
+			<p:outputPanel styleClass="ui-g-12">
+				<p:toolbar id="toolbar">
+					<p:toolbarGroup>
+						<p:commandButton value="Nuevo chat" icon="pi pi-plus"
+							actionListener="#{chatBean.nuevo}" update="toolbar,messages"
+							styleClass="ui-button-success" style="margin-right: .5rem">
+						</p:commandButton>
+						<p:commandButton value="Guardar chat" icon="pi pi-save"
+							oncomplete="PF('saveDialog').show()"
+							styleClass="ui-button-success" style="margin-right: .5rem"
+							disabled="#{empty chatBean.conversationId}">
+						</p:commandButton>
+					</p:toolbarGroup>
+				</p:toolbar>
+			</p:outputPanel>
 			
 			<p:outputPanel styleClass="ui-g-12 ui-md-12 ui-lg-4">
 				<!-- Formulario de envío al chat -->
@@ -148,6 +163,26 @@
 					</div>
 				</div>
 			</p:outputPanel>
+		</p:dialog>
+		
+		<p:dialog id="saveDialog" header="Guardar como" showEffect="fade"
+			modal="true" widgetVar="saveDialog" responsive="true" position="center" appendTo="@(body)">
+			<p:outputPanel id="save-content" class="ui-fluid">
+				<div class="field ui-g-12">
+					<p:outputLabel for="name">Nombre</p:outputLabel>
+					<p:inputText id="name"
+						value="#{chatBean.selectedConversation.nombre}" />
+				</div>
+			</p:outputPanel>
+
+			<f:facet name="footer">
+				<p:commandButton value="Guardar" icon="pi pi-check"
+					actionListener="#{chatBean.guardar}" update="save-content,messages"
+					process="save-content @this"/>
+				<p:commandButton value="Cancelar" icon="pi pi-times"
+					onclick="PF('saveDialog').hide()" class="ui-button-secondary"
+					type="button" />
+			</f:facet>
 		</p:dialog>
 		
 	</ui:define>

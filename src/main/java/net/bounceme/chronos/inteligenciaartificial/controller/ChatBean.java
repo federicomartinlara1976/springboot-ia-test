@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
+import org.primefaces.PrimeFaces;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.ChatMemoryRepository;
 import org.springframework.ai.chat.memory.InMemoryChatMemoryRepository;
@@ -22,24 +23,24 @@ import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.stereotype.Component;
 
+import io.micrometer.common.util.StringUtils;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
-import jakarta.faces.context.ExternalContext;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import net.bounceme.chronos.inteligenciaartificial.model.ChatMessage;
+import net.bounceme.chronos.inteligenciaartificial.model.Conversation;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
-import net.bounceme.chronos.inteligenciaartificial.util.Asserts;
 import net.bounceme.chronos.inteligenciaartificial.util.JsfHelper;
 import reactor.core.Disposable;
 
 @Component
 @Named
-@SessionScoped
+@ViewScoped
 public class ChatBean extends ChatSelectorBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -75,7 +76,12 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     private transient AtomicReference<ChatResponse> lastChatResponse;
     
     private transient ChatMemory chatMemory;
+    
+    @Getter
     private String conversationId;
+    
+    @Getter
+    private Conversation selectedConversation;
 
 	public ChatBean(ChatService chatService) {
 		this.chatService = chatService;
@@ -83,14 +89,6 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	
 	@PostConstruct
 	private void init() {
-		ExternalContext context = JsfHelper.getExternalContext();
-		Asserts.assertNotNull(context);
-		
-		conversationId = context.getSessionId(false);
-		if (Objects.isNull(conversationId)) {
-			conversationId = UUID.randomUUID().toString();
-		}
-		
 		// 1. Crear el repositorio donde se guardan físicamente los mensajes
 	    ChatMemoryRepository repository = new InMemoryChatMemoryRepository(); // ← Sustituye a InMemoryChatMemory
 		
@@ -100,6 +98,20 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	            .build();
 		
 		lastChatResponse = new AtomicReference<>();
+	}
+	
+	public void nuevo() {
+		conversationId = UUID.randomUUID().toString();
+		selectedConversation = Conversation.builder()
+								.conversationId(conversationId)
+								.build();
+		
+		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Nuevo", "Nueva conversación iniciada");
+	}
+	
+	public void guardar() {
+		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Guardado", "Conversación guardada");
+		PrimeFaces.current().executeScript("PF('saveDialog').hide()");
 	}
 	
 	@SneakyThrows
@@ -173,7 +185,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     }
     
     public List<Message> getHistorial() {
-    	if (!Objects.isNull(chatMemory)) {
+    	if (!Objects.isNull(chatMemory) && StringUtils.isNotBlank(conversationId)) {
 	        List<Message> messages = chatMemory.get(conversationId).stream()
 	        		.filter(msg -> MessageType.USER.equals(msg.getMessageType()))
 	                .map(msg -> new ChatMessage(
