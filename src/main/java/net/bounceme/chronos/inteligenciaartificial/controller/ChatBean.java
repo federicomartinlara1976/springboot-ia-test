@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.ChatMemoryRepository;
@@ -28,6 +29,7 @@ import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import net.bounceme.chronos.inteligenciaartificial.model.ChatMessage;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
 import net.bounceme.chronos.inteligenciaartificial.util.Asserts;
 import net.bounceme.chronos.inteligenciaartificial.util.JsfHelper;
@@ -164,6 +166,15 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
             completionMessageShown = true;
             JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error");
         }
+    }
+    
+    public List<Message> getHistorial() {
+        return chatMemory.get(conversationId).stream()
+                .map(msg -> new ChatMessage(
+                    msg.getMessageType(), 
+                    msg.getText()
+                ))
+                .collect(Collectors.toList());
     }
     
     // Opcional: cancelar la suscripción al destruir la vista
