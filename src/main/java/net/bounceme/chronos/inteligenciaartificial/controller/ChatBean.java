@@ -2,6 +2,7 @@ package net.bounceme.chronos.inteligenciaartificial.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -14,6 +15,7 @@ import org.springframework.ai.chat.memory.InMemoryChatMemoryRepository;
 import org.springframework.ai.chat.memory.MessageWindowChatMemory;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.Message;
+import org.springframework.ai.chat.messages.MessageType;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -70,7 +72,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	private transient Long ellapsedTime;
 	
 	// Para guardar el último ChatResponse y extraer metadatos al final
-    private transient AtomicReference<ChatResponse> lastChatResponse = new AtomicReference<>();
+    private transient AtomicReference<ChatResponse> lastChatResponse;
     
     private transient ChatMemory chatMemory;
     private String conversationId;
@@ -96,6 +98,8 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	            .chatMemoryRepository(repository)
 	            .maxMessages(20)  // Mantiene los últimos 20 mensajes en contexto
 	            .build();
+		
+		lastChatResponse = new AtomicReference<>();
 	}
 	
 	@SneakyThrows
@@ -169,12 +173,19 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     }
     
     public List<Message> getHistorial() {
-        return chatMemory.get(conversationId).stream()
-                .map(msg -> new ChatMessage(
-                    msg.getMessageType(), 
-                    msg.getText()
-                ))
-                .collect(Collectors.toList());
+    	if (!Objects.isNull(chatMemory)) {
+	        List<Message> messages = chatMemory.get(conversationId).stream()
+	        		.filter(msg -> MessageType.USER.equals(msg.getMessageType()))
+	                .map(msg -> new ChatMessage(
+	                    msg.getMessageType(), 
+	                    msg.getText()
+	                ))
+	                .collect(Collectors.toList());
+	        
+	        return messages;
+    	}
+    	
+    	return Collections.emptyList();
     }
     
     // Opcional: cancelar la suscripción al destruir la vista

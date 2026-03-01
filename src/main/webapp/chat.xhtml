@@ -9,72 +9,102 @@
 	<ui:define name="content">
 		<p:outputPanel styleClass="dashboard">
 			
-			<!-- Formulario de envío al chat -->
-			<p:panel styleClass="ui-g-12 ui-md-12 ui-lg-4">
-				<f:facet name="header">
-					<i class="pi pi-send"></i>
-	             	Pregunta
-	       		</f:facet>
-	              
-	         	<f:facet name="actions">
-	         		<p:outputLabel for="models" >Modelos</p:outputLabel>
-					<p:selectOneMenu id="models"
-						value="#{chatBean.selectedChatModel}">
-
-						<f:selectItems value="#{chatBean.options}"/>
-
-						<p:ajax event="valueChange"
-							listener="#{chatBean.modelChanged}"/>
-
-					</p:selectOneMenu>
-		            
-		            <p:commandButton id="send" icon="pi pi-send" process="mensaje @this" update="respuesta"
-		            	actionListener="#{chatBean.enviar}"
-						styleClass="edit-button rounded-button ui-button-success"
-						disabled="#{chatBean.status eq 'RUNNING'}" />
-		            
-				</f:facet>
+			<p:outputPanel styleClass="ui-g-12 ui-md-12 ui-lg-4">
+				<!-- Formulario de envío al chat -->
+				<p:panel styleClass="ui-g-12 ui-md-12 ui-lg-12">
+					<f:facet name="header">
+						<i class="pi pi-send"></i>
+		             	Pregunta
+		       		</f:facet>
+		              
+		         	<f:facet name="actions">
+		         		<p:outputLabel for="models" >Modelos</p:outputLabel>
+						<p:selectOneMenu id="models"
+							value="#{chatBean.selectedChatModel}">
 	
-				<div class="ui-g ui-fluid">
-					<div class="ui-g-12">
-						<p:inputTextarea id="mensaje" value="#{chatBean.mensaje}"
-							placeholder="Escribe el mensaje..." 
-							rows="10" cols="50" widgetVar="mensajeWidget" />
+							<f:selectItems value="#{chatBean.options}"/>
+	
+							<p:ajax event="valueChange"
+								listener="#{chatBean.modelChanged}"/>
+	
+						</p:selectOneMenu>
+			            
+			            <p:commandButton id="send" icon="pi pi-send" process="mensaje @this" update="respuesta"
+			            	actionListener="#{chatBean.enviar}"
+							styleClass="edit-button rounded-button ui-button-success"
+							disabled="#{chatBean.status eq 'RUNNING'}" />
+			            
+					</f:facet>
+		
+					<div class="ui-g ui-fluid">
+						<div class="ui-g-12">
+							<p:inputTextarea id="mensaje" value="#{chatBean.mensaje}"
+								placeholder="Escribe el mensaje..." 
+								rows="10" cols="50" widgetVar="mensajeWidget" />
+						</div>
 					</div>
-				</div>
-	
-			</p:panel>
+		
+				</p:panel>
+				
+				<!-- Historial de la conversación -->
+				<p:panel id="historial" styleClass="ui-g-12 ui-md-12 ui-lg-12">
+					<f:facet name="header">
+						<i class="pi pi-list-check"></i>
+		             	Historial
+		       		</f:facet>
+		
+					<div class="ui-g ui-fluid">
+						<p:dataView var="message" value="#{chatBean.historial}" rows="5" paginator="true"
+		                    rowsPerPageTemplate="5,10,15" paginatorPosition="top"
+		                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		                    gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+
+				            <p:dataViewListItem>
+				                <div class="product-list-item">
+				                    <div class="product-list-detail">
+				                        <div class="product-name">#{message.text}</div>
+				                    </div>
+				                </div>
+				            </p:dataViewListItem>
+				        </p:dataView>	
+					</div>
+		
+				</p:panel>
 			
-			<!-- Respuesta del chat -->
-			<p:panel id="respuesta" styleClass="ui-g-12 ui-md-12 ui-lg-8">
-				<f:facet name="header">
-					<i class="pi pi-send"></i>
-	                  Respuesta
-	         	</f:facet>
-	
-				<f:facet name="actions">
-		            <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" title="Info"
-		            	rendered="#{not empty chatBean.htmlContent}"
-		            	disabled="#{chatBean.status eq 'RUNNING'}"
-		            	oncomplete="PF('infoDialog').show()">
-		                    <h:outputText styleClass="ui-icon pi pi-info-circle"/>
-		            </p:commandLink>
-		            
-				</f:facet>
-	
-				<div class="ui-g ui-fluid">
-					<div class="ui-g-12 overflow" style="height:450px;">
-        				<h:outputText value="#{chatBean.htmlContent}" escape="false" />
+			</p:outputPanel>
+			
+			<p:outputPanel styleClass="ui-g-12 ui-md-12 ui-lg-8">
+				<!-- Respuesta del chat -->
+				<p:panel id="respuesta" styleClass="ui-g-12 ui-md-12 ui-lg-12">
+					<f:facet name="header">
+						<i class="pi pi-send"></i>
+		                  Respuesta
+		         	</f:facet>
+		
+					<f:facet name="actions">
+			            <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" title="Info"
+			            	rendered="#{not empty chatBean.htmlContent}"
+			            	disabled="#{chatBean.status eq 'RUNNING'}"
+			            	oncomplete="PF('infoDialog').show()">
+			                    <h:outputText styleClass="ui-icon pi pi-info-circle"/>
+			            </p:commandLink>
+			            
+					</f:facet>
+		
+					<div class="ui-g ui-fluid">
+						<div class="ui-g-12 overflow" style="height:450px;">
+	        				<h:outputText value="#{chatBean.htmlContent}" escape="false" />
+						</div>
 					</div>
-				</div>
-	
-				<!-- Poll que cada 1 segundo actualiza el panel de respuesta -->
-	    		<p:poll interval="1" update="send,respuesta,info-content,messages" 
-	            	listener="#{chatBean.checkUpdates}" 
-	            	autoStart="true" 
-	            	stop="#{not chatBean.pollActive}" />
-	
-			</p:panel>
+		
+					<!-- Poll que cada 1 segundo actualiza el panel de respuesta -->
+		    		<p:poll interval="1" update="send,respuesta,info-content,messages,historial" 
+		            	listener="#{chatBean.checkUpdates}" 
+		            	autoStart="true" 
+		            	stop="#{not chatBean.pollActive}" />
+		
+				</p:panel>
+			</p:outputPanel>
             	
 		</p:outputPanel>
 		
