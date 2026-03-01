@@ -1,26 +1,41 @@
 package net.bounceme.chronos.inteligenciaartificial.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.ai.chat.memory.ChatMemoryRepository;
+import org.springframework.ai.chat.memory.InMemoryChatMemoryRepository;
+import org.springframework.ai.chat.memory.MessageWindowChatMemory;
+import org.springframework.ai.chat.messages.AssistantMessage;
+import org.springframework.ai.chat.messages.Message;
+import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.stereotype.Component;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
-import jakarta.faces.view.ViewScoped;
+import jakarta.faces.context.ExternalContext;
 import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
+import net.bounceme.chronos.inteligenciaartificial.util.Asserts;
 import net.bounceme.chronos.inteligenciaartificial.util.JsfHelper;
 import reactor.core.Disposable;
 
 @Component
 @Named
-@ViewScoped
+@SessionScoped
 public class ChatBean extends ChatSelectorBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -54,9 +69,31 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	
 	// Para guardar el último ChatResponse y extraer metadatos al final
     private transient AtomicReference<ChatResponse> lastChatResponse = new AtomicReference<>();
+    
+    private transient ChatMemory chatMemory;
+    private String conversationId;
 
 	public ChatBean(ChatService chatService) {
 		this.chatService = chatService;
+	}
+	
+	@PostConstruct
+	private void init() {
+		ExternalContext context = JsfHelper.getExternalContext();
+		Asserts.assertNotNull(context);
+		
+		conversationId = context.getSessionId(false);
+		if (Objects.isNull(conversationId)) {
+			conversationId = UUID.randomUUID().toString();
+		}
+		
+		// 1. Crear el repositorio donde se guardan físicamente los mensajes
+	    ChatMemoryRepository repository = new InMemoryChatMemoryRepository(); // ← Sustituye a InMemoryChatMemory
+		
+		chatMemory = MessageWindowChatMemory.builder()  // ← Sustituye a MessageChatMemoryChatHistory
+	            .chatMemoryRepository(repository)
+	            .maxMessages(20)  // Mantiene los últimos 20 mensajes en contexto
+	            .build();
 	}
 	
 	@SneakyThrows
@@ -69,10 +106,21 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		pollActive = true;
         completionMessageShown = false;
         lastChatResponse.set(null);
+        
+        // 1. Obtener historial previo
+        List<Message> historial = chatMemory.get(conversationId);
+        
+        // 2. Crear mensaje del usuario
+        UserMessage userMessage = new UserMessage(mensaje);
+        
+        // 3. Construir prompt con historial + nuevo mensaje
+        List<Message> todosLosMensajes = new ArrayList<>(historial);
+        todosLosMensajes.add(userMessage);
+        Prompt prompt = new Prompt(todosLosMensajes);
 		
         Long startTime = System.currentTimeMillis();
         
-		subscription = chatService.generationStream(mensaje, chatClient)
+		subscription = chatService.generationStream(prompt, chatClient)
 				.doOnNext(chatResponse -> {
                     // Este código se ejecuta en el hilo reactivo por cada fragmento
                     String chunk = chatResponse.getResult().getOutput().getText();
@@ -93,6 +141,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
                     pollActive = false;
                     
                     ellapsedTime = System.currentTimeMillis() - startTime;
+                    updateChatHistory();
                 })
                 .doOnError(error -> {
                     respuesta.append("\n[Error: " + error.getMessage() + "]");
@@ -127,5 +176,11 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		if (subscription != null && !subscription.isDisposed()) {
             subscription.dispose();
         }
+	}
+	
+	private void updateChatHistory() {
+		UserMessage userMsg = new UserMessage(mensaje);
+		AssistantMessage assistantMsg = new AssistantMessage(respuesta.toString());
+		chatMemory.add(conversationId, List.of(userMsg, assistantMsg));
 	}
 }

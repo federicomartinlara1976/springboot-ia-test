@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.stereotype.Service;
 
 import lombok.Getter;
@@ -37,9 +38,8 @@ public class ChatServiceImpl implements ChatService {
 	}
 	
 	// Este método NO es bloqueante. Devuelve un Flux (un stream reactivo).
-    public Flux<ChatResponse> generationStream(String userInput, ChatClient chatClient) {
-        return chatClient.prompt()
-                .user(userInput)
+    public Flux<ChatResponse> generationStream(Prompt prompt, ChatClient chatClient) {
+        return chatClient.prompt(prompt)
                 .stream()
                 .chatResponse(); // <--- ESTO DEVUELVE UN FLUX de chatResponse
     }
