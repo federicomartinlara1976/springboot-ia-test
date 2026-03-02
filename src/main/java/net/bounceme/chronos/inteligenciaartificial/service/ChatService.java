@@ -1,5 +1,7 @@
 package net.bounceme.chronos.inteligenciaartificial.service;
 
+import java.util.List;
+
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -17,4 +19,6 @@ public interface ChatService {
 	ChatResponseMetadata getChatResponseMetadata();
 
 	void save(ConversationDTO selectedConversation);
+	
+	List<ConversationDTO> getConversations();
 }

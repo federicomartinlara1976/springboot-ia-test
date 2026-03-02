@@ -120,6 +120,10 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		PrimeFaces.current().executeScript("PF('saveDialog').hide()");
 	}
 	
+	public List<ConversationDTO> getConversations() {
+		return chatService.getConversations();
+	}
+	
 	@SneakyThrows
 	public void enviar() {
 		cancelSubscription();

@@ -1421,7 +1421,7 @@ body {
 .layout-menu-container {
   overflow: auto;
   position: fixed;
-  width: 287px;
+  width: 515px;
   z-index: 99;
   top: 60px;
   height: 100%;

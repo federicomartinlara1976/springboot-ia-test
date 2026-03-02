@@ -14,16 +14,32 @@
 					<span><h:outputText value="Inicio" /></span>
 				</h:commandLink>
 			</li>
-			<li class="list-group-item">
-				<h:commandLink
-					action="chat" inmediate="true" process="@this">
-					<i class="pi pi-fw pi-comments"></i>
-					<span><h:outputText value="Chat" /></span>
-				</h:commandLink>
-			</li>
 		</ul>
-
 		<p:accordionPanel activeIndex="-1">
+			<p:tab title="Chat">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<h:commandLink
+							action="chat" inmediate="true" process="@this">
+							<i class="pi pi-fw pi-comments"></i>
+							<span><h:outputText value="Chat" /></span>
+						</h:commandLink>
+					</li>
+				</ul>
+				<p:dataView id="conversations" var="conversation" value="#{chatBean.conversations}" rows="5" paginator="true"
+                    rowsPerPageTemplate="5,10,15" paginatorPosition="top"
+                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+
+		            <p:dataViewListItem>
+		                <div class="product-list-item">
+		                    <div class="product-list-detail">
+		                        <div class="product-name">#{conversation.nombre}</div>
+		                    </div>
+		                </div>
+		            </p:dataViewListItem>
+		        </p:dataView>
+			</p:tab>
 			<p:tab title="Tests">
 				<ul class="list-group">
 					<li class="list-group-item">
