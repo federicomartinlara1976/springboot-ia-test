@@ -1,5 +1,7 @@
 package net.bounceme.chronos.inteligenciaartificial.model;
 
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -27,4 +29,8 @@ public class Conversation {
 	@Getter
 	@Setter
 	private String nombre;
+	
+	@Getter
+	@Setter
+	private Date fechaCreacion;
 }
