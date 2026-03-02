@@ -110,6 +110,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Nuevo", "Nueva conversación iniciada");
 	}
 	
+	@SneakyThrows
 	public void guardar() {
 		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Guardado", "Conversación guardada");
 		PrimeFaces.current().executeScript("PF('saveDialog').hide()");
