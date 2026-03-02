@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.LogTime;
+import net.bounceme.chronos.inteligenciaartificial.model.Conversation;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
 import reactor.core.publisher.Flux;
 
@@ -43,4 +44,10 @@ public class ChatServiceImpl implements ChatService {
                 .stream()
                 .chatResponse(); // <--- ESTO DEVUELVE UN FLUX de chatResponse
     }
+
+	@Override
+	public void save(Conversation selectedConversation) {
+		// TODO Auto-generated method stub
+		
+	}
 }
