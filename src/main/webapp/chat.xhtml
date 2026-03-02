@@ -178,7 +178,7 @@
 
 			<f:facet name="footer">
 				<p:commandButton value="Guardar" icon="pi pi-check"
-					actionListener="#{chatBean.guardar}" update="save-content,conversations,messages"
+					actionListener="#{chatBean.guardar}" update="save-content,menu,messages"
 					process="save-content @this"/>
 				<p:commandButton value="Cancelar" icon="pi pi-times"
 					onclick="PF('saveDialog').hide()" class="ui-button-secondary"

@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 	
-	<p:outputPanel layout="block" styleClass="menu">
+	<p:outputPanel id="menu" layout="block" styleClass="menu">
 		<ul class="list-group">
 			<li class="list-group-item">
 				<h:commandLink
@@ -26,7 +26,7 @@
 						</h:commandLink>
 					</li>
 				</ul>
-				<p:dataView id="conversations" var="conversation" value="#{chatBean.conversations}" rows="5" paginator="true"
+				<p:dataView var="conversation" value="#{chatBean.conversations}" rows="5" paginator="true"
                     rowsPerPageTemplate="5,10,15" paginatorPosition="top"
                     paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown}"
                     gridIcon="pi pi-th-large" listIcon="pi pi-bars">
