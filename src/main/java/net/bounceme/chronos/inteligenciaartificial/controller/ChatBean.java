@@ -82,6 +82,9 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     private String conversationId;
     
     @Getter
+    private String chatTitle;
+    
+    @Getter
     @Setter
     private transient ConversationDTO selectedConversation;
 
@@ -110,12 +113,16 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		selectedConversation.setConversationId(conversationId);
 		selectedConversation.setFechaCreacion(new Date());
 		
+		chatTitle = conversationId;
+		
 		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Nuevo", "Nueva conversación iniciada");
 	}
 	
 	@SneakyThrows
 	public void guardar() {
 		chatService.save(selectedConversation);
+		chatTitle = selectedConversation.getNombre();
+		
 		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Guardado", "Conversación guardada");
 		PrimeFaces.current().executeScript("PF('saveDialog').hide()");
 	}
