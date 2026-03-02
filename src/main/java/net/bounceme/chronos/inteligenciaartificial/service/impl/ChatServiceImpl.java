@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.LogTime;
 import net.bounceme.chronos.inteligenciaartificial.model.Conversation;
+import net.bounceme.chronos.inteligenciaartificial.repository.ConversationRepository;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
 import reactor.core.publisher.Flux;
 
@@ -22,6 +23,12 @@ public class ChatServiceImpl implements ChatService {
 
 	@Getter
 	private ChatResponseMetadata chatResponseMetadata;
+	
+	private ConversationRepository conversationRepository;
+	
+	public ChatServiceImpl(ConversationRepository conversationRepository) {
+		this.conversationRepository = conversationRepository;
+	}
 
 	@Override
 	@LogTime
@@ -47,7 +54,6 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	public void save(Conversation selectedConversation) {
-		// TODO Auto-generated method stub
-		
+		conversationRepository.save(selectedConversation);
 	}
 }
