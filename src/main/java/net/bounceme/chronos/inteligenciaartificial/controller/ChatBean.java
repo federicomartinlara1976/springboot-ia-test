@@ -3,6 +3,7 @@ package net.bounceme.chronos.inteligenciaartificial.controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -23,7 +24,6 @@ import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.stereotype.Component;
-
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -105,6 +105,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		conversationId = UUID.randomUUID().toString();
 		selectedConversation = Conversation.builder()
 								.conversationId(conversationId)
+								.fechaCreacion(new Date())
 								.build();
 		
 		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Nuevo", "Nueva conversación iniciada");
