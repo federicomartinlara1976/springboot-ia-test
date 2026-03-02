@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang.StringUtils;
 import org.primefaces.PrimeFaces;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.ChatMemoryRepository;
@@ -23,7 +24,7 @@ import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.stereotype.Component;
 
-import io.micrometer.common.util.StringUtils;
+
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.faces.application.FacesMessage;
