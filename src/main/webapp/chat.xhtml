@@ -10,7 +10,7 @@
 		<p:outputPanel styleClass="dashboard">
 			<p:outputPanel styleClass="ui-g-12">
 				<p:toolbar id="toolbar">
-					<p:toolbarGroup>
+					<p:toolbarGroup align="left">
 						<p:commandButton value="Nuevo chat" icon="pi pi-plus"
 							actionListener="#{chatBean.nuevo}" update="save-content,toolbar,messages"
 							styleClass="ui-button-success" style="margin-right: .5rem">
@@ -21,6 +21,9 @@
 							styleClass="ui-button-success" style="margin-right: .5rem"
 							disabled="#{empty chatBean.conversationId}">
 						</p:commandButton>
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<h5><h:outputText value="#{chatBean.chatTitle}"/></h5>
 					</p:toolbarGroup>
 				</p:toolbar>
 			</p:outputPanel>
@@ -178,7 +181,7 @@
 
 			<f:facet name="footer">
 				<p:commandButton value="Guardar" icon="pi pi-check"
-					actionListener="#{chatBean.guardar}" update="save-content,menu,messages"
+					actionListener="#{chatBean.guardar}" update="save-content,menu,toolbar,messages"
 					process="save-content @this"/>
 				<p:commandButton value="Cancelar" icon="pi pi-times"
 					onclick="PF('saveDialog').hide()" class="ui-button-secondary"
