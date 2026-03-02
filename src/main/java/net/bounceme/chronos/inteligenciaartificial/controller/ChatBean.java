@@ -33,8 +33,8 @@ import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import net.bounceme.chronos.inteligenciaartificial.dto.ConversationDTO;
 import net.bounceme.chronos.inteligenciaartificial.model.ChatMessage;
-import net.bounceme.chronos.inteligenciaartificial.model.Conversation;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
 import net.bounceme.chronos.inteligenciaartificial.util.JsfHelper;
 import reactor.core.Disposable;
@@ -82,7 +82,8 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     private String conversationId;
     
     @Getter
-    private Conversation selectedConversation;
+    @Setter
+    private transient ConversationDTO selectedConversation;
 
 	public ChatBean(ChatService chatService) {
 		this.chatService = chatService;
@@ -99,14 +100,15 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	            .build();
 		
 		lastChatResponse = new AtomicReference<>();
+		
+		selectedConversation = new ConversationDTO();
 	}
 	
 	public void nuevo() {
 		conversationId = UUID.randomUUID().toString();
-		selectedConversation = Conversation.builder()
-								.conversationId(conversationId)
-								.fechaCreacion(new Date())
-								.build();
+		selectedConversation = new ConversationDTO();
+		selectedConversation.setConversationId(conversationId);
+		selectedConversation.setFechaCreacion(new Date());
 		
 		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Nuevo", "Nueva conversación iniciada");
 	}

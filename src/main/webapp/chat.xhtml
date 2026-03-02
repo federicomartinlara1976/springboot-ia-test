@@ -12,10 +12,11 @@
 				<p:toolbar id="toolbar">
 					<p:toolbarGroup>
 						<p:commandButton value="Nuevo chat" icon="pi pi-plus"
-							actionListener="#{chatBean.nuevo}" update="toolbar,messages"
+							actionListener="#{chatBean.nuevo}" update="save-content,toolbar,messages"
 							styleClass="ui-button-success" style="margin-right: .5rem">
 						</p:commandButton>
 						<p:commandButton value="Guardar chat" icon="pi pi-save"
+							update="save-content"
 							oncomplete="PF('saveDialog').show()"
 							styleClass="ui-button-success" style="margin-right: .5rem"
 							disabled="#{empty chatBean.conversationId}">
@@ -125,8 +126,7 @@
 		
 		<p:dialog id="infoDialog" header="Response info" showEffect="fade"
 			modal="true" widgetVar="infoDialog" responsive="true" position="center"
-			resizable="false"
-			appendTo="@(body)">
+			resizable="false" appendTo="@(form)">
 			<p:outputPanel id="info-content" class="ui-fluid">
 				<div class="field ui-g-12">
 					<div class="ui-g-4">
@@ -166,7 +166,8 @@
 		</p:dialog>
 		
 		<p:dialog id="saveDialog" header="Guardar como" showEffect="fade"
-			modal="true" widgetVar="saveDialog" responsive="true" position="center" appendTo="@(body)">
+			modal="true" widgetVar="saveDialog" responsive="true" position="center"
+			appendTo="@(form)">
 			<p:outputPanel id="save-content" class="ui-fluid">
 				<div class="field ui-g-12">
 					<p:outputLabel for="name">Nombre</p:outputLabel>

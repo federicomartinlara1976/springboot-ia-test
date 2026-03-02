@@ -3,6 +3,7 @@ package net.bounceme.chronos.inteligenciaartificial.service.impl;
 import java.util.Objects;
 
 import org.apache.commons.lang.StringUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.LogTime;
+import net.bounceme.chronos.inteligenciaartificial.dto.ConversationDTO;
 import net.bounceme.chronos.inteligenciaartificial.model.Conversation;
 import net.bounceme.chronos.inteligenciaartificial.repository.ConversationRepository;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
@@ -26,8 +28,11 @@ public class ChatServiceImpl implements ChatService {
 	
 	private ConversationRepository conversationRepository;
 	
-	public ChatServiceImpl(ConversationRepository conversationRepository) {
+	private ModelMapper modelMapper;
+	
+	public ChatServiceImpl(ConversationRepository conversationRepository, ModelMapper modelMapper) {
 		this.conversationRepository = conversationRepository;
+		this.modelMapper = modelMapper;
 	}
 
 	@Override
@@ -53,7 +58,9 @@ public class ChatServiceImpl implements ChatService {
     }
 
 	@Override
-	public void save(Conversation selectedConversation) {
-		conversationRepository.save(selectedConversation);
+	public void save(ConversationDTO selectedConversation) {
+		Conversation conversation = modelMapper.map(selectedConversation, Conversation.class);
+		
+		conversationRepository.save(conversation);
 	}
 }

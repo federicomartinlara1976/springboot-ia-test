@@ -186,6 +186,13 @@
 		    <artifactId>owasp-java-html-sanitizer</artifactId>
 		    <version>20220608.1</version>
 		</dependency>
+		
+		<!-- ModelMapper -->
+		<dependency>
+      		<groupId>org.modelmapper</groupId>
+      		<artifactId>modelmapper</artifactId>
+      		<version>3.1.0</version>
+    	</dependency>
 	</dependencies>
 
 	<build>
