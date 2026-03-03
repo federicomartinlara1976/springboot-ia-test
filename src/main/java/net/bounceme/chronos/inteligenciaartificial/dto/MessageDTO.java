@@ -1,6 +1,7 @@
 package net.bounceme.chronos.inteligenciaartificial.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
@@ -27,4 +28,8 @@ public class MessageDTO implements Serializable {
 	private Message response;
 	
 	private ChatResponseMetadata responseMetadata;
+	
+	private Date requestTime;
+	
+	private Date responseTime;
 }
