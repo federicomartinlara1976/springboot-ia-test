@@ -3,6 +3,7 @@ package net.bounceme.chronos.inteligenciaartificial.dto;
 import java.io.Serializable;
 
 import org.springframework.ai.chat.messages.Message;
+import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,4 +25,6 @@ public class MessageDTO implements Serializable {
 	private Message request;
 	
 	private Message response;
+	
+	private ChatResponseMetadata responseMetadata;
 }

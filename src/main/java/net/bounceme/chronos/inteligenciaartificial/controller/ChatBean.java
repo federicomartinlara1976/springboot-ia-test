@@ -95,6 +95,10 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     
     @Getter
     private transient List<MessageDTO> historial;
+    
+    @Getter
+    @Setter
+    private MessageDTO message;
 	
 	@PostConstruct
 	private void init() {
@@ -109,6 +113,8 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		lastChatResponse = new AtomicReference<>();
 		
 		selectedConversation = new ConversationDTO();
+		
+		message = new MessageDTO();
 	}
 	
 	public void nuevo() {
@@ -195,6 +201,12 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
                 .subscribe();
 	}
 	
+	public void verMensaje() {
+		mensaje = message.getRequest().getText();
+		htmlContent = JsfHelper.markdown2Html(message.getResponse().getText());
+		chatResponseMetadata = message.getResponseMetadata();
+	}
+	
 	// Método que será llamado por el poll para "forzar" la actualización
     // No hace nada especial, solo sirve para que el poll ejecute una acción JSF
     public void checkUpdates() {
@@ -222,7 +234,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	            .filter(cm -> StringUtils.isNotBlank(conversationId) && completionMessageShown)
 	            .map(cm -> cm.get(conversationId))
 	            .filter(Objects::nonNull)
-	            .map(AIUtils::convertirAParesDTO)
+	            .map(list-> AIUtils.convertirAParesDTO(list, chatResponseMetadata))
 	            .orElse(Collections.emptyList());
     }
     
