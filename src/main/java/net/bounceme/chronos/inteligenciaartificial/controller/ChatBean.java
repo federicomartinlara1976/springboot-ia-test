@@ -89,6 +89,9 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     @Getter
     @Setter
     private transient ConversationDTO selectedConversation;
+    
+    @Getter
+    private transient List<MessageDTO> historial;
 
 	public ChatBean(ChatService chatService) {
 		this.chatService = chatService;
@@ -196,17 +199,22 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     public void checkUpdates() {
     	if ("COMPLETADA".equals(status) && !completionMessageShown) {
 			completionMessageShown = true;
+			updateHistorial();
+			
 			JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Completada", "Respuesta completada");
 			PrimeFaces.current().ajax().update("historial");
         } else if ("ERROR".equals(status) && !completionMessageShown) {
             completionMessageShown = true;
+            updateHistorial();
+            
             JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error");
             PrimeFaces.current().ajax().update("historial");
         }
     }
     
-    public List<MessageDTO> getHistorial() {
-	    return Optional.ofNullable(chatMemory)
+    private void updateHistorial() {
+    	historial.clear();
+	    historial = Optional.ofNullable(chatMemory)
 	            .filter(cm -> StringUtils.isNotBlank(conversationId) && completionMessageShown)
 	            .map(cm -> cm.get(conversationId))
 	            .filter(Objects::nonNull)
