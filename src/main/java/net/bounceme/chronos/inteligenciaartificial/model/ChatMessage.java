@@ -18,6 +18,9 @@ import lombok.NoArgsConstructor;
 public class ChatMessage implements Message {
 	
 	@Getter
+	private String uuid;
+	
+	@Getter
 	private MessageType messageType;
     
 	@Getter

@@ -6,9 +6,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.primefaces.PrimeFaces;
@@ -18,7 +18,6 @@ import org.springframework.ai.chat.memory.InMemoryChatMemoryRepository;
 import org.springframework.ai.chat.memory.MessageWindowChatMemory;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.Message;
-import org.springframework.ai.chat.messages.MessageType;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -33,15 +32,18 @@ import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.inteligenciaartificial.dto.ConversationDTO;
-import net.bounceme.chronos.inteligenciaartificial.model.ChatMessage;
+import net.bounceme.chronos.inteligenciaartificial.dto.MessageDTO;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
+import net.bounceme.chronos.inteligenciaartificial.util.AIUtils;
 import net.bounceme.chronos.inteligenciaartificial.util.JsfHelper;
 import reactor.core.Disposable;
 
 @Component
 @Named
 @ViewScoped
+@Slf4j
 public class ChatBean extends ChatSelectorBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -195,26 +197,21 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     	if ("COMPLETADA".equals(status) && !completionMessageShown) {
 			completionMessageShown = true;
 			JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Completada", "Respuesta completada");
+			PrimeFaces.current().ajax().update("historial");
         } else if ("ERROR".equals(status) && !completionMessageShown) {
             completionMessageShown = true;
             JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error");
+            PrimeFaces.current().ajax().update("historial");
         }
     }
     
-    public List<Message> getHistorial() {
-    	if (!Objects.isNull(chatMemory) && StringUtils.isNotBlank(conversationId)) {
-	        List<Message> messages = chatMemory.get(conversationId).stream()
-	        		.filter(msg -> MessageType.USER.equals(msg.getMessageType()))
-	                .map(msg -> new ChatMessage(
-	                    msg.getMessageType(), 
-	                    msg.getText()
-	                ))
-	                .collect(Collectors.toList());
-	        
-	        return messages;
-    	}
-    	
-    	return Collections.emptyList();
+    public List<MessageDTO> getHistorial() {
+	    return Optional.ofNullable(chatMemory)
+	            .filter(cm -> StringUtils.isNotBlank(conversationId) && completionMessageShown)
+	            .map(cm -> cm.get(conversationId))
+	            .filter(Objects::nonNull)
+	            .map(AIUtils::convertirAParesDTO)
+	            .orElse(Collections.emptyList());
     }
     
     // Opcional: cancelar la suscripción al destruir la vista
