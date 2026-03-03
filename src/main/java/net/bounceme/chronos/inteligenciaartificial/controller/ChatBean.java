@@ -138,6 +138,12 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	
 	@SneakyThrows
 	public void enviar() {
+		// No se enviará mensaje a no ser que se inicie una nueva conversación
+		if (StringUtils.isBlank(selectedConversation.getConversationId())) {
+			JsfHelper.writeMessage(FacesMessage.SEVERITY_WARN, "Atención", "Inicie una nueva conversación");
+			return;
+		}
+		
 		cancelSubscription();
 		
 		// Antes de enviar, limpiar la respuesta
