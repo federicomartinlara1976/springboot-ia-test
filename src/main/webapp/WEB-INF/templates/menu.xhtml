@@ -26,7 +26,7 @@
 						</h:commandLink>
 					</li>
 				</ul>
-				<p:dataView var="conversation" value="#{chatBean.conversations}" rows="5" paginator="true"
+				<p:dataView var="conversation" value="#{sessionBean.conversations}" rows="5" paginator="true"
                     rowsPerPageTemplate="5,10,15" paginatorPosition="top"
                     paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
                     gridIcon="pi pi-th-large" listIcon="pi pi-bars">

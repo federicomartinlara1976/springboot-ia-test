@@ -22,12 +22,14 @@ import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
-import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,7 +44,7 @@ import reactor.core.Disposable;
 
 @Component
 @Named
-@ViewScoped
+@SessionScoped
 @Slf4j
 public class ChatBean extends ChatSelectorBean implements Serializable {
 
@@ -61,6 +63,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	@Getter 
 	private volatile boolean pollActive = false;
 	
+	@Autowired
 	private transient ChatService chatService;
 	
 	private StringBuilder respuesta = new StringBuilder();
@@ -92,10 +95,6 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     
     @Getter
     private transient List<MessageDTO> historial;
-
-	public ChatBean(ChatService chatService) {
-		this.chatService = chatService;
-	}
 	
 	@PostConstruct
 	private void init() {
@@ -130,10 +129,6 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		
 		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Guardado", "Conversación guardada");
 		PrimeFaces.current().executeScript("PF('saveDialog').hide()");
-	}
-	
-	public List<ConversationDTO> getConversations() {
-		return chatService.getConversations();
 	}
 	
 	@SneakyThrows
@@ -219,8 +214,11 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     }
     
     private void updateHistorial() {
-    	historial.clear();
-	    historial = Optional.ofNullable(chatMemory)
+    	if (!CollectionUtils.isEmpty(historial)) {
+    		historial.clear();
+    	}
+	    
+    	historial = Optional.ofNullable(chatMemory)
 	            .filter(cm -> StringUtils.isNotBlank(conversationId) && completionMessageShown)
 	            .map(cm -> cm.get(conversationId))
 	            .filter(Objects::nonNull)
