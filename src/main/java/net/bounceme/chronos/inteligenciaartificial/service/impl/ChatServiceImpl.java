@@ -65,7 +65,7 @@ public class ChatServiceImpl implements ChatService {
 		
 		conversationRepository.save(conversation);
 		
-		// TODO - Guardar el historial en una colección identificada por conversationId
+		saveHistorial(conversation.getConversationId(), historial);
 	}
 
 	@Override
@@ -73,5 +73,10 @@ public class ChatServiceImpl implements ChatService {
 		return conversationRepository.findAll().stream()
 				.map(conversation -> modelMapper.map(conversation, ConversationDTO.class))
 				.toList();
+	}
+	
+	private void saveHistorial(String conversationId, List<MessageDTO> historial) {
+		log.info("Save {} historial", conversationId);
+		historial.forEach(message -> log.info("Saving {}", message.toString()));
 	}
 }
