@@ -134,15 +134,6 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		
 		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Nuevo", "Nueva conversación iniciada");
 	}
-	
-	private void resetHistorial() {
-		if (!CollectionUtils.isEmpty(historial)) {
-			historial.clear();
-		}
-		else {
-			historial = new ArrayList<>();
-		}
-	}
 
 	@SneakyThrows
 	public void guardar() {
@@ -277,5 +268,14 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	
 	private void updateChatHistory() {
 		chatMemory.add(conversationId, List.of(userMessage, assistantMessage));
+	}
+	
+	private void resetHistorial() {
+		if (!CollectionUtils.isEmpty(historial)) {
+			historial.clear();
+		}
+		else {
+			historial = new ArrayList<>();
+		}
 	}
 }
