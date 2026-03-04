@@ -18,8 +18,6 @@ import net.bounceme.chronos.inteligenciaartificial.dto.ConversationDTO;
 import net.bounceme.chronos.inteligenciaartificial.dto.MessageDTO;
 import net.bounceme.chronos.inteligenciaartificial.model.Conversation;
 import net.bounceme.chronos.inteligenciaartificial.repository.ConversationRepository;
-import net.bounceme.chronos.inteligenciaartificial.repository.MessageRepository;
-import net.bounceme.chronos.inteligenciaartificial.repository.RepositoryCollectionCustom;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
 import reactor.core.publisher.Flux;
 
@@ -32,17 +30,10 @@ public class ChatServiceImpl implements ChatService {
 	
 	private ConversationRepository conversationRepository;
 	
-	private RepositoryCollectionCustom repositoryCollectionCustom;
-	
-	private MessageRepository messageRepository;
-	
 	private ModelMapper modelMapper;
 	
-	public ChatServiceImpl(ConversationRepository conversationRepository, RepositoryCollectionCustom repositoryCollectionCustom,
-			MessageRepository messageRepository, ModelMapper modelMapper) {
+	public ChatServiceImpl(ConversationRepository conversationRepository, ModelMapper modelMapper) {
 		this.conversationRepository = conversationRepository;
-		this.repositoryCollectionCustom = repositoryCollectionCustom;
-		this.messageRepository = messageRepository;
 		this.modelMapper = modelMapper;
 	}
 
@@ -73,8 +64,6 @@ public class ChatServiceImpl implements ChatService {
 		Conversation conversation = modelMapper.map(selectedConversation, Conversation.class);
 		
 		conversationRepository.save(conversation);
-		
-		saveHistorial(conversation.getConversationId(), historial);
 	}
 
 	@Override
@@ -82,13 +71,5 @@ public class ChatServiceImpl implements ChatService {
 		return conversationRepository.findAll().stream()
 				.map(conversation -> modelMapper.map(conversation, ConversationDTO.class))
 				.toList();
-	}
-	
-	private void saveHistorial(String conversationId, List<MessageDTO> historial) {
-		log.info("Save {} historial", conversationId);
-		repositoryCollectionCustom.setCollectionName(conversationId);
-		historial.forEach(message -> {
-			messageRepository.save(message);
-		});
 	}
 }
