@@ -200,15 +200,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
                     status = "COMPLETADA";
                     pollActive = false;
                     
-                    assistantMessage = new AssistantMessage(respuesta.toString());
-                    message.setResponse(assistantMessage);
-                    endTime = System.currentTimeMillis();
-                    message.setResponseTime(endTime);
-                    message.setEllapsedTime(endTime - startTime);
-                    
-                    updateChatHistory();
-                    AIUtils.markDTO(message);
-                    addToHistorial(message);
+                    processResponse();
                 })
                 .doOnError(error -> {
                     respuesta.append("\n[Error: " + error.getMessage() + "]");
@@ -216,19 +208,12 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
                     status = "ERROR";
                     pollActive = false;
                     
-                    endTime = System.currentTimeMillis();
-                    message.setResponseTime(endTime);
-                    message.setEllapsedTime(endTime - startTime);
-                    
-                    updateChatHistory();
-                    AIUtils.markDTO(message);
-                    addToHistorial(message);
+                    processResponse();
                 })
                 .subscribe();
 	}
 
 	public void verMensaje() {
-		log.info("Mensaje: {}", message.toString());
 		mensaje = message.getRequest().getText();
 		htmlContent = JsfHelper.markdown2Html(message.getResponse().getText());
 		chatResponseMetadata = message.getResponseMetadata();
@@ -260,6 +245,18 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		if (subscription != null && !subscription.isDisposed()) {
             subscription.dispose();
         }
+	}
+	
+	private void processResponse() {
+		assistantMessage = new AssistantMessage(respuesta.toString());
+		message.setResponse(assistantMessage);
+		endTime = System.currentTimeMillis();
+		message.setResponseTime(endTime);
+		message.setEllapsedTime(endTime - startTime);
+		
+		updateChatHistory();
+		AIUtils.markDTO(message);
+		addToHistorial(message);
 	}
 	
 	private void addToHistorial(MessageDTO messageDTO) {
