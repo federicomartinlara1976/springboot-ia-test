@@ -20,6 +20,8 @@ public class MessageDTO implements Serializable {
 	
 	private String uuid;
 	
+	private String conversationId;
+	
 	private String title;
 
 	private transient Message request;

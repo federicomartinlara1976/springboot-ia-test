@@ -1,40 +1,16 @@
 package net.bounceme.chronos.inteligenciaartificial.util;
 
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-import org.springframework.ai.chat.messages.Message;
-import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 
 import lombok.experimental.UtilityClass;
 import net.bounceme.chronos.inteligenciaartificial.dto.MessageDTO;
-import net.bounceme.chronos.inteligenciaartificial.model.ChatMessage;
 
 @UtilityClass
 public class AIUtils {
 	
-	public List<MessageDTO> convertirAParesDTO(List<Message> messages, ChatResponseMetadata metadata) {
-        List<ChatMessage> chatMessages = messages.stream()
-                .map(msg -> new ChatMessage(UUID.randomUUID().toString(), 
-                                          msg.getMessageType(), 
-                                          msg.getText()))
-                .toList();
-
-        return IntStream.range(0, chatMessages.size() / 2)
-                .mapToObj(i -> crearDTO(chatMessages.get(i * 2), chatMessages.get(i * 2 + 1), metadata))
-                .collect(Collectors.toList());
-    }
-	
-	public MessageDTO crearDTO(ChatMessage request, ChatMessage response, ChatResponseMetadata metadata) {
-        MessageDTO dto = new MessageDTO();
-        dto.setUuid(request.getUuid());
-        dto.setTitle(ellipsis(request.getText(), 40));
-        dto.setRequest(request);
-        dto.setResponse(response);
-        dto.setResponseMetadata(metadata);
-        return dto;
+	public void markDTO(MessageDTO messageDTO) {
+        messageDTO.setUuid(UUID.randomUUID().toString());
+		messageDTO.setTitle(ellipsis(messageDTO.getRequest().getText(), 40));
     }
 	
 	public String ellipsis(String inString, Integer limit) {

@@ -147,7 +147,7 @@
 						<span><b>Id</b></span>
 					</div>
 					<div class="ui-g-8">
-						<span><h:outputText value="#{chatBean.chatResponseMetadata.id}"/></span>
+						<span><h:outputText value="#{chatBean.message.responseMetadata.id}"/></span>
 					</div>
 				</div>
 				<div class="field ui-g-12">
@@ -177,13 +177,13 @@
 					<div class="ui-g-8">
 						<p:panelGrid columns="2" layout="grid">
 		                    <p:outputLabel value="Prompt tokens:" />
-		                    <p:outputLabel value="#{chatBean.chatResponseMetadata.usage.promptTokens}" />
+		                    <p:outputLabel value="#{chatBean.message.responseMetadata.usage.promptTokens}" />
 		                    
 		                    <p:outputLabel value="Completion tokens:" />
-		                    <p:outputLabel value="#{chatBean.chatResponseMetadata.usage.completionTokens}" />
+		                    <p:outputLabel value="#{chatBean.message.responseMetadata.usage.completionTokens}" />
 		                    
 		                    <p:outputLabel value="Total tokens:" />
-		                    <p:outputLabel value="#{chatBean.chatResponseMetadata.usage.totalTokens}" />
+		                    <p:outputLabel value="#{chatBean.message.responseMetadata.usage.totalTokens}" />
 		                    
 		                </p:panelGrid>
 					</div>

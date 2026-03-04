@@ -2,11 +2,8 @@ package net.bounceme.chronos.inteligenciaartificial.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -73,8 +70,9 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	
 	private volatile boolean completionMessageShown = false;
 	
-	@Getter
-	private transient Long ellapsedTime;
+	private transient Long startTime;
+	
+	private transient Long endTime;
 	
 	// Para guardar el último ChatResponse y extraer metadatos al final
     private transient AtomicReference<ChatResponse> lastChatResponse;
@@ -96,7 +94,11 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     
     @Getter
     @Setter
-    private MessageDTO message;
+    private transient MessageDTO message;
+    
+    private transient UserMessage userMessage;
+    
+    private transient AssistantMessage assistantMessage;
     
 	public ChatBean(ChatService chatService) {
 		this.chatService = chatService;
@@ -117,6 +119,8 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		selectedConversation = new ConversationDTO();
 		
 		message = new MessageDTO();
+		
+		resetHistorial();
 	}
 	
 	public void nuevo() {
@@ -126,10 +130,20 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		selectedConversation.setFechaCreacion(new Date());
 		
 		chatTitle = conversationId;
+		resetHistorial();
 		
 		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Nuevo", "Nueva conversación iniciada");
 	}
 	
+	private void resetHistorial() {
+		if (!CollectionUtils.isEmpty(historial)) {
+			historial.clear();
+		}
+		else {
+			historial = new ArrayList<>();
+		}
+	}
+
 	@SneakyThrows
 	public void guardar() {
 		chatService.save(selectedConversation, historial);
@@ -156,18 +170,23 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
         completionMessageShown = false;
         lastChatResponse.set(null);
         
+        // Iniciar un nuevo mensaje
+        message = new MessageDTO();
+        message.setConversationId(conversationId);
+        
         // 1. Obtener historial previo
         List<Message> historialMessages = chatMemory.get(conversationId);
         
         // 2. Crear mensaje del usuario
-        UserMessage userMessage = new UserMessage(mensaje);
+        userMessage = new UserMessage(mensaje);
+        message.setRequest(userMessage);
         
         // 3. Construir prompt con historial + nuevo mensaje
         List<Message> todosLosMensajes = new ArrayList<>(historialMessages);
         todosLosMensajes.add(userMessage);
         Prompt prompt = new Prompt(todosLosMensajes);
 		
-        Long startTime = System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
         message.setRequestTime(startTime);
         
 		subscription = chatService.generationStream(prompt, chatClient)
@@ -185,15 +204,20 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
                     // Al completarse, extraemos los metadatos de la última respuesta
                     ChatResponse finalResponse = lastChatResponse.get();
                     if (finalResponse != null) {
-                        chatResponseMetadata = finalResponse.getMetadata();
+                        message.setResponseMetadata(finalResponse.getMetadata());
                     }
                     status = "COMPLETADA";
                     pollActive = false;
                     
-                    Long endTime = System.currentTimeMillis();
+                    assistantMessage = new AssistantMessage(respuesta.toString());
+                    message.setResponse(assistantMessage);
+                    endTime = System.currentTimeMillis();
                     message.setResponseTime(endTime);
                     message.setEllapsedTime(endTime - startTime);
+                    
                     updateChatHistory();
+                    AIUtils.markDTO(message);
+                    addToHistorial(message);
                 })
                 .doOnError(error -> {
                     respuesta.append("\n[Error: " + error.getMessage() + "]");
@@ -201,16 +225,22 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
                     status = "ERROR";
                     pollActive = false;
                     
-                    ellapsedTime = System.currentTimeMillis() - startTime;
+                    endTime = System.currentTimeMillis();
+                    message.setResponseTime(endTime);
+                    message.setEllapsedTime(endTime - startTime);
+                    
+                    updateChatHistory();
+                    AIUtils.markDTO(message);
+                    addToHistorial(message);
                 })
                 .subscribe();
 	}
-	
+
 	public void verMensaje() {
+		log.info("Mensaje: {}", message.toString());
 		mensaje = message.getRequest().getText();
 		htmlContent = JsfHelper.markdown2Html(message.getResponse().getText());
 		chatResponseMetadata = message.getResponseMetadata();
-		log.info("Mensaje con título {} cargado", message.getTitle());
 	}
 	
 	// Método que será llamado por el poll para "forzar" la actualización
@@ -218,30 +248,15 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     public void checkUpdates() {
     	if ("COMPLETADA".equals(status) && !completionMessageShown) {
 			completionMessageShown = true;
-			updateHistorial();
 			
 			JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Completada", "Respuesta completada");
 			PrimeFaces.current().ajax().update("historial");
         } else if ("ERROR".equals(status) && !completionMessageShown) {
             completionMessageShown = true;
-            updateHistorial();
             
             JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error");
             PrimeFaces.current().ajax().update("historial");
         }
-    }
-    
-    private void updateHistorial() {
-    	if (!CollectionUtils.isEmpty(historial)) {
-    		historial.clear();
-    	}
-	    
-    	historial = Optional.ofNullable(chatMemory)
-	            .filter(cm -> StringUtils.isNotBlank(conversationId) && completionMessageShown)
-	            .map(cm -> cm.get(conversationId))
-	            .filter(Objects::nonNull)
-	            .map(list-> AIUtils.convertirAParesDTO(list, chatResponseMetadata))
-	            .orElse(Collections.emptyList());
     }
     
     // Opcional: cancelar la suscripción al destruir la vista
@@ -256,9 +271,11 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
         }
 	}
 	
+	private void addToHistorial(MessageDTO messageDTO) {
+		historial.add(messageDTO);
+	}
+	
 	private void updateChatHistory() {
-		UserMessage userMsg = new UserMessage(mensaje);
-		AssistantMessage assistantMsg = new AssistantMessage(respuesta.toString());
-		chatMemory.add(conversationId, List.of(userMsg, assistantMsg));
+		chatMemory.add(conversationId, List.of(userMessage, assistantMessage));
 	}
 }
