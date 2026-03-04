@@ -276,6 +276,8 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	
 	private void updateChatHistory() {
 		chatMemory.add(conversationId, List.of(userMessage, assistantMessage));
+		
+		// TODO - Añadir al historial
 	}
 	
 	private void resetHistorial() {
