@@ -22,14 +22,13 @@ import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,7 +43,7 @@ import reactor.core.Disposable;
 
 @Component
 @Named
-@SessionScoped
+@ViewScoped
 @Slf4j
 public class ChatBean extends ChatSelectorBean implements Serializable {
 
@@ -63,7 +62,6 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	@Getter 
 	private volatile boolean pollActive = false;
 	
-	@Autowired
 	private transient ChatService chatService;
 	
 	private StringBuilder respuesta = new StringBuilder();
@@ -99,7 +97,11 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     @Getter
     @Setter
     private MessageDTO message;
-	
+    
+	public ChatBean(ChatService chatService) {
+		this.chatService = chatService;
+	}
+
 	@PostConstruct
 	private void init() {
 		// 1. Crear el repositorio donde se guardan físicamente los mensajes
@@ -130,7 +132,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	
 	@SneakyThrows
 	public void guardar() {
-		chatService.save(selectedConversation);
+		chatService.save(selectedConversation, historial);
 		chatTitle = selectedConversation.getNombre();
 		
 		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Guardado", "Conversación guardada");
@@ -155,17 +157,18 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
         lastChatResponse.set(null);
         
         // 1. Obtener historial previo
-        List<Message> historial = chatMemory.get(conversationId);
+        List<Message> historialMessages = chatMemory.get(conversationId);
         
         // 2. Crear mensaje del usuario
         UserMessage userMessage = new UserMessage(mensaje);
         
         // 3. Construir prompt con historial + nuevo mensaje
-        List<Message> todosLosMensajes = new ArrayList<>(historial);
+        List<Message> todosLosMensajes = new ArrayList<>(historialMessages);
         todosLosMensajes.add(userMessage);
         Prompt prompt = new Prompt(todosLosMensajes);
 		
         Long startTime = System.currentTimeMillis();
+        message.setRequestTime(startTime);
         
 		subscription = chatService.generationStream(prompt, chatClient)
 				.doOnNext(chatResponse -> {
@@ -187,7 +190,9 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
                     status = "COMPLETADA";
                     pollActive = false;
                     
-                    ellapsedTime = System.currentTimeMillis() - startTime;
+                    Long endTime = System.currentTimeMillis();
+                    message.setResponseTime(endTime);
+                    message.setEllapsedTime(endTime - startTime);
                     updateChatHistory();
                 })
                 .doOnError(error -> {
@@ -205,6 +210,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		mensaje = message.getRequest().getText();
 		htmlContent = JsfHelper.markdown2Html(message.getResponse().getText());
 		chatResponseMetadata = message.getResponseMetadata();
+		log.info("Mensaje con título {} cargado", message.getTitle());
 	}
 	
 	// Método que será llamado por el poll para "forzar" la actualización

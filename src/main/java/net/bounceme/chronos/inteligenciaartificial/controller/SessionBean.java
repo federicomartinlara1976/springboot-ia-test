@@ -16,7 +16,7 @@ import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
 public class SessionBean {
 
 	@Autowired
-	private transient ChatService chatService;
+	private ChatService chatService;
 	
 	public List<ConversationDTO> getConversations() {
 		return chatService.getConversations();

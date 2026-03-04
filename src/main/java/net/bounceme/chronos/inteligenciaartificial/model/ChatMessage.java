@@ -1,5 +1,6 @@
 package net.bounceme.chronos.inteligenciaartificial.model;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.springframework.ai.chat.messages.Message;
@@ -28,6 +29,6 @@ public class ChatMessage implements Message {
 
 	@Override
 	public Map<String, Object> getMetadata() {
-		return null;
+		return Collections.emptyMap();
 	}
 }

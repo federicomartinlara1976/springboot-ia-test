@@ -87,10 +87,11 @@
 				                    <div class="product-list-action">
 				                        <p:commandButton icon="pi pi-eye"
 											styleClass="edit-button rounded-button ui-button-success"
-											actionListener="#{chatBean.verMensaje}"
+											action="#{chatBean.verMensaje}"
 											process="@this" update="peticion,respuesta,info-content">
 											<f:setPropertyActionListener value="#{message}"
 												target="#{chatBean.message}" />
+											<p:resetInput target="info-content" />
 										</p:commandButton>
 				                    </div>
 				                </div>
@@ -154,7 +155,19 @@
 						<span><b>Ellapsed time</b></span>
 					</div>
 					<div class="ui-g-8">
-						<span><h:outputText value="#{chatBean.ellapsedTime}"/> milliseconds</span>
+						<span><h:outputText value="#{chatBean.message.ellapsedTime}"/> milliseconds</span>
+					</div>
+					<div class="ui-g-3">
+						<span><b>Request timestamp</b></span>
+					</div>
+					<div class="ui-g-3">
+						<span><h:outputText value="#{chatBean.message.requestTime}"/></span>
+					</div>
+					<div class="ui-g-3">
+						<span><b>Response timestamp</b></span>
+					</div>
+					<div class="ui-g-3">
+						<span><h:outputText value="#{chatBean.message.responseTime}"/></span>
 					</div>
 				</div>
 				<div class="ui-g-12">

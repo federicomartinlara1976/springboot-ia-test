@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.LogTime;
 import net.bounceme.chronos.inteligenciaartificial.dto.ConversationDTO;
+import net.bounceme.chronos.inteligenciaartificial.dto.MessageDTO;
 import net.bounceme.chronos.inteligenciaartificial.model.Conversation;
 import net.bounceme.chronos.inteligenciaartificial.repository.ConversationRepository;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
@@ -59,10 +60,12 @@ public class ChatServiceImpl implements ChatService {
     }
 
 	@Override
-	public void save(ConversationDTO selectedConversation) {
+	public void save(ConversationDTO selectedConversation, List<MessageDTO> historial) {
 		Conversation conversation = modelMapper.map(selectedConversation, Conversation.class);
 		
 		conversationRepository.save(conversation);
+		
+		// TODO - Guardar el historial en una colección identificada por conversationId
 	}
 
 	@Override
