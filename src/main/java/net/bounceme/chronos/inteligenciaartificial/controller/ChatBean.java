@@ -72,8 +72,6 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	
 	private transient Long startTime;
 	
-	private transient Long endTime;
-	
 	// Para guardar el último ChatResponse y extraer metadatos al final
     private transient AtomicReference<ChatResponse> lastChatResponse;
     
@@ -250,7 +248,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	private void processResponse() {
 		assistantMessage = new AssistantMessage(respuesta.toString());
 		message.setResponse(assistantMessage);
-		endTime = System.currentTimeMillis();
+		Long endTime = System.currentTimeMillis();
 		message.setResponseTime(endTime);
 		message.setEllapsedTime(endTime - startTime);
 		message.setEstado(status);
