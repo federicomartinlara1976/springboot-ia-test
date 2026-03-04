@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.primefaces.PrimeFaces;
 import org.springframework.ai.chat.memory.ChatMemory;
@@ -20,7 +21,6 @@ import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -270,12 +270,11 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	}
 	
 	private void resetHistorial() {
-		if (!CollectionUtils.isEmpty(historial)) {
+		if (CollectionUtils.isNotEmpty(historial)) {
 			historial.clear();
 		}
-		else {
-			historial = new ArrayList<>();
-		}
+		
+		historial = new ArrayList<>();
 	}
 	
 	private void dumpResponse() {
