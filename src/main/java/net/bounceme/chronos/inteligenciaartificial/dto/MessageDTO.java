@@ -35,4 +35,6 @@ public class MessageDTO implements Serializable {
 	private Long responseTime;
 	
 	private Long ellapsedTime;
+	
+	private String estado;
 }

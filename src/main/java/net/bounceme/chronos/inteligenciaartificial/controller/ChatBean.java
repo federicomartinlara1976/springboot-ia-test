@@ -253,6 +253,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		endTime = System.currentTimeMillis();
 		message.setResponseTime(endTime);
 		message.setEllapsedTime(endTime - startTime);
+		message.setEstado(status);
 		
 		updateChatHistory();
 		AIUtils.markDTO(message);
