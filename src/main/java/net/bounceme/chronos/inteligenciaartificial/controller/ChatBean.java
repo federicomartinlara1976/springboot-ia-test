@@ -11,17 +11,12 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.primefaces.PrimeFaces;
 import org.springframework.ai.chat.memory.ChatMemory;
-import org.springframework.ai.chat.memory.ChatMemoryRepository;
-import org.springframework.ai.chat.memory.MessageWindowChatMemory;
-import org.springframework.ai.chat.memory.repository.jdbc.JdbcChatMemoryRepository;
-import org.springframework.ai.chat.memory.repository.jdbc.MysqlChatMemoryRepositoryDialect;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
@@ -63,8 +58,6 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	
 	private transient ChatService chatService;
 	
-	private transient JdbcTemplate jdbcTemplate;
-	
 	private StringBuilder respuesta = new StringBuilder();
 	
 	private transient Disposable subscription; // para poder cancelar si es necesario
@@ -102,24 +95,13 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     
     private transient AssistantMessage assistantMessage;
     
-	public ChatBean(ChatService chatService, JdbcTemplate jdbcTemplate) {
+	public ChatBean(ChatService chatService, ChatMemory chatMemory) {
 		this.chatService = chatService;
-		this.jdbcTemplate = jdbcTemplate;
+		this.chatMemory = chatMemory;
 	}
 
 	@PostConstruct
 	private void init() {
-		// 1. Crear el repositorio donde se guardan físicamente los mensajes
-		ChatMemoryRepository repository = JdbcChatMemoryRepository.builder()
-                .jdbcTemplate(jdbcTemplate)
-                .dialect(new MysqlChatMemoryRepositoryDialect()) // Para MySQL
-                .build();
-
-		
-		chatMemory = MessageWindowChatMemory.builder()  // ← Sustituye a MessageChatMemoryChatHistory
-	            .chatMemoryRepository(repository)
-	            .maxMessages(20)  // Mantiene los últimos 20 mensajes en contexto
-	            .build();
 		
 		lastChatResponse = new AtomicReference<>();
 		
@@ -202,11 +184,6 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
                     status = "RUNNING";
                 })
                 .doOnComplete(() -> {
-                    // Al completarse, extraemos los metadatos de la última respuesta
-                    ChatResponse finalResponse = lastChatResponse.get();
-                    if (finalResponse != null) {
-                        message.setResponseMetadata(finalResponse.getMetadata());
-                    }
                     status = "COMPLETADA";
                     pollActive = false;
                     
@@ -226,7 +203,6 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	public void verMensaje() {
 		mensaje = message.getRequest().getText();
 		htmlContent = JsfHelper.markdown2Html(message.getResponse().getText());
-		chatResponseMetadata = message.getResponseMetadata();
 	}
 	
 	// Método que será llamado por el poll para "forzar" la actualización
@@ -262,8 +238,6 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		message.setResponse(assistantMessage);
 		Long endTime = System.currentTimeMillis();
 		message.setResponseTime(endTime);
-		message.setEllapsedTime(endTime - startTime);
-		message.setEstado(status);
 		
 		updateChatHistory();
 		AIUtils.markDTO(message);

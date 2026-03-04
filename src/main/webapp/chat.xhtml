@@ -146,20 +146,6 @@
 			<p:outputPanel id="info-content" class="ui-fluid">
 				<div class="field ui-g-12">
 					<div class="ui-g-4">
-						<span><b>Id</b></span>
-					</div>
-					<div class="ui-g-8">
-						<span><h:outputText value="#{chatBean.message.responseMetadata.id}"/></span>
-					</div>
-				</div>
-				<div class="field ui-g-12">
-					<div class="ui-g-4">
-						<span><b>Ellapsed time</b></span>
-					</div>
-					<div class="ui-g-8">
-						<span><h:outputText value="#{chatBean.message.ellapsedTime}"/> milliseconds</span>
-					</div>
-					<div class="ui-g-4">
 						<span><b>Request timestamp</b></span>
 					</div>
 					<div class="ui-g-8">
@@ -170,24 +156,6 @@
 					</div>
 					<div class="ui-g-8">
 						<span><h:outputText value="#{chatBean.message.responseTime}"/></span>
-					</div>
-				</div>
-				<div class="ui-g-12">
-					<div class="ui-g-4">
-						<span><b>Usage</b></span>
-					</div>
-					<div class="ui-g-8">
-						<p:panelGrid columns="2" layout="grid">
-		                    <p:outputLabel value="Prompt tokens:" />
-		                    <p:outputLabel value="#{chatBean.message.responseMetadata.usage.promptTokens}" />
-		                    
-		                    <p:outputLabel value="Completion tokens:" />
-		                    <p:outputLabel value="#{chatBean.message.responseMetadata.usage.completionTokens}" />
-		                    
-		                    <p:outputLabel value="Total tokens:" />
-		                    <p:outputLabel value="#{chatBean.message.responseMetadata.usage.totalTokens}" />
-		                    
-		                </p:panelGrid>
 					</div>
 				</div>
 			</p:outputPanel>

@@ -1,7 +1,5 @@
 package net.bounceme.chronos.inteligenciaartificial.util;
 
-import java.util.UUID;
-
 import lombok.experimental.UtilityClass;
 import net.bounceme.chronos.inteligenciaartificial.dto.MessageDTO;
 
@@ -9,8 +7,7 @@ import net.bounceme.chronos.inteligenciaartificial.dto.MessageDTO;
 public class AIUtils {
 	
 	public void markDTO(MessageDTO messageDTO) {
-        messageDTO.setUuid(UUID.randomUUID().toString());
-		messageDTO.setTitle(ellipsis(messageDTO.getRequest().getText(), 40));
+       messageDTO.setTitle(ellipsis(messageDTO.getRequest().getText(), 40));
     }
 	
 	public String ellipsis(String inString, Integer limit) {
