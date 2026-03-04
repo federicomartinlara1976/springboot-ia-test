@@ -128,8 +128,11 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		selectedConversation.setFechaCreacion(new Date());
 		
 		chatTitle = conversationId;
+		mensaje = StringUtils.EMPTY;
+		respuesta.setLength(0);
 		resetHistorial();
 		
+		dumpResponse();
 		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Nuevo", "Nueva conversación iniciada");
 	}
 
@@ -183,7 +186,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
                     // Este código se ejecuta en el hilo reactivo por cada fragmento
                     String chunk = chatResponse.getResult().getOutput().getText();
                     respuesta.append(chunk);
-                    htmlContent = JsfHelper.markdown2Html(respuesta.toString());
+                    dumpResponse();
                     
                     // Guardamos la última respuesta para usarla al final
                     lastChatResponse.set(chatResponse);
@@ -202,7 +205,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
                 })
                 .doOnError(error -> {
                     respuesta.append("\n[Error: " + error.getMessage() + "]");
-                    htmlContent = JsfHelper.markdown2Html(respuesta.toString());
+                    dumpResponse();
                     status = "ERROR";
                     pollActive = false;
                     
@@ -273,5 +276,9 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		else {
 			historial = new ArrayList<>();
 		}
+	}
+	
+	private void dumpResponse() {
+		htmlContent = JsfHelper.markdown2Html(respuesta.toString());
 	}
 }

@@ -12,7 +12,7 @@
 				<p:toolbar id="toolbar">
 					<p:toolbarGroup align="left">
 						<p:commandButton value="Nuevo chat" icon="pi pi-plus"
-							actionListener="#{chatBean.nuevo}" update="save-content,toolbar,messages"
+							actionListener="#{chatBean.nuevo}" update="peticion,respuesta,historial,save-content,toolbar,messages"
 							styleClass="ui-button-success" style="margin-right: .5rem">
 						</p:commandButton>
 						<p:commandButton value="Guardar chat" icon="pi pi-save"
@@ -59,7 +59,8 @@
 						<div class="ui-g-12">
 							<p:inputTextarea id="mensaje" value="#{chatBean.mensaje}"
 								placeholder="Escribe el mensaje..." 
-								rows="10" cols="50" widgetVar="mensajeWidget" />
+								rows="10" cols="50" widgetVar="mensajeWidget" 
+								disabled="#{chatBean.status eq 'RUNNING'}"/>
 						</div>
 					</div>
 		
@@ -128,7 +129,7 @@
 					</div>
 		
 					<!-- Poll que cada 1 segundo actualiza el panel de respuesta -->
-		    		<p:poll interval="1" update="send,respuesta,info-content,messages" 
+		    		<p:poll interval="1" update="peticion,respuesta,info-content,messages" 
 		            	listener="#{chatBean.checkUpdates}" 
 		            	autoStart="true" 
 		            	stop="#{not chatBean.pollActive}" />
@@ -157,16 +158,16 @@
 					<div class="ui-g-8">
 						<span><h:outputText value="#{chatBean.message.ellapsedTime}"/> milliseconds</span>
 					</div>
-					<div class="ui-g-3">
+					<div class="ui-g-4">
 						<span><b>Request timestamp</b></span>
 					</div>
-					<div class="ui-g-3">
+					<div class="ui-g-8">
 						<span><h:outputText value="#{chatBean.message.requestTime}"/></span>
 					</div>
-					<div class="ui-g-3">
+					<div class="ui-g-4">
 						<span><b>Response timestamp</b></span>
 					</div>
-					<div class="ui-g-3">
+					<div class="ui-g-8">
 						<span><h:outputText value="#{chatBean.message.responseTime}"/></span>
 					</div>
 				</div>
