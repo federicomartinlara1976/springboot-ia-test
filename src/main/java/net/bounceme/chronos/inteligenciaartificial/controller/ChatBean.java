@@ -12,14 +12,16 @@ import org.apache.commons.lang.StringUtils;
 import org.primefaces.PrimeFaces;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.ChatMemoryRepository;
-import org.springframework.ai.chat.memory.InMemoryChatMemoryRepository;
 import org.springframework.ai.chat.memory.MessageWindowChatMemory;
+import org.springframework.ai.chat.memory.repository.jdbc.JdbcChatMemoryRepository;
+import org.springframework.ai.chat.memory.repository.jdbc.MysqlChatMemoryRepositoryDialect;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
@@ -61,6 +63,8 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	
 	private transient ChatService chatService;
 	
+	private transient JdbcTemplate jdbcTemplate;
+	
 	private StringBuilder respuesta = new StringBuilder();
 	
 	private transient Disposable subscription; // para poder cancelar si es necesario
@@ -98,14 +102,19 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     
     private transient AssistantMessage assistantMessage;
     
-	public ChatBean(ChatService chatService) {
+	public ChatBean(ChatService chatService, JdbcTemplate jdbcTemplate) {
 		this.chatService = chatService;
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 	@PostConstruct
 	private void init() {
 		// 1. Crear el repositorio donde se guardan físicamente los mensajes
-	    ChatMemoryRepository repository = new InMemoryChatMemoryRepository(); // ← Sustituye a InMemoryChatMemory
+		ChatMemoryRepository repository = JdbcChatMemoryRepository.builder()
+                .jdbcTemplate(jdbcTemplate)
+                .dialect(new MysqlChatMemoryRepositoryDialect()) // Para MySQL
+                .build();
+
 		
 		chatMemory = MessageWindowChatMemory.builder()  // ← Sustituye a MessageChatMemoryChatHistory
 	            .chatMemoryRepository(repository)

@@ -1,5 +1,6 @@
 package net.bounceme.chronos.inteligenciaartificial.model;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
 
@@ -16,8 +17,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class ChatMessage implements Message {
+public class ChatMessage implements Message, Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Getter
 	private String uuid;
 	
