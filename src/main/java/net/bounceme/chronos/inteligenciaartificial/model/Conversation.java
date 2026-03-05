@@ -12,7 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "spring_ai_conversations")
+@Table(name = "SPRING_AI_CONVERSATIONS")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

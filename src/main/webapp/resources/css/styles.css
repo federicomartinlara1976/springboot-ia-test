@@ -302,8 +302,8 @@ footer span {
 .product-list-action {
 	display: -ms-flexbox;
     display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
+    -ms-flex-direction: row;
+    flex-direction: row;
 }
 
 .product-grid-item-top {

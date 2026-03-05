@@ -26,7 +26,7 @@
 						</h:commandLink>
 					</li>
 				</ul>
-				<p:dataView var="conversation" value="#{sessionBean.conversations}" rows="5" paginator="true"
+				<p:dataView id="conversations" var="conversation" value="#{sessionBean.conversations}" rows="5" paginator="true"
                     rowsPerPageTemplate="5,10,15" paginatorPosition="top"
                     paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
                     gridIcon="pi pi-th-large" listIcon="pi pi-bars">
@@ -43,10 +43,28 @@
 									styleClass="edit-button rounded-button ui-button-success">
 									<f:param name="id" value="#{conversation.conversationId}" />
 								</p:button>
+								<p:commandButton icon="pi pi-trash"
+									oncomplete="PF('deleteDialog').show()"
+									styleClass="edit-button rounded-button ui-button-success">
+									<f:setPropertyActionListener value="#{conversation}"
+										target="#{sessionBean.selectedConversation}" />
+								</p:commandButton>
 		                    </div>
 		                </div>
 		            </p:dataViewListItem>
 		        </p:dataView>
+		        
+		        <p:confirmDialog widgetVar="deleteDialog" showEffect="fade"
+					width="300" message="Desea borrar la conversación?"
+					header="Confirmación" severity="warn" appendTo="@(form)">
+					<p:commandButton value="Si" icon="pi pi-check"
+						actionListener="#{sessionBean.deleteConversation}" process="@this"
+						update="conversations,messages"
+						oncomplete="PF('deleteDialog').hide()" />
+					<p:commandButton value="No" type="button"
+						styleClass="ui-button-secondary" icon="pi pi-times"
+						onclick="PF('deleteDialog').hide()" />
+				</p:confirmDialog>
 			</p:tab>
 			<p:tab title="Tests">
 				<ul class="list-group">

@@ -17,7 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.inteligenciaartificial.aspect.annotations.LogTime;
 import net.bounceme.chronos.inteligenciaartificial.dto.ConversationDTO;
 import net.bounceme.chronos.inteligenciaartificial.model.Conversation;
+import net.bounceme.chronos.inteligenciaartificial.model.Message;
 import net.bounceme.chronos.inteligenciaartificial.repository.ConversationRepository;
+import net.bounceme.chronos.inteligenciaartificial.repository.MessageRepository;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
 import reactor.core.publisher.Flux;
 
@@ -30,10 +32,14 @@ public class ChatServiceImpl implements ChatService {
 	
 	private ConversationRepository conversationRepository;
 	
+	private MessageRepository messageRepository;
+	
 	private ModelMapper modelMapper;
 	
-	public ChatServiceImpl(ConversationRepository conversationRepository, ModelMapper modelMapper) {
+	public ChatServiceImpl(ConversationRepository conversationRepository, 
+			MessageRepository messageRepository, ModelMapper modelMapper) {
 		this.conversationRepository = conversationRepository;
+		this.messageRepository = messageRepository;
 		this.modelMapper = modelMapper;
 	}
 
@@ -80,5 +86,15 @@ public class ChatServiceImpl implements ChatService {
 		return conversationRepository.findById(id)
 				.map(c -> modelMapper.map(c, ConversationDTO.class))
 				.get();
+	}
+
+	@Override
+	@Transactional
+	public void deleteConversation(ConversationDTO selectedConversation) {
+		List<Message> messages = messageRepository.buscarPorConversationId(selectedConversation.getConversationId());
+		
+		messages.forEach(message -> messageRepository.delete(message));
+		
+		conversationRepository.deleteById(selectedConversation.getConversationId());
 	}
 }

@@ -23,4 +23,6 @@ public interface ChatService {
 	List<ConversationDTO> getConversations();
 
 	ConversationDTO getConversation(String id);
+
+	void deleteConversation(ConversationDTO selectedConversation);
 }
