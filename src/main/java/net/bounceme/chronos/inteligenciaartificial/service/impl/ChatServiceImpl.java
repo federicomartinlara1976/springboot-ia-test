@@ -10,6 +10,7 @@ import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -60,6 +61,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
 	@Override
+	@Transactional
 	public void save(ConversationDTO selectedConversation, List<MessageDTO> historial) {
 		Conversation conversation = modelMapper.map(selectedConversation, Conversation.class);
 		
@@ -67,6 +69,7 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<ConversationDTO> getConversations() {
 		return conversationRepository.findAll().stream()
 				.map(conversation -> modelMapper.map(conversation, ConversationDTO.class))

@@ -2,16 +2,17 @@ package net.bounceme.chronos.inteligenciaartificial.model;
 
 import java.util.Date;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Document(collection = "conversations")
+@Entity
+@Table(name = "spring_ai_conversations")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,10 +20,12 @@ import lombok.NoArgsConstructor;
 public class Conversation {
 
 	@Id
-    @Field("_id")
-	private String conversationId;
+	@Column(name = "conversation_id")
+    private String conversationId;
 	
+	@Column(name = "name")
 	private String nombre;
 	
+	@Column(name = "timestamp")
 	private Date fechaCreacion;
 }

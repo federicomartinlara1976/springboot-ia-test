@@ -132,7 +132,7 @@
 				
 				<!-- Poll que cada medio segundo actualiza el chat -->
 	    		<p:poll id="updater" interval="50" intervalType="millisecond" 
-	    			update="peticion,respuesta,info-content,messages" 
+	    			update="peticion,respuesta,info-content" 
 	            	listener="#{chatBean.checkUpdates}" 
 	            	autoStart="true" 
 	            	stop="#{not chatBean.pollActive}" />

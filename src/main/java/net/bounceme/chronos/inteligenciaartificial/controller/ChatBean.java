@@ -2,8 +2,11 @@ package net.bounceme.chronos.inteligenciaartificial.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -66,8 +69,6 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	private String status;
 	
 	private volatile boolean completionMessageShown = false;
-	
-	private transient Long startTime;
 	
 	// Para guardar el último ChatResponse y extraer metadatos al final
     private transient AtomicReference<ChatResponse> lastChatResponse;
@@ -153,10 +154,6 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
         completionMessageShown = false;
         lastChatResponse.set(null);
         
-        // Iniciar un nuevo mensaje
-        message = new MessageDTO();
-        message.setConversationId(conversationId);
-        
         // 1. Obtener historial previo
         List<Message> historialMessages = chatMemory.get(conversationId);
         
@@ -168,9 +165,6 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
         List<Message> todosLosMensajes = new ArrayList<>(historialMessages);
         todosLosMensajes.add(userMessage);
         Prompt prompt = new Prompt(todosLosMensajes);
-		
-        startTime = System.currentTimeMillis();
-        message.setRequestTime(startTime);
         
 		subscription = chatService.generationStream(prompt, chatClient)
 				.doOnNext(chatResponse -> {
@@ -209,15 +203,17 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     // No hace nada especial, solo sirve para que el poll ejecute una acción JSF
     public void checkUpdates() {
     	if ("COMPLETADA".equals(status) && !completionMessageShown) {
-			completionMessageShown = true;
-			
+    		completionMessageShown = true;
+    		updateChatHistory();
+    		
+    		PrimeFaces.current().ajax().update("historial");
 			JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Completada", "Respuesta completada");
-			PrimeFaces.current().ajax().update("historial");
         } else if ("ERROR".equals(status) && !completionMessageShown) {
-            completionMessageShown = true;
-            
+        	completionMessageShown = true;
+    		updateChatHistory();
+    		
+    		PrimeFaces.current().ajax().update("historial");
             JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error");
-            PrimeFaces.current().ajax().update("historial");
         }
     }
     
@@ -235,25 +231,23 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	
 	private void processResponse() {
 		assistantMessage = new AssistantMessage(respuesta.toString());
-		message.setResponse(assistantMessage);
-		Long endTime = System.currentTimeMillis();
-		message.setResponseTime(endTime);
-		
-		updateChatHistory();
-		AIUtils.markDTO(message);
-		addToHistorial(message);
-	}
-	
-	private void addToHistorial(MessageDTO messageDTO) {
-		historial.add(messageDTO);
 	}
 	
 	private void updateChatHistory() {
 		chatMemory.add(conversationId, List.of(userMessage, assistantMessage));
-		
-		// TODO - Añadir al historial
+		rebuildHistorial();
 	}
 	
+	private void rebuildHistorial() {
+		historial.clear();
+		historial.addAll(Optional.ofNullable(chatMemory)
+		            .filter(cm -> StringUtils.isNotBlank(conversationId) && completionMessageShown)
+		            .map(cm -> cm.get(conversationId))
+		            .filter(Objects::nonNull)
+		            .map(AIUtils::convertirAParesDTO)
+		            .orElse(Collections.emptyList()));
+	}
+
 	private void resetHistorial() {
 		if (CollectionUtils.isNotEmpty(historial)) {
 			historial.clear();
