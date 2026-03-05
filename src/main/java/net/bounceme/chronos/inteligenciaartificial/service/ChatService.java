@@ -21,4 +21,6 @@ public interface ChatService {
 	void save(ConversationDTO selectedConversation);
 	
 	List<ConversationDTO> getConversations();
+
+	ConversationDTO getConversation(String id);
 }

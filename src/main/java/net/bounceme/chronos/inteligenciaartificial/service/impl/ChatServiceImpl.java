@@ -74,4 +74,11 @@ public class ChatServiceImpl implements ChatService {
 				.map(conversation -> modelMapper.map(conversation, ConversationDTO.class))
 				.toList();
 	}
+
+	@Override
+	public ConversationDTO getConversation(String id) {
+		return conversationRepository.findById(id)
+				.map(c -> modelMapper.map(c, ConversationDTO.class))
+				.get();
+	}
 }

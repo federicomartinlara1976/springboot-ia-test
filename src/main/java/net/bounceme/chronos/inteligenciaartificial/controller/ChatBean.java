@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -88,6 +89,8 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     @Getter
     private transient List<MessageDTO> historial;
     
+    private transient List<Message> historialMessages;
+    
     @Getter
     @Setter
     private transient MessageDTO message;
@@ -111,6 +114,20 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		message = new MessageDTO();
 		
 		resetHistorial();
+		
+		loadChat();
+	}
+	
+	private void loadChat() {
+		Map<String,String> params = JsfHelper.getExternalContext().getRequestParameterMap();
+		String id = params.get("id");
+		
+		if (StringUtils.isNotBlank(id)) {
+			conversationId = id;
+			selectedConversation = chatService.getConversation(id);
+			chatTitle = selectedConversation.getNombre();
+			rebuildHistorial();
+		}
 	}
 	
 	public void nuevo() {
@@ -157,7 +174,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
         lastChatResponse.set(null);
         
         // 1. Obtener historial previo
-        List<Message> historialMessages = chatMemory.get(conversationId);
+        historialMessages = chatMemory.get(conversationId);
         
         // 2. Crear mensaje del usuario
         userMessage = new UserMessage(mensaje);
@@ -243,7 +260,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 	private void rebuildHistorial() {
 		historial.clear();
 		historial.addAll(Optional.ofNullable(chatMemory)
-		            .filter(cm -> StringUtils.isNotBlank(conversationId) && completionMessageShown)
+		            .filter(cm -> StringUtils.isNotBlank(conversationId))
 		            .map(cm -> cm.get(conversationId))
 		            .filter(Objects::nonNull)
 		            .map(AIUtils::convertirAParesDTO)

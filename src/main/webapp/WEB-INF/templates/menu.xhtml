@@ -38,8 +38,11 @@
 		                    </div>
 		                    
 		                    <div class="product-list-action">
-		                        <p:commandButton type="button" icon="pi pi-eye"
-									styleClass="edit-button rounded-button ui-button-success"/>
+		                        <p:button icon="pi pi-eye"
+		                        	outcome="chat"
+									styleClass="edit-button rounded-button ui-button-success">
+									<f:param name="id" value="#{conversation.conversationId}" />
+								</p:button>
 		                    </div>
 		                </div>
 		            </p:dataViewListItem>
