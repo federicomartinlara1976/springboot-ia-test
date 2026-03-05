@@ -134,7 +134,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		conversationId = UUID.randomUUID().toString();
 		selectedConversation = new ConversationDTO();
 		selectedConversation.setConversationId(conversationId);
-		selectedConversation.setNombre(conversationId);
+		selectedConversation.setNombre(StringUtils.EMPTY);
 		selectedConversation.setFechaCreacion(new Date());
 		chatService.save(selectedConversation);
 		
