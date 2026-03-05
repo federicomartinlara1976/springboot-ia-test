@@ -89,10 +89,9 @@
 				                        <p:commandButton icon="pi pi-eye"
 											styleClass="edit-button rounded-button ui-button-success"
 											action="#{chatBean.verMensaje}"
-											process="@this" update="peticion,respuesta,info-content">
+											process="@this" update="peticion,respuesta">
 											<f:setPropertyActionListener value="#{message}"
 												target="#{chatBean.message}" />
-											<p:resetInput target="info-content" />
 										</p:commandButton>
 				                    </div>
 				                </div>
@@ -112,16 +111,6 @@
 		                  Respuesta
 		         	</f:facet>
 		
-					<f:facet name="actions">
-			            <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" title="Info"
-			            	rendered="#{not empty chatBean.htmlContent}"
-			            	disabled="#{chatBean.status eq 'RUNNING'}"
-			            	oncomplete="PF('infoDialog').show()">
-			                    <h:outputText styleClass="ui-icon pi pi-info-circle"/>
-			            </p:commandLink>
-			            
-					</f:facet>
-		
 					<div class="ui-g ui-fluid">
 						<div class="ui-g-12 overflow" style="height:450px;">
 	        				<h:outputText value="#{chatBean.htmlContent}" escape="false" />
@@ -132,34 +121,13 @@
 				
 				<!-- Poll que cada medio segundo actualiza el chat -->
 	    		<p:poll id="updater" interval="50" intervalType="millisecond" 
-	    			update="peticion,respuesta,info-content" 
+	    			update="peticion,respuesta" 
 	            	listener="#{chatBean.checkUpdates}" 
 	            	autoStart="true" 
 	            	stop="#{not chatBean.pollActive}" />
 			</p:outputPanel>
             	
 		</p:outputPanel>
-		
-		<p:dialog id="infoDialog" header="Response info" showEffect="fade"
-			modal="true" widgetVar="infoDialog" responsive="true" position="center"
-			resizable="false" appendTo="@(form)">
-			<p:outputPanel id="info-content" class="ui-fluid">
-				<div class="field ui-g-12">
-					<div class="ui-g-4">
-						<span><b>Request timestamp</b></span>
-					</div>
-					<div class="ui-g-8">
-						<span><h:outputText value="#{chatBean.message.requestTime}"/></span>
-					</div>
-					<div class="ui-g-4">
-						<span><b>Response timestamp</b></span>
-					</div>
-					<div class="ui-g-8">
-						<span><h:outputText value="#{chatBean.message.responseTime}"/></span>
-					</div>
-				</div>
-			</p:outputPanel>
-		</p:dialog>
 		
 		<p:dialog id="saveDialog" header="Guardar como" showEffect="fade"
 			modal="true" widgetVar="saveDialog" responsive="true" position="center"
