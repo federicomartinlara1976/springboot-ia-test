@@ -8,7 +8,6 @@ import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 
 import net.bounceme.chronos.inteligenciaartificial.dto.ConversationDTO;
-import net.bounceme.chronos.inteligenciaartificial.dto.MessageDTO;
 import reactor.core.publisher.Flux;
 
 public interface ChatService {
@@ -19,7 +18,7 @@ public interface ChatService {
 	
 	ChatResponseMetadata getChatResponseMetadata();
 
-	void save(ConversationDTO selectedConversation, List<MessageDTO> historial);
+	void save(ConversationDTO selectedConversation);
 	
 	List<ConversationDTO> getConversations();
 }

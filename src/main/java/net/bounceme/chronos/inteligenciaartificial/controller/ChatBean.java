@@ -117,7 +117,9 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		conversationId = UUID.randomUUID().toString();
 		selectedConversation = new ConversationDTO();
 		selectedConversation.setConversationId(conversationId);
+		selectedConversation.setNombre(conversationId);
 		selectedConversation.setFechaCreacion(new Date());
+		chatService.save(selectedConversation);
 		
 		chatTitle = conversationId;
 		mensaje = StringUtils.EMPTY;
@@ -130,7 +132,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 
 	@SneakyThrows
 	public void guardar() {
-		chatService.save(selectedConversation, historial);
+		chatService.save(selectedConversation);
 		chatTitle = selectedConversation.getNombre();
 		
 		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Guardado", "Conversación guardada");
