@@ -123,10 +123,12 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
 		String id = params.get("id");
 		
 		if (StringUtils.isNotBlank(id)) {
-			conversationId = id;
-			selectedConversation = chatService.getConversation(id);
-			chatTitle = selectedConversation.getNombre();
-			rebuildHistorial();
+			chatService.getConversation(id).ifPresent(c -> {
+				selectedConversation = c;
+				chatTitle = selectedConversation.getNombre();
+				conversationId = c.getConversationId();
+				rebuildHistorial();
+			});
 		}
 	}
 	

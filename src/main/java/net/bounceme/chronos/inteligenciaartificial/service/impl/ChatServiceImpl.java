@@ -2,6 +2,7 @@ package net.bounceme.chronos.inteligenciaartificial.service.impl;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.apache.commons.lang.StringUtils;
 import org.modelmapper.ModelMapper;
@@ -82,10 +83,9 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public ConversationDTO getConversation(String id) {
+	public Optional<ConversationDTO> getConversation(String id) {
 		return conversationRepository.findById(id)
-				.map(c -> modelMapper.map(c, ConversationDTO.class))
-				.get();
+				.map(c -> modelMapper.map(c, ConversationDTO.class));
 	}
 
 	@Override

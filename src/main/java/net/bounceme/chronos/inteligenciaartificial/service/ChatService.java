@@ -1,6 +1,7 @@
 package net.bounceme.chronos.inteligenciaartificial.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
@@ -22,7 +23,7 @@ public interface ChatService {
 	
 	List<ConversationDTO> getConversations();
 
-	ConversationDTO getConversation(String id);
+	Optional<ConversationDTO> getConversation(String id);
 
 	void deleteConversation(ConversationDTO selectedConversation);
 }
