@@ -89,8 +89,6 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
     @Getter
     private transient List<MessageDTO> historial;
     
-    private transient List<Message> historialMessages;
-    
     @Getter
     @Setter
     private transient MessageDTO message;
@@ -176,7 +174,7 @@ public class ChatBean extends ChatSelectorBean implements Serializable {
         lastChatResponse.set(null);
         
         // 1. Obtener historial previo
-        historialMessages = chatMemory.get(conversationId);
+        List<Message> historialMessages = chatMemory.get(conversationId);
         
         // 2. Crear mensaje del usuario
         userMessage = new UserMessage(mensaje);
