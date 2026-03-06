@@ -131,6 +131,13 @@ label, .layout-footer {
 	color: #222;
 }
 
+.layout-wrapper .layout-main {
+	background-image: url("/springboot-ia-test/resources/images/fondo.jpg");
+	background-size: cover;  
+  	background-position: top right; /* imagen en esquina superior derecha */
+  	background-repeat: no-repeat; 
+}
+
 .layout-footer {
 	width: 100%;
 	color: #bdbdbd;
