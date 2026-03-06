@@ -29,106 +29,15 @@
 				</ul>
 			</p:panel>
 			
-			<!-- Formulario de envío al chat -->
-			<p:panel styleClass="ui-g-12 ui-md-12 ui-lg-6">
-				<f:facet name="header">
-					<i class="pi pi-send"></i>
-	             	Pregunta
-	       		</f:facet>
-	              
-	         	<f:facet name="actions">
-	         		<p:outputLabel for="models" >Modelos</p:outputLabel>
-					<p:selectOneMenu id="models"
-						value="#{chatBean.selectedChatModel}">
-
-						<f:selectItems value="#{chatBean.options}"/>
-
-						<p:ajax event="valueChange"
-							listener="#{chatBean.modelChanged}"/>
-
-					</p:selectOneMenu>
-		            
-		            <p:commandButton icon="pi pi-send" process="mensaje @this" update="respuesta"
-		            	actionListener="#{chatBean.enviar}"
-						styleClass="edit-button rounded-button ui-button-success"/>
-		            
-				</f:facet>
+			<p:panel styleClass="ui-g-12 ui-md-12 ui-lg-12" header="Opciones">
 	
 				<div class="ui-g ui-fluid">
 					<div class="ui-g-12">
-						<p:inputTextarea id="mensaje" value="#{chatBean.mensaje}"
-							placeholder="Escribe el mensaje..." 
-							rows="10" cols="50" widgetVar="mensajeWidget" />
+        				
 					</div>
 				</div>
 	
 			</p:panel>
-			
-			<!-- Respuesta del chat -->
-			<p:panel id="respuesta" styleClass="ui-g-12 ui-md-12 ui-lg-6">
-				<f:facet name="header">
-					<i class="pi pi-send"></i>
-	                  Respuesta
-	         	</f:facet>
-	
-				<f:facet name="actions">
-		            <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" title="Info"
-		            	rendered="#{not empty chatBean.htmlContent}"
-		            	oncomplete="PF('infoDialog').show()">
-		                    <h:outputText styleClass="ui-icon pi pi-info-circle"/>
-		            </p:commandLink>
-		            
-				</f:facet>
-	
-				<div class="ui-g ui-fluid">
-					<div class="ui-g-12 overflow" style="height:450px;">
-        				<h:outputText value="#{chatBean.htmlContent}" escape="false" />
-					</div>
-				</div>
-	
-				<!-- Poll que cada 1 segundo actualiza el panel de respuesta -->
-	    		<p:poll interval="1" update="respuesta,info-content,messages" 
-	            	listener="#{chatBean.checkUpdates}" 
-	            	autoStart="true" 
-	            	stop="#{not chatBean.pollActive}" />
-	
-			</p:panel>
-            	
 		</p:outputPanel>
-		
-		<p:dialog id="infoDialog" header="Response info" showEffect="fade"
-			modal="true" widgetVar="infoDialog" responsive="true" position="center"
-			resizable="false"
-			appendTo="@(body)">
-			<p:outputPanel id="info-content" class="ui-fluid">
-				<div class="field ui-g-12">
-					<div class="ui-g-4">
-						<span><b>Id</b></span>
-					</div>
-					<div class="ui-g-8">
-						<span><h:outputText value="#{chatBean.chatResponseMetadata.id}"/></span>
-					</div>
-				</div>
-				<div class="ui-g-12">
-					<div class="ui-g-4">
-						<span><b>Usage</b></span>
-					</div>
-					<div class="ui-g-8">
-						<p:panelGrid columns="2" layout="grid">
-		                    <p:outputLabel value="Prompt tokens:" />
-		                    <p:outputLabel value="#{chatBean.chatResponseMetadata.usage.promptTokens}" />
-		                    
-		                    <p:outputLabel value="Completion tokens:" />
-		                    <p:outputLabel value="#{chatBean.chatResponseMetadata.usage.completionTokens}" />
-		                    
-		                    <p:outputLabel value="Total tokens:" />
-		                    <p:outputLabel value="#{chatBean.chatResponseMetadata.usage.totalTokens}" />
-		                    
-		                </p:panelGrid>
-					</div>
-				</div>
-			</p:outputPanel>
-		</p:dialog>
-		
 	</ui:define>
 </ui:composition>

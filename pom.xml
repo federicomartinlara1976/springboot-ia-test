@@ -12,7 +12,7 @@
 	
 	<groupId>net.bounceme.chronos.inteligenciaartificial</groupId>
 	<artifactId>springboot-ia-test</artifactId>
-	<version>1.0.14</version>
+	<version>1.0.15</version>
 	<name>springboot-ia-test</name>
 	<description>Servicio para probar funcionalidades de motores de IA</description>
 	<packaging>war</packaging>
@@ -70,6 +70,12 @@
 	</dependencyManagement>
 	
 	<dependencies>
+		
+		<dependency>
+		    <groupId>org.springframework.ai</groupId>
+		    <artifactId>spring-ai-client-chat</artifactId>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
 			<artifactId>spring-ai-starter-model-mistral-ai</artifactId>
@@ -78,6 +84,35 @@
 		<dependency>
 		    <groupId>org.springframework.ai</groupId>
 		    <artifactId>spring-ai-starter-model-deepseek</artifactId>
+		</dependency>
+		
+		<!-- Repositorio JDBC para memoria de chat (núcleo) -->
+		<dependency>
+		    <groupId>org.springframework.ai</groupId>
+		    <artifactId>spring-ai-model-chat-memory-repository-jdbc</artifactId>
+		</dependency>
+		
+		<!-- Driver MySQL -->
+		<dependency>
+		    <groupId>com.mysql</groupId>
+		    <artifactId>mysql-connector-j</artifactId>
+		    <scope>runtime</scope>
+		</dependency>
+		
+		<!-- Spring Boot Starter JDBC -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
 		
 		<dependency>
@@ -174,6 +209,20 @@
 		    <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
 		    <artifactId>owasp-java-html-sanitizer</artifactId>
 		    <version>20220608.1</version>
+		</dependency>
+		
+		<!-- ModelMapper -->
+		<dependency>
+      		<groupId>org.modelmapper</groupId>
+      		<artifactId>modelmapper</artifactId>
+      		<version>3.1.0</version>
+    	</dependency>
+    	
+    	<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-collections4</artifactId>
+		    <version>4.5.0</version>
+		    <scope>compile</scope>
 		</dependency>
 	</dependencies>
 
