@@ -1,7 +1,6 @@
 package net.bounceme.chronos.inteligenciaartificial.aspect.impl;
 
 import java.util.Date;
-import java.util.Objects;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -28,13 +27,7 @@ public class BeforeSaveAspect {
 		 */
 		Conversation conversation  = (Conversation) args[0];
 		
-		Date dateTag = new Date();
-		
-		if (Objects.isNull(conversation.getCreateTime())) {
-			conversation.setCreateTime(dateTag);
-		}
-
-		conversation.setUpdateTime(dateTag);
+		conversation.setUpdateTime(new Date());
 
 		return args;
 	}
