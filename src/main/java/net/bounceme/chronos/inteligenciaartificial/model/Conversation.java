@@ -1,6 +1,7 @@
 package net.bounceme.chronos.inteligenciaartificial.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,27 +9,29 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "SPRING_AI_CONVERSATIONS")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Conversation extends CamposControl implements Serializable {
+@Data
+public class Conversation implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "conversation_id")
-	@Getter
-	@Setter
 	private String conversationId;
 	
 	@Column(name = "name")
-	@Getter
-	@Setter
 	private String nombre;
+	
+	@Column(name = "create_timestamp")
+	private Date createTime;
+
+	@Column(name = "update_timestamp")
+	private Date updateTime;
 }

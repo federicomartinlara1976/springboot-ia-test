@@ -9,7 +9,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.context.annotation.Configuration;
 
 import lombok.extern.slf4j.Slf4j;
-import net.bounceme.chronos.inteligenciaartificial.model.CamposControl;
+import net.bounceme.chronos.inteligenciaartificial.model.Conversation;
 
 @Configuration
 @Aspect
@@ -26,15 +26,15 @@ public class BeforeSaveAspect {
 		 * Para la operación de guardado save, sólo hay un argumento, por lo tanto
 		 * sólo se recogerá el primero.
 		 */
-		CamposControl camposControl  = (CamposControl) args[0];
+		Conversation conversation  = (Conversation) args[0];
 		
 		Date dateTag = new Date();
 		
-		if (Objects.isNull(camposControl.getCreateTime())) {
-			camposControl.setCreateTime(dateTag);
+		if (Objects.isNull(conversation.getCreateTime())) {
+			conversation.setCreateTime(dateTag);
 		}
 
-		camposControl.setUpdateTime(dateTag);
+		conversation.setUpdateTime(dateTag);
 
 		return args;
 	}

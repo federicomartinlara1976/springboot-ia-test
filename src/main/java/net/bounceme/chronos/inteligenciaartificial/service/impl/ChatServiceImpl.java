@@ -1,5 +1,6 @@
 package net.bounceme.chronos.inteligenciaartificial.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -69,9 +70,10 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	@Transactional
 	public void save(ConversationDTO selectedConversation) {
-		Conversation conversation = modelMapper.map(selectedConversation, Conversation.class);
-		
-		conversationRepository.save(conversation);
+		conversationRepository.findById(selectedConversation.getConversationId())
+			.ifPresent(c -> {
+				conversationRepository.save(c);
+			});
 	}
 
 	@Override
