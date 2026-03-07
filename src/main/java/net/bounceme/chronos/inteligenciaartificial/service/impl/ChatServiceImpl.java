@@ -70,10 +70,14 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	@Transactional
 	public void save(ConversationDTO selectedConversation) {
-		conversationRepository.findById(selectedConversation.getConversationId())
-			.ifPresent(c -> {
-				conversationRepository.save(c);
-			});
+	    Conversation conversation = conversationRepository
+	            .findById(selectedConversation.getConversationId())
+	            .orElseGet(() -> {
+	                Conversation newConv = modelMapper.map(selectedConversation, Conversation.class);
+	                newConv.setCreateTime(new Date());
+	                return newConv;
+	            });
+	    conversationRepository.save(conversation);
 	}
 
 	@Override
