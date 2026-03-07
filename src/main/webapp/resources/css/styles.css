@@ -131,6 +131,12 @@ label, .layout-footer {
 	color: #222;
 }
 
+.layout-wrapper .layout-main {
+	background: 
+		url("/springboot-ia-test/resources/images/pngegg.png") no-repeat left/cover,
+		linear-gradient(to right, #fff, #eef2f6);
+}
+
 .layout-footer {
 	width: 100%;
 	color: #bdbdbd;
@@ -288,7 +294,11 @@ footer span {
     padding: 1rem;
     box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
     margin-bottom: 2rem;
-    background-color: #eef2f6;
+    /*background-color: #eef2f6;*/
+    background: 
+    	linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), 
+    	url("/springboot-ia-test/resources/images/pngegg_product.png") left/cover,
+    	linear-gradient(to right, #eef2f6, #fff);
 }
 
 .product-list-item img, .product-grid-item img {
@@ -385,4 +395,24 @@ footer span {
 
 .overflow {
 	overflow: auto;
+}
+
+.ui-sidebar.ui-sidebar-left {
+	box-shadow: 3px 0 25px lightgray inset;
+	background: 
+		url("/springboot-ia-test/resources/images/pngegg_side.png") no-repeat -1024px 266px,
+		linear-gradient(to right, #eef2f6, #fff);
+}
+
+.ui-sidebar.ui-sidebar-left .product-list-item {
+	display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 1rem;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
+    margin-bottom: 2rem;
+    /*background-color: #eef2f6;*/
+    background: 
+    	linear-gradient(to right, #eef2f6, #fff);
 }
