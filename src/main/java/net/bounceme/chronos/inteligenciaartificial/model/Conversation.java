@@ -1,5 +1,6 @@
 package net.bounceme.chronos.inteligenciaartificial.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -17,15 +18,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Conversation {
+public class Conversation implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "conversation_id")
-    private String conversationId;
+	private String conversationId;
 	
 	@Column(name = "name")
 	private String nombre;
 	
-	@Column(name = "timestamp")
-	private Date fechaCreacion;
+	@Column(name = "create_timestamp")
+	private Date createTime;
+
+	@Column(name = "update_timestamp")
+	private Date updateTime;
 }
