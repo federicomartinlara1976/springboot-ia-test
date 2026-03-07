@@ -77,6 +77,8 @@ public class ChatServiceImpl implements ChatService {
 	                newConv.setCreateTime(new Date());
 	                return newConv;
 	            });
+	    
+	    conversation.setNombre(selectedConversation.getNombre());
 	    conversationRepository.save(conversation);
 	}
 
