@@ -16,5 +16,8 @@ public class CommonJoinPointConfig {
 	
 	@Pointcut("@annotation(net.bounceme.chronos.inteligenciaartificial.aspect.annotations.ShowTime)")
 	public void showTimeAnnotation(){}
+	
+	@Pointcut("@annotation(net.bounceme.chronos.inteligenciaartificial.aspect.annotations.BeforeSave)")
+	public void beforeSaveAnnotation(){}
 
 }
