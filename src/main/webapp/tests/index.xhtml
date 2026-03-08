@@ -8,6 +8,17 @@
 
 	<ui:define name="content">
 		<p:outputPanel styleClass="dashboard">
+			<p:outputPanel styleClass="ui-g-12" style="padding: 1em;">
+				<p:toolbar id="toolbar">
+					<p:toolbarGroup align="left">
+						
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<h5><h:outputText value="Tests"/></h5>
+					</p:toolbarGroup>
+				</p:toolbar>
+			</p:outputPanel>
+		
 			<!-- Tarjeta de bienvenida -->
 			<p:panel styleClass="ui-g-12 ui-md-12 ui-lg-12">
 				<f:facet name="header">
@@ -26,7 +37,7 @@
 				
 				<div class="ui-g ui-fluid">
 					<div class="ui-g-12">
-        				<p:outputPanel styleClass="ui-g-12 ui-lg-3">
+        				<p:outputPanel styleClass="ui-g-12 ui-lg-6">
         					<div class="card shadow">
         						<p:commandLink action="testEntidad">
 	        						<p:graphicImage styleClass="card-img-top" title="Chat"
@@ -38,7 +49,7 @@
 								</p:commandLink>
         					</div>
         				</p:outputPanel>
-        				<p:outputPanel styleClass="ui-g-12 ui-lg-3">
+        				<p:outputPanel styleClass="ui-g-12 ui-lg-6">
         					<div class="card shadow">
         						<p:commandLink action="testListEntidad">
 	        						<p:graphicImage styleClass="card-img-top" title="Chat"
@@ -50,19 +61,19 @@
 								</p:commandLink>
         					</div>
         				</p:outputPanel>
-        				<p:outputPanel styleClass="ui-g-12 ui-lg-3">
+        				<p:outputPanel styleClass="ui-g-12 ui-lg-6">
         					<div class="card shadow">
         						<p:commandLink action="testEntidadFormato">
 	        						<p:graphicImage styleClass="card-img-top" title="Chat"
 										value="#{resource['images/usuario.png']}"
 										style="width: 128px"/>
 									<div class="card-body">
-										<h5 class="card-title">Lista de actores</h5>
+										<h5 class="card-title">Películas de un actor</h5>
 									</div>
 								</p:commandLink>
         					</div>
         				</p:outputPanel>
-        				<p:outputPanel styleClass="ui-g-12 ui-lg-3">
+        				<p:outputPanel styleClass="ui-g-12 ui-lg-6">
         					<div class="card shadow">
         						<p:commandLink action="testListaFestivos">
 	        						<p:graphicImage styleClass="card-img-top" title="Chat"
