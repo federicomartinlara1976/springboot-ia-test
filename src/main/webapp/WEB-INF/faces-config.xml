@@ -31,6 +31,15 @@
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
+			<from-outcome>tests</from-outcome>
+			<to-view-id>/tests/index.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
 			<from-outcome>testEntidad</from-outcome>
 			<to-view-id>/tests/testEntidad.xhtml</to-view-id>
 			<redirect/>
