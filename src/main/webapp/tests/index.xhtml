@@ -11,23 +11,16 @@
 			<p:outputPanel styleClass="ui-g-12" style="padding: 1em;">
 				<p:toolbar id="toolbar">
 					<p:toolbarGroup align="left">
-						
+						<p:breadCrumb>
+				            <p:menuitem value="Inicio" action="index"/>
+				            <p:menuitem value="Tests" disabled="true"/>
+				        </p:breadCrumb>	
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
 						<h5><h:outputText value="Tests"/></h5>
 					</p:toolbarGroup>
 				</p:toolbar>
 			</p:outputPanel>
-		
-			<!-- Tarjeta de bienvenida -->
-			<p:panel styleClass="ui-g-12 ui-md-12 ui-lg-12">
-				<f:facet name="header">
-					<i class="pi pi-star-fill"></i>
-	                Tests
-	            </f:facet>
-	
-				<p class="p-m-0">Tests de generación</p>
-			</p:panel>
 			
 			<p:panel styleClass="ui-g-12 ui-md-12 ui-lg-12">
 				<f:facet name="header">
