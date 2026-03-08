@@ -18,12 +18,12 @@
 				<p class="p-m-0">Esta es una aplicación modular que demuestra las
 					funcionalidades de <b>Spring</b> de IA generativa</p>
 				<ul>
-					<li>JSF con JoinFaces</li>
+					<li>JSF con <b>Primefaces</b></li>
 					<li>
 						<span>IA generativa</span>
 						<ul>
 							<li><b>Principal: </b>Mistral AI</li>
-							<li><b>Opcional: </b>Deepseek</li>
+							<li><b>Opcionales: </b>Deepseek, Anthropic</li>
 						</ul>
 					</li>
 				</ul>
@@ -33,7 +33,42 @@
 	
 				<div class="ui-g ui-fluid">
 					<div class="ui-g-12">
-        				
+        				<p:outputPanel styleClass="ui-g-12 ui-lg-3">
+        					<div class="card shadow">
+        						<p:commandLink action="chat">
+	        						<p:graphicImage styleClass="card-img-top" title="Chat"
+										value="#{resource['images/robot-conversacional.png']}"
+										style="width: 128px"/>
+									<div class="card-body">
+										<h5 class="card-title">Chat interactivo</h5>
+									</div>
+								</p:commandLink>
+        					</div>
+        				</p:outputPanel>
+        				<p:outputPanel styleClass="ui-g-12 ui-lg-3">
+        					<div class="card shadow">
+        						<p:commandLink action="temaProgramacion">
+	        						<p:graphicImage styleClass="card-img-top" title="Chat"
+										value="#{resource['images/java.png']}"
+										style="width: 128px"/>
+									<div class="card-body">
+										<h5 class="card-title">Programación</h5>
+									</div>
+								</p:commandLink>
+        					</div>
+        				</p:outputPanel>
+        				<p:outputPanel styleClass="ui-g-12 ui-lg-3">
+        					<div class="card shadow">
+        						<p:commandLink action="temaAstronomia">
+	        						<p:graphicImage styleClass="card-img-top" title="Chat"
+										value="#{resource['images/astronomia.png']}"
+										style="width: 128px"/>
+									<div class="card-body">
+										<h5 class="card-title">Astronomía</h5>
+									</div>
+								</p:commandLink>
+        					</div>
+        				</p:outputPanel>	
 					</div>
 				</div>
 	

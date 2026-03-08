@@ -4,7 +4,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
-	<div class="layout-footer">
+	<div class="layout-footer ui-g">
 
 		<div class="ui-g-12 ui-md-6 ui-lg-4">
 			<span class="logo text first">
@@ -16,40 +16,35 @@
 			<div class="ui-g-12">
 				<span class="logo first text"><h:outputText value="Powered by" escape="true" /></span>
 			</div>
-			<div class="ui-g-3">
-				<h:outputLink value="https://mistral.ai/"
-					target="_blank">
-					<p:graphicImage styleClass="icon64 first" title="Mistral AI"
-						value="#{resource['images/mistral-color.png']}"/>
-				</h:outputLink>
-			</div>
-			<div class="ui-g-3">
-				<h:outputLink value="https://www.deepseek.com/"
-					target="_blank">
-					<p:graphicImage styleClass="icon64 first" title="DeepSeek"
-						value="#{resource['images/deepseek-color.png']}"/>
-				</h:outputLink>
-			</div>
-			<div class="ui-g-3">
-				<h:outputLink value="https://www.primefaces.org/"
-					target="_blank">
-					<p:graphicImage styleClass="icon64w first" title="Primefaces"
-						value="#{resource['images/primefaces.png']}"/>
-				</h:outputLink>
-			</div>
-			<div class="ui-g-3">
-				<h:outputLink value="https://spring.io/ai"
-					target="_blank">
-					<p:graphicImage styleClass="icon64w first" title="Spring AI"
-						value="#{resource['images/spring-ai.png']}"/>
-				</h:outputLink>
-			</div>
-			<div class="ui-g-3">
-				<h:outputLink value="https://tomcat.apache.org"
-					target="_blank">
-					<p:graphicImage styleClass="icon64w first" title="Tomcat"
-						value="#{resource['images/tomcat.png']}"/>
-				</h:outputLink>
+			<div class="ui-g-12">
+				<div class="ui-g-3">
+					<h:outputLink value="https://mistral.ai/"
+						target="_blank">
+						<p:graphicImage styleClass="icon64w" title="Mistral AI"
+							value="#{resource['images/mistral-color.png']}"/>
+					</h:outputLink>
+				</div>
+				<div class="ui-g-3">
+					<h:outputLink value="https://www.deepseek.com/"
+						target="_blank">
+						<p:graphicImage styleClass="icon64w" title="DeepSeek"
+							value="#{resource['images/deepseek-color.png']}"/>
+					</h:outputLink>
+				</div>
+				<div class="ui-g-3">
+					<h:outputLink value="https://www.anthropic.com/"
+						target="_blank">
+						<p:graphicImage styleClass="icon64" title="Anthropic"
+							value="#{resource['images/icons8-claude-ai-96.png']}"/>
+					</h:outputLink>
+				</div>
+				<div class="ui-g-3">
+					<h:outputLink value="https://www.primefaces.org/"
+						target="_blank">
+						<p:graphicImage styleClass="icon64w" title="Primefaces"
+							value="#{resource['images/primefaces.png']}"/>
+					</h:outputLink>
+				</div>
 			</div>
 		</div>
 
