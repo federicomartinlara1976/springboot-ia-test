@@ -52,15 +52,11 @@
 				<div class="ui-g ui-fluid">
 					<div class="field ui-g-12 ui-md-12 ui-lg-6">
 						<p:outputLabel for="year" value="Año"/>
-                		<p:inputNumber id="year" value="#{testListFestivosBean.year}" minValue="1" decimalPlaces="0">
-                			<f:validateBean for="year"/>
-                		</p:inputNumber>
+                		<p:inputNumber id="year" value="#{testListFestivosBean.year}" minValue="1" decimalPlaces="0"/>
 					</div>
 					<div class="field ui-g-12 ui-md-12 ui-lg-6">
 						<p:outputLabel for="pais" value="País"/>
-						<p:inputText id="pais" value="#{testListFestivosBean.pais}">
-							<f:validateBean for="pais"/>
-						</p:inputText>
+						<p:inputText id="pais" value="#{testListFestivosBean.pais}"/>
 					</div>
 				</div>
 	
