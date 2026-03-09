@@ -13,7 +13,7 @@ public class MessageId implements Serializable {
     
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="conversation_id")
+	@Column(name="conversation_id",insertable=false, updatable=false)
 	private String conversationId;
     
 	private Date timestamp;

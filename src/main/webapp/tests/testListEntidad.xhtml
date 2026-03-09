@@ -9,6 +9,21 @@
 	<ui:define name="content">
 		<p:outputPanel styleClass="dashboard">
 			
+			<p:outputPanel styleClass="ui-g-12" style="padding: 1em;">
+				<p:toolbar id="toolbar">
+					<p:toolbarGroup align="left">
+						<p:breadCrumb>
+							<p:menuitem value="Inicio" action="index"/>
+				            <p:menuitem value="Tests" action="tests"/>
+				            <p:menuitem value="Devolver una lista de entidades" disabled="true"/>
+				        </p:breadCrumb>		
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<h5><h:outputText value="Devolver una lista de entidades"/></h5>
+					</p:toolbarGroup>
+				</p:toolbar>
+			</p:outputPanel>
+			
 			<!-- Formulario de envío al chat -->
 			<p:panel styleClass="ui-g-12 ui-md-12 ui-lg-6">
 				<f:facet name="header">

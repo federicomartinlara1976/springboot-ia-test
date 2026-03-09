@@ -8,83 +8,81 @@
 
 	<ui:define name="content">
 		<p:outputPanel styleClass="dashboard">
-			<!-- Tarjeta de bienvenida -->
+			<p:outputPanel styleClass="ui-g-12" style="padding: 1em;">
+				<p:toolbar id="toolbar">
+					<p:toolbarGroup align="left">
+						<p:breadCrumb>
+				            <p:menuitem value="Inicio" action="index"/>
+				            <p:menuitem value="Tests" disabled="true"/>
+				        </p:breadCrumb>	
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<h5><h:outputText value="Tests"/></h5>
+					</p:toolbarGroup>
+				</p:toolbar>
+			</p:outputPanel>
+			
 			<p:panel styleClass="ui-g-12 ui-md-12 ui-lg-12">
 				<f:facet name="header">
-					<i class="pi pi-star-fill"></i>
-	                Aplicación de IA generativa
-	                </f:facet>
-	
-				<p class="p-m-0">Esta es una aplicación modular que demuestra las
-					funcionalidades de <b>Spring</b> de IA generativa</p>
-				<ul>
-					<li>JSF con <b>Primefaces</b></li>
-					<li>
-						<span>IA generativa</span>
-						<ul>
-							<li><b>Principal: </b>Mistral AI</li>
-							<li><b>Opcionales: </b>Deepseek, Anthropic</li>
-						</ul>
-					</li>
-				</ul>
-			</p:panel>
-			
-			<p:panel styleClass="ui-g-12 ui-md-12 ui-lg-12" header="Opciones">
-	
+					<i class="pi pi-list"></i>
+	                Menú principal
+	            </f:facet>
+				
 				<div class="ui-g ui-fluid">
 					<div class="ui-g-12">
-        				<p:outputPanel styleClass="ui-g-12 ui-lg-3">
+        				<p:outputPanel styleClass="ui-g-12 ui-lg-6">
         					<div class="card shadow">
-        						<p:commandLink action="chat">
+        						<p:commandLink action="testEntidad">
 	        						<p:graphicImage styleClass="card-img-top" title="Chat"
-										value="#{resource['images/robot-conversacional.png']}"
+										value="#{resource['images/usuario.png']}"
 										style="width: 128px"/>
 									<div class="card-body">
-										<h5 class="card-title">Chat interactivo</h5>
+										<h5 class="card-title">Devolver una entidad</h5>
 									</div>
 								</p:commandLink>
         					</div>
         				</p:outputPanel>
-        				<p:outputPanel styleClass="ui-g-12 ui-lg-3">
+        				<p:outputPanel styleClass="ui-g-12 ui-lg-6">
         					<div class="card shadow">
-        						<p:commandLink action="tests">
+        						<p:commandLink action="testListEntidad">
 	        						<p:graphicImage styleClass="card-img-top" title="Chat"
 										value="#{resource['images/dna-test.png']}"
 										style="width: 128px"/>
 									<div class="card-body">
-										<h5 class="card-title">Tests</h5>
+										<h5 class="card-title">Devolver una lista de entidades</h5>
 									</div>
 								</p:commandLink>
         					</div>
         				</p:outputPanel>
-        				<p:outputPanel styleClass="ui-g-12 ui-lg-3">
+        				<p:outputPanel styleClass="ui-g-12 ui-lg-6">
         					<div class="card shadow">
-        						<p:commandLink action="temaProgramacion">
+        						<p:commandLink action="testEntidadFormato">
 	        						<p:graphicImage styleClass="card-img-top" title="Chat"
-										value="#{resource['images/java.png']}"
+										value="#{resource['images/usuario.png']}"
 										style="width: 128px"/>
 									<div class="card-body">
-										<h5 class="card-title">Programación</h5>
+										<h5 class="card-title">Películas de un actor</h5>
 									</div>
 								</p:commandLink>
         					</div>
         				</p:outputPanel>
-        				<p:outputPanel styleClass="ui-g-12 ui-lg-3">
+        				<p:outputPanel styleClass="ui-g-12 ui-lg-6">
         					<div class="card shadow">
-        						<p:commandLink action="temaAstronomia">
+        						<p:commandLink action="testListaFestivos">
 	        						<p:graphicImage styleClass="card-img-top" title="Chat"
-										value="#{resource['images/astronomia.png']}"
+										value="#{resource['images/abril.png']}"
 										style="width: 128px"/>
 									<div class="card-body">
-										<h5 class="card-title">Astronomía</h5>
+										<h5 class="card-title">Lista de festivos</h5>
 									</div>
 								</p:commandLink>
         					</div>
         				</p:outputPanel>	
 					</div>
 				</div>
-	
 			</p:panel>
+			
 		</p:outputPanel>
+		
 	</ui:define>
 </ui:composition>
