@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -26,7 +25,6 @@ public class TestEntidadFormatoBean extends ChatSelectorBean implements Serializ
 	
 	@Getter
 	@Setter
-	@NotBlank(message = "Campo obligatorio")
 	private String actor;
 	
 	private transient ActorFilmsService actorFilmsService;
