@@ -1,5 +1,7 @@
 package net.bounceme.chronos.inteligenciaartificial.model;
 
+import java.io.Serializable;
+
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -20,7 +22,9 @@ import lombok.Setter;
 @EqualsAndHashCode
 @Getter
 @Setter
-public class Message {
+public class Message implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private MessageId id;
