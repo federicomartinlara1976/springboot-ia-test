@@ -119,7 +119,10 @@
 		
 				</p:panel>
 				
-				<!-- Poll que cada medio segundo actualiza el chat -->
+				<!--  
+					Se usa un poll que vaya actualizando la respuesta 
+				    cada 50ms ya que se obtiene de forma reactiva 
+				-->
 	    		<p:poll id="updater" interval="50" intervalType="millisecond" 
 	    			update="peticion,respuesta" 
 	            	listener="#{chatBean.checkUpdates}" 
