@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:h="jakarta.faces.html"
+	xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="content">
+		<p:outputPanel styleClass="dashboard">
+		
+			<p:outputPanel styleClass="ui-g-12" style="padding: 1em;">
+				<p:toolbar id="toolbar">
+					<p:toolbarGroup align="left">
+						<p:breadCrumb>
+							<p:menuitem value="Inicio" action="index"/>
+				            <p:menuitem value="Tests" action="tests"/>
+				            <p:menuitem value="Test multimodal" disabled="true"/>
+				        </p:breadCrumb>		
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<h5><h:outputText value="Test multimodal"/></h5>
+					</p:toolbarGroup>
+				</p:toolbar>
+			</p:outputPanel>
+			
+			<!-- Formulario de envío al chat -->
+			<p:panel styleClass="ui-g-12 ui-md-12 ui-lg-6">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	             	Pregunta con imagen
+	       		</f:facet>
+	       		
+	       		<f:facet name="actions">
+	         		<p:outputLabel for="models" >Modelos</p:outputLabel>
+					<p:selectOneMenu id="models"
+						value="#{chatBean.selectedChatModel}">
+
+						<f:selectItems value="#{chatBean.options}"/>
+
+						<p:ajax event="valueChange"
+							listener="#{chatBean.modelChanged}"/>
+
+					</p:selectOneMenu>
+		            
+		            <p:commandButton icon="pi pi-replay" process="@form" update="respuesta"
+		            	actionListener="#{chatMultimodalBean.enviar}"
+						styleClass="edit-button rounded-button ui-button-success"/>
+		            
+				</f:facet>
+	              
+				<div class="ui-g ui-fluid">
+					<div class="field ui-g-12 ui-md-12 ui-lg-12">
+						<p:fileUpload id="upload" listener="#{chatMultimodalBean.handleFileUpload}"
+							value="#{chatMultimodalBean.imagenSubida}"
+							mode="advanced" multiple="false"
+		                    accept=".gif,.jpg,.jpeg,.png"
+		                    update="messages">
+            				<p:validateFile sizeLimit="1000000" fileLimit="1" allowTypes="/(\.|\/)(gif|jpeg|jpg|png)$/" contentType="true" />
+        				</p:fileUpload> 
+					</div>
+					<div class="field ui-g-12 ui-md-12 ui-lg-12">
+						<p:outputLabel for="pregunta" value="Pregunta"/>
+						<p:inputTextarea id="pregunta" value="#{chatMultimodalBean.mensaje}"
+								placeholder="Escribe el mensaje..." 
+								rows="10" cols="50" widgetVar="mensajeWidget"/>
+					</div>
+				</div>
+	
+			</p:panel>
+			
+			<!-- Respuesta del chat -->
+			<p:panel id="respuesta" styleClass="ui-g-12 ui-md-12 ui-lg-6">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	                  <h:outputText value="#{testListFestivosBean.festivosPais.pais}"/>
+	         	</f:facet>
+	
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+        				<p:dataView var="festivo" value="#{testListFestivosBean.festivosPais.festivos}" rows="5" paginator="true"
+		                    rowsPerPageTemplate="5,10,15" paginatorPosition="top"
+		                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		                    gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+
+				            <p:dataViewListItem>
+				                <div class="product-list-item">
+				                    <div class="product-list-detail">
+				                        <div class="product-name">#{festivo.nombre}</div>
+				                    </div>
+				                    
+				                    <div class="product-list-action">
+				                        <p:commandButton icon="pi pi-eye" update="info-content"
+											oncomplete="PF('festivoDialog').show()"
+											styleClass="edit-button rounded-button ui-button-success"
+											process="@this">
+											<f:setPropertyActionListener value="#{festivo}"
+												target="#{testListFestivosBean.festivo}" />
+											<p:resetInput target="info-content" />
+										</p:commandButton>
+				                    </div>
+				                </div>
+				            </p:dataViewListItem>
+				        </p:dataView>
+					</div>
+				</div>
+	
+			</p:panel>
+		</p:outputPanel>
+		
+		<p:dialog id="festivoDialog" header="Festivo info" showEffect="fade"
+			modal="true" widgetVar="festivoDialog" responsive="true" position="center"
+			resizable="false"
+			appendTo="@(body)">
+			<p:outputPanel id="info-content" class="ui-fluid">
+				<div class="field ui-g-12">
+					<div class="ui-g-4">
+						<span><b>Festivo</b></span>
+					</div>
+					<div class="ui-g-8">
+						<span><h:outputText value="#{testListFestivosBean.festivo.nombre}"/></span>
+					</div>
+				</div>
+				<div class="field ui-g-12">
+					<div class="ui-g-4">
+						<span><b>Fecha</b></span>
+					</div>
+					<div class="ui-g-8">
+						<p:datePicker id="from" value="#{testListFestivosBean.festivo.fecha}" 
+		                	disabled="true" pattern="dd/MM/yyyy"
+		                   	showTime="false"/>
+					</div>
+				</div>
+			</p:outputPanel>
+		</p:dialog>
+		
+	</ui:define>
+</ui:composition>
