@@ -43,7 +43,7 @@
 
 					</p:selectOneMenu>
 		            
-		            <p:commandButton icon="pi pi-replay" process="@form" update="respuesta"
+		            <p:commandButton icon="pi pi-replay" process="@form" update="respuesta, messages"
 		            	actionListener="#{chatMultimodalBean.enviar}"
 						styleClass="edit-button rounded-button ui-button-success"/>
 		            
@@ -56,7 +56,7 @@
 							mode="advanced" multiple="false"
 		                    accept=".gif,.jpg,.jpeg,.png"
 		                    update="messages">
-            				<p:validateFile sizeLimit="1000000" fileLimit="1" allowTypes="/(\.|\/)(gif|jpeg|jpg|png)$/" contentType="true" />
+            				<p:validateFile fileLimit="1" allowTypes="/(\.|\/)(gif|jpeg|jpg|png)$/" contentType="true" />
         				</p:fileUpload> 
 					</div>
 					<div class="field ui-g-12 ui-md-12 ui-lg-12">
