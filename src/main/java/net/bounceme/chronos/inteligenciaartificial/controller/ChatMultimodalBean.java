@@ -1,12 +1,12 @@
 package net.bounceme.chronos.inteligenciaartificial.controller;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.apache.commons.lang3.StringUtils;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.file.UploadedFile;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -25,6 +25,7 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
+import net.bounceme.chronos.inteligenciaartificial.util.AIUtils;
 import net.bounceme.chronos.inteligenciaartificial.util.JsfHelper;
 import reactor.core.Disposable;
 
@@ -42,10 +43,6 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 	@Setter
 	private String mensaje;
 	
-	@Getter 
-	@Setter
-	private transient UploadedFile imagenSubida; // Para PrimeFaces
-	
 	@Getter
     private volatile String htmlContent;
 	
@@ -60,6 +57,8 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 	
 	@Getter
 	private String status;
+	
+	private String tempFile;
 	
 	private volatile boolean completionMessageShown = false;
 	
@@ -76,63 +75,61 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 	}
 	
 	public void handleFileUpload(FileUploadEvent event) {
-		imagenSubida = event.getFile();
-		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Correcto", imagenSubida.getFileName() + " se ha subido.");
+		tempFile = AIUtils.createTempFile(event.getFile());
+		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha subido la imagen.");
     }
 	
 	@SneakyThrows
 	public void enviar() {
-		// No se enviará mensaje a no ser que la imagen sea correcta
-		if (!comprobarImagenSubida()) {
-			return;
-		}
-		
-		Media imageMedia = getImageMedia();
-	    
-	    cancelSubscription();
-		
-		// Antes de enviar, limpiar la respuesta
+		// 1. Antes de enviar, cancelar la suscripción anterior y limpiar la respuesta
+		cancelSubscription();
 		initProcess();
         
-        // 2. Crear mensaje del usuario
-        UserMessage userMessage = UserMessage.builder()
-        				.text(mensaje)
-        				.media(imageMedia)
-        				.build();
-        
-        // 3. Construir prompt con historial + nuevo mensaje
-        Prompt prompt = new Prompt(userMessage);
-        
-		subscription = chatService.generationStream(prompt, chatClient)
-				.doOnNext(chatResponse -> {
-                    // Este código se ejecuta en el hilo reactivo por cada fragmento
-                    String chunk = chatResponse.getResult().getOutput().getText();
-                    respuesta.append(chunk);
-                    dumpResponse();
-                    
-                    // Guardamos la última respuesta para usarla al final
-                    lastChatResponse.set(chatResponse);
-                    status = "RUNNING";
-                })
-                .doOnComplete(() -> {
-                    status = "COMPLETADA";
-                    pollActive = false;
-                })
-                .doOnError(error -> {
-                    respuesta.append("\n[Error: " + error.getMessage() + "]");
-                    dumpResponse();
-                    status = "ERROR";
-                    pollActive = false;
-                })
-                .subscribe();
+		getImageMedia().ifPresent(imagen -> {
+			// 2. Crear mensaje del usuario con la imagen
+			UserMessage userMessage = UserMessage.builder()
+    				.text(mensaje)
+    				.media(imagen)
+    				.build();
+			
+			// 3. Construir prompt
+	        Prompt prompt = new Prompt(userMessage);
+	        
+	        subscription = chatService.generationStream(prompt, chatClient)
+					.doOnNext(chatResponse -> {
+	                    // Este código se ejecuta en el hilo reactivo por cada fragmento
+	                    String chunk = chatResponse.getResult().getOutput().getText();
+	                    respuesta.append(chunk);
+	                    dumpResponse();
+	                    
+	                    // Guardamos la última respuesta para usarla al final
+	                    lastChatResponse.set(chatResponse);
+	                    status = "RUNNING";
+	                })
+	                .doOnComplete(() -> {
+	                    status = "COMPLETADA";
+	                    pollActive = false;
+	                })
+	                .doOnError(error -> {
+	                    respuesta.append("\n[Error: " + error.getMessage() + "]");
+	                    dumpResponse();
+	                    status = "ERROR";
+	                    pollActive = false;
+	                })
+	                .subscribe();
+		});
 	}
 
-	private Media getImageMedia() {
-		byte[] imagenBytes = null;
+	private Optional<Media> getImageMedia() {
+		if (!comprobarImagenSubida()) {
+			return Optional.empty();
+		}
 
+		byte[] imagenBytes = null;
+		// TODO - Obtener la imagen del archivo temporal guardado en tempFile
 	    // Si hay imagen subida, leer los bytes AHORA (dentro de la petición JSF)
 	    try {
-	    	imagenBytes = imagenSubida.getContent(); // Obtener bytes directamente
+	    	//imagenBytes = imagenSubida.getContent(); // Obtener bytes directamente
 	    } catch (Exception e) {
             JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, ERROR, 
                 "No se pudo leer la imagen: " + e.getMessage());
@@ -147,7 +144,7 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
             }
         };
         
-        return new Media(MimeTypeUtils.IMAGE_JPEG, imageResource); // Ajusta el MimeType según tu imagen
+        return Optional.of(new Media(MimeTypeUtils.IMAGE_JPEG, imageResource)); // Ajusta el MimeType según tu imagen
 	}
 
 	private void initProcess() {
@@ -159,15 +156,9 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 	}
 
 	private boolean comprobarImagenSubida() {
-		if (Objects.isNull(imagenSubida)) {
+		if (StringUtils.isBlank(tempFile)) {
 			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, ERROR, "No se ha cargado ninguna imagen");
 			return false;
-		}
-		else {
-			if (imagenSubida.getSize() == 0) {
-				JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, ERROR, "Error al cargar la imagen");
-				return false;
-			}
 		}
 		
 		return true;
@@ -193,6 +184,7 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
     @PreDestroy
     public void cleanup() {
         cancelSubscription();
+        AIUtils.deleteTempFile(tempFile);
     }
 
 	private void cancelSubscription() {

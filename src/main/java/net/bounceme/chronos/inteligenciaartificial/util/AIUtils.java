@@ -1,19 +1,29 @@
 package net.bounceme.chronos.inteligenciaartificial.util;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
 import org.primefaces.model.file.UploadedFile;
 import org.springframework.ai.chat.messages.Message;
 
+import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.inteligenciaartificial.dto.MessageDTO;
 import net.bounceme.chronos.inteligenciaartificial.model.ChatMessage;
-import net.bounceme.chronos.inteligenciaartificial.util.Constants.StatusImage;
+import net.bounceme.chronos.utils.io.IOUtils;
 
 @UtilityClass
+@Slf4j
 public class AIUtils {
 	
 	public String ellipsis(String inString, Integer limit) {
@@ -35,6 +45,24 @@ public class AIUtils {
 	    return IntStream.range(0, chatMessages.size() / 2)
 	            .mapToObj(i -> crearDTO(chatMessages.get(i * 2), chatMessages.get(i * 2 + 1)))
 	            .toList();
+	}
+	
+	@SneakyThrows(IOException.class)
+	public String createTempFile(UploadedFile source) {
+		File tempFile = File.createTempFile(source.getFileName(), ".tmp");
+		
+	    try (InputStream inputStream = source.getInputStream();
+	    		OutputStream outputStream = new FileOutputStream(tempFile)) {
+	    	IOUtils.copy(inputStream, outputStream, 8192);
+	    } 
+	    
+	    return tempFile.getAbsolutePath();
+	}
+	
+	@SneakyThrows(IOException.class)
+	public void deleteTempFile(String filePath) {
+		Path path = Paths.get(filePath);
+		Files.delete(path);
 	}
 	
 	private MessageDTO crearDTO(ChatMessage request, ChatMessage response) {
