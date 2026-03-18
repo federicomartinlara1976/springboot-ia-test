@@ -56,7 +56,7 @@
 							mode="advanced" multiple="false"
 		                    accept=".gif,.jpg,.jpeg,.png"
 		                    update="messages">
-            				<p:validateFile fileLimit="1" allowTypes="/(\.|\/)(gif|jpeg|jpg|png)$/" contentType="true" />
+            				<p:validateFile sizeLimit="10000000" fileLimit="1" allowTypes="/(\.|\/)(gif|jpeg|jpg|png)$/" contentType="true" />
         				</p:fileUpload> 
 					</div>
 					<div class="field ui-g-12 ui-md-12 ui-lg-12">
