@@ -60,6 +60,12 @@ public class AIUtils {
 	}
 	
 	@SneakyThrows(IOException.class)
+	public byte[] readFile(String tempFile) {
+		Path path = Paths.get(tempFile);
+		return Files.readAllBytes(path);
+	}
+	
+	@SneakyThrows(IOException.class)
 	public void deleteTempFile(String filePath) {
 		Path path = Paths.get(filePath);
 		Files.delete(path);

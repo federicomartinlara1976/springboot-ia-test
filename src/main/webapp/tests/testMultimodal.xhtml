@@ -43,7 +43,7 @@
 
 					</p:selectOneMenu>
 		            
-		            <p:commandButton icon="pi pi-replay" process="@form" update="respuesta, messages"
+		            <p:commandButton icon="pi pi-replay" process="@form" update="respuesta, updater"
 		            	actionListener="#{chatMultimodalBean.enviar}"
 						styleClass="edit-button rounded-button ui-button-success"/>
 		            
@@ -72,66 +72,29 @@
 			<p:panel id="respuesta" styleClass="ui-g-12 ui-md-12 ui-lg-6">
 				<f:facet name="header">
 					<i class="pi pi-send"></i>
-	                  <h:outputText value="#{testListFestivosBean.festivosPais.pais}"/>
+	                  <h:outputText value="Respuesta"/>
 	         	</f:facet>
 	
 				<div class="ui-g ui-fluid">
-					<div class="ui-g-12">
-        				<p:dataView var="festivo" value="#{testListFestivosBean.festivosPais.festivos}" rows="5" paginator="true"
-		                    rowsPerPageTemplate="5,10,15" paginatorPosition="top"
-		                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-		                    gridIcon="pi pi-th-large" listIcon="pi pi-bars">
-
-				            <p:dataViewListItem>
-				                <div class="product-list-item">
-				                    <div class="product-list-detail">
-				                        <div class="product-name">#{festivo.nombre}</div>
-				                    </div>
-				                    
-				                    <div class="product-list-action">
-				                        <p:commandButton icon="pi pi-eye" update="info-content"
-											oncomplete="PF('festivoDialog').show()"
-											styleClass="edit-button rounded-button ui-button-success"
-											process="@this">
-											<f:setPropertyActionListener value="#{festivo}"
-												target="#{testListFestivosBean.festivo}" />
-											<p:resetInput target="info-content" />
-										</p:commandButton>
-				                    </div>
-				                </div>
-				            </p:dataViewListItem>
-				        </p:dataView>
+					<div class="ui-g ui-fluid">
+						<div class="ui-g-12 overflow" style="height:650px;">
+	        				<h:outputText value="#{chatMultimodalBean.htmlContent}" escape="false" />
+						</div>
 					</div>
 				</div>
 	
 			</p:panel>
+			
+			<!--  
+				Se usa un poll que vaya actualizando la respuesta 
+			    cada 50ms ya que se obtiene de forma reactiva 
+			-->
+    		<p:poll id="updater" interval="50" intervalType="millisecond" 
+    			update="respuesta" 
+            	listener="#{chatMultimodalBean.checkUpdates}" 
+            	autoStart="true" 
+            	stop="#{not chatMultimodalBean.pollActive}" />
 		</p:outputPanel>
-		
-		<p:dialog id="festivoDialog" header="Festivo info" showEffect="fade"
-			modal="true" widgetVar="festivoDialog" responsive="true" position="center"
-			resizable="false"
-			appendTo="@(body)">
-			<p:outputPanel id="info-content" class="ui-fluid">
-				<div class="field ui-g-12">
-					<div class="ui-g-4">
-						<span><b>Festivo</b></span>
-					</div>
-					<div class="ui-g-8">
-						<span><h:outputText value="#{testListFestivosBean.festivo.nombre}"/></span>
-					</div>
-				</div>
-				<div class="field ui-g-12">
-					<div class="ui-g-4">
-						<span><b>Fecha</b></span>
-					</div>
-					<div class="ui-g-8">
-						<p:datePicker id="from" value="#{testListFestivosBean.festivo.fecha}" 
-		                	disabled="true" pattern="dd/MM/yyyy"
-		                   	showTime="false"/>
-					</div>
-				</div>
-			</p:outputPanel>
-		</p:dialog>
 		
 	</ui:define>
 </ui:composition>

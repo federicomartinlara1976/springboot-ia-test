@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.apache.commons.lang3.StringUtils;
-import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -126,10 +125,9 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 		}
 
 		byte[] imagenBytes = null;
-		// TODO - Obtener la imagen del archivo temporal guardado en tempFile
-	    // Si hay imagen subida, leer los bytes AHORA (dentro de la petición JSF)
+		// Si hay imagen subida, leer los bytes AHORA (dentro de la petición JSF)
 	    try {
-	    	//imagenBytes = imagenSubida.getContent(); // Obtener bytes directamente
+	    	imagenBytes = AIUtils.readFile(tempFile);// Obtener bytes directamente
 	    } catch (Exception e) {
             JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, ERROR, 
                 "No se pudo leer la imagen: " + e.getMessage());
@@ -170,13 +168,11 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
     	if ("COMPLETADA".equals(status) && !completionMessageShown) {
     		completionMessageShown = true;
     		
-    		PrimeFaces.current().ajax().update("historial");
-			JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Completada", "Respuesta completada");
+    		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Completada", "Respuesta completada");
         } else if ("ERROR".equals(status) && !completionMessageShown) {
         	completionMessageShown = true;
     		
-    		PrimeFaces.current().ajax().update("historial");
-            JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, ERROR, "Ocurrió un error");
+    		JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, ERROR, "Ocurrió un error");
         }
     }
     
