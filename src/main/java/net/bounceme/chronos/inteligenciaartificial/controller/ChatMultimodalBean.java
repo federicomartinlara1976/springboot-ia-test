@@ -74,8 +74,13 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 	}
 	
 	public void handleFileUpload(FileUploadEvent event) {
-		tempFile = AIUtils.createTempFile(event.getFile());
-		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha subido la imagen.");
+		try {
+			tempFile = AIUtils.createTempFile(event.getFile());
+			JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha subido la imagen.");
+		} catch (Exception e) {
+			log.error("ERROR: ", e);
+			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, ERROR, "Ocurrió un error al subir la imagen.");
+		}
     }
 	
 	@SneakyThrows
@@ -84,7 +89,7 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 		cancelSubscription();
 		initProcess();
         
-		getImageMedia().ifPresent(imagen -> {
+		getImageMedia().ifPresentOrElse(imagen -> {
 			// 2. Crear mensaje del usuario con la imagen
 			UserMessage userMessage = UserMessage.builder()
     				.text(mensaje)
@@ -116,6 +121,10 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 	                    pollActive = false;
 	                })
 	                .subscribe();
+		}, () -> {
+			status = "INICIADA";
+            pollActive = false;
+			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, ERROR, "No se ha cargado ninguna imagen");
 		});
 	}
 
@@ -124,25 +133,25 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 			return Optional.empty();
 		}
 
-		byte[] imagenBytes = null;
 		// Si hay imagen subida, leer los bytes AHORA (dentro de la petición JSF)
 	    try {
-	    	imagenBytes = AIUtils.readFile(tempFile);// Obtener bytes directamente
+	    	byte[] imagenBytes = AIUtils.readFile(tempFile);// Obtener bytes directamente
+	    	
+	    	// Convertir el archivo subido a un Resource
+	        // Crear un ByteArrayResource (implementación de Resource de Spring)
+	        ByteArrayResource imageResource = new ByteArrayResource(imagenBytes) {
+	            @Override
+	            public String getFilename() {
+	                return tempFile; // Para mantener el nombre original
+	            }
+	        };
+	        
+	        return Optional.of(new Media(MimeTypeUtils.IMAGE_JPEG, imageResource)); // Ajusta el MimeType según tu imagen
 	    } catch (Exception e) {
             JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, ERROR, 
                 "No se pudo leer la imagen: " + e.getMessage());
+            return Optional.empty();
 	    }
-	    
-	    // Convertir el archivo subido a un Resource
-        // Crear un ByteArrayResource (implementación de Resource de Spring)
-        ByteArrayResource imageResource = new ByteArrayResource(imagenBytes) {
-            @Override
-            public String getFilename() {
-                return ""; // Para mantener el nombre original
-            }
-        };
-        
-        return Optional.of(new Media(MimeTypeUtils.IMAGE_JPEG, imageResource)); // Ajusta el MimeType según tu imagen
 	}
 
 	private void initProcess() {
@@ -154,12 +163,7 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 	}
 
 	private boolean comprobarImagenSubida() {
-		if (StringUtils.isBlank(tempFile)) {
-			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, ERROR, "No se ha cargado ninguna imagen");
-			return false;
-		}
-		
-		return true;
+		return StringUtils.isNotBlank(tempFile);
 	}
 	
 	// Método que será llamado por el poll para "forzar" la actualización
@@ -168,19 +172,30 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
     	if ("COMPLETADA".equals(status) && !completionMessageShown) {
     		completionMessageShown = true;
     		
+    		deleteTempFileIfExists();
+    		
     		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Completada", "Respuesta completada");
         } else if ("ERROR".equals(status) && !completionMessageShown) {
         	completionMessageShown = true;
+        	
+        	deleteTempFileIfExists();
     		
     		JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, ERROR, "Ocurrió un error");
         }
     }
+
+	private void deleteTempFileIfExists() {
+		if (StringUtils.isNotBlank(tempFile)) {
+			AIUtils.deleteTempFile(tempFile);
+			tempFile = StringUtils.EMPTY;
+		}
+	}
     
     // Opcional: cancelar la suscripción al destruir la vista
     @PreDestroy
     public void cleanup() {
         cancelSubscription();
-        AIUtils.deleteTempFile(tempFile);
+        deleteTempFileIfExists();
     }
 
 	private void cancelSubscription() {

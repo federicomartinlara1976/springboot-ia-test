@@ -43,7 +43,7 @@
 
 					</p:selectOneMenu>
 		            
-		            <p:commandButton icon="pi pi-replay" process="@form" update="respuesta, updater"
+		            <p:commandButton icon="pi pi-replay" process="@form" update="respuesta, updater, messages"
 		            	actionListener="#{chatMultimodalBean.enviar}"
 						styleClass="edit-button rounded-button ui-button-success"
 						disabled="#{chatMultimodalBean.status eq 'RUNNING'}"/>
