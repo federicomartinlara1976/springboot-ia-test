@@ -25,7 +25,7 @@
 			</p:outputPanel>
 			
 			<!-- Formulario de envío al chat -->
-			<p:panel styleClass="ui-g-12 ui-md-12 ui-lg-6">
+			<p:panel id="peticion" styleClass="ui-g-12 ui-md-12 ui-lg-6">
 				<f:facet name="header">
 					<i class="pi pi-send"></i>
 	             	Pregunta con imagen
@@ -45,7 +45,8 @@
 		            
 		            <p:commandButton icon="pi pi-replay" process="@form" update="respuesta, updater"
 		            	actionListener="#{chatMultimodalBean.enviar}"
-						styleClass="edit-button rounded-button ui-button-success"/>
+						styleClass="edit-button rounded-button ui-button-success"
+						disabled="#{chatMultimodalBean.status eq 'RUNNING'}"/>
 		            
 				</f:facet>
 	              
@@ -90,7 +91,7 @@
 			    cada 50ms ya que se obtiene de forma reactiva 
 			-->
     		<p:poll id="updater" interval="50" intervalType="millisecond" 
-    			update="respuesta" 
+    			update="peticion,respuesta,messages" 
             	listener="#{chatMultimodalBean.checkUpdates}" 
             	autoStart="true" 
             	stop="#{not chatMultimodalBean.pollActive}" />
