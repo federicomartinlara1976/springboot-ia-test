@@ -13,13 +13,13 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
+import org.apache.commons.lang3.StringUtils;
 import org.primefaces.model.file.UploadedFile;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.content.Media;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.util.MimeTypeUtils;
 
-import jakarta.faces.application.FacesMessage;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -54,13 +54,28 @@ public class AIUtils {
 	
 	@SneakyThrows(IOException.class)
 	public String createTempFile(UploadedFile source) {
-		// FIXME - Sonar security issue
-		File tempFile = File.createTempFile(source.getFileName(), ".tmp");
-		
-	    try (InputStream inputStream = source.getInputStream();
-	    		OutputStream outputStream = new FileOutputStream(tempFile)) {
-	    	IOUtils.copy(inputStream, outputStream, 8192);
-	    } 
+		// 1. Asegurar directorio
+	    String baseDir = System.getProperty("java.io.tmpdir");
+	    File appTempDir = new File(baseDir, "miapp-uploads");
+	    if (!appTempDir.exists()) {
+	        appTempDir.mkdirs();
+	    }
+	    
+	    // 2. Generar nombre seguro
+	    String originalName = source.getFileName();
+	    String extension = StringUtils.EMPTY;
+	    int dotIndex = originalName.lastIndexOf('.');
+	    if (dotIndex > 0) {
+	        extension = originalName.substring(dotIndex);
+	    }
+	    String safeName = UUID.randomUUID().toString() + extension;
+	    
+	    // 3. Crear archivo y copiar
+	    File tempFile = new File(appTempDir, safeName);
+	    try (InputStream in = source.getInputStream();
+	         OutputStream out = new FileOutputStream(tempFile)) {
+	        IOUtils.copy(in, out, 8192);
+	    }
 	    
 	    return tempFile.getAbsolutePath();
 	}
