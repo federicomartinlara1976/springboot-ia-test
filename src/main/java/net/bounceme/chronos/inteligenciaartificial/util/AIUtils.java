@@ -9,12 +9,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
 import org.primefaces.model.file.UploadedFile;
 import org.springframework.ai.chat.messages.Message;
+import org.springframework.ai.content.Media;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.util.MimeTypeUtils;
 
+import jakarta.faces.application.FacesMessage;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -70,6 +75,26 @@ public class AIUtils {
 	public void deleteTempFile(String filePath) {
 		Path path = Paths.get(filePath);
 		Files.delete(path);
+	}
+	
+	public Optional<Media> getImageMedia(String tempFile) {
+		// Si hay imagen subida, leer los bytes AHORA (dentro de la petición JSF)
+	    try {
+	    	byte[] imagenBytes = readFile(tempFile);// Obtener bytes directamente
+	    	
+	    	// Convertir el archivo subido a un Resource
+	        // Crear un ByteArrayResource (implementación de Resource de Spring)
+	        ByteArrayResource imageResource = new ByteArrayResource(imagenBytes) {
+	            @Override
+	            public String getFilename() {
+	                return tempFile; // Para mantener el nombre original
+	            }
+	        };
+	        
+	        return Optional.of(new Media(MimeTypeUtils.IMAGE_JPEG, imageResource)); // Ajusta el MimeType según tu imagen
+	    } catch (Exception e) {
+            return Optional.empty();
+	    }
 	}
 	
 	private MessageDTO crearDTO(ChatMessage request, ChatMessage response) {

@@ -89,7 +89,7 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 		cancelSubscription();
 		initProcess();
         
-		getImageMedia().ifPresentOrElse(imagen -> {
+		AIUtils.getImageMedia(tempFile).ifPresentOrElse(imagen -> {
 			// 2. Crear mensaje del usuario con la imagen
 			UserMessage userMessage = UserMessage.builder()
     				.text(mensaje)
@@ -128,42 +128,12 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 		});
 	}
 
-	private Optional<Media> getImageMedia() {
-		if (!comprobarImagenSubida()) {
-			return Optional.empty();
-		}
-
-		// Si hay imagen subida, leer los bytes AHORA (dentro de la petición JSF)
-	    try {
-	    	byte[] imagenBytes = AIUtils.readFile(tempFile);// Obtener bytes directamente
-	    	
-	    	// Convertir el archivo subido a un Resource
-	        // Crear un ByteArrayResource (implementación de Resource de Spring)
-	        ByteArrayResource imageResource = new ByteArrayResource(imagenBytes) {
-	            @Override
-	            public String getFilename() {
-	                return tempFile; // Para mantener el nombre original
-	            }
-	        };
-	        
-	        return Optional.of(new Media(MimeTypeUtils.IMAGE_JPEG, imageResource)); // Ajusta el MimeType según tu imagen
-	    } catch (Exception e) {
-            JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, ERROR, 
-                "No se pudo leer la imagen: " + e.getMessage());
-            return Optional.empty();
-	    }
-	}
-
 	private void initProcess() {
 		respuesta.setLength(0);
 		status = "INICIADA";
 		pollActive = true;
         completionMessageShown = false;
         lastChatResponse.set(null);
-	}
-
-	private boolean comprobarImagenSubida() {
-		return StringUtils.isNotBlank(tempFile);
 	}
 	
 	// Método que será llamado por el poll para "forzar" la actualización
