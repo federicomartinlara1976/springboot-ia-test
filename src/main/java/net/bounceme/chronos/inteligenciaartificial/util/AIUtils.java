@@ -49,6 +49,7 @@ public class AIUtils {
 	
 	@SneakyThrows(IOException.class)
 	public String createTempFile(UploadedFile source) {
+		// FIXME - Sonar security issue
 		File tempFile = File.createTempFile(source.getFileName(), ".tmp");
 		
 	    try (InputStream inputStream = source.getInputStream();
