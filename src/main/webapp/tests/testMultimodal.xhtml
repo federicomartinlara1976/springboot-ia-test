@@ -43,7 +43,7 @@
 
 					</p:selectOneMenu>
 		            
-		            <p:commandButton icon="pi pi-replay" process="@form" update="respuesta, updater, messages"
+		            <p:commandButton id="send" icon="pi pi-replay" process="@form" update="respuesta, updater, messages"
 		            	actionListener="#{chatMultimodalBean.enviar}"
 						styleClass="edit-button rounded-button ui-button-success"
 						disabled="#{chatMultimodalBean.status eq 'RUNNING'}"/>
@@ -55,7 +55,7 @@
 						<p:fileUpload id="upload" listener="#{chatMultimodalBean.handleFileUpload}"
 							mode="advanced" multiple="false"
 		                    accept=".gif,.jpg,.jpeg,.png"
-		                    update="messages">
+		                    update="messages, peticion">
             				<p:validateFile sizeLimit="10000000" fileLimit="1" allowTypes="/(\.|\/)(gif|jpeg|jpg|png)$/" contentType="true" />
         				</p:fileUpload> 
 					</div>
@@ -91,7 +91,7 @@
 			    cada 50ms ya que se obtiene de forma reactiva 
 			-->
     		<p:poll id="updater" interval="50" intervalType="millisecond" 
-    			update="peticion,respuesta,messages" 
+    			update="send,respuesta,messages" 
             	listener="#{chatMultimodalBean.checkUpdates}" 
             	autoStart="true" 
             	stop="#{not chatMultimodalBean.pollActive}" />

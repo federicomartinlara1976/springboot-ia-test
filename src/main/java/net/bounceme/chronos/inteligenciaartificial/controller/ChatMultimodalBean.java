@@ -53,6 +53,8 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 	@Getter
 	private String status;
 	
+	@Getter
+	@Setter
 	private String tempFile;
 	
 	private volatile boolean completionMessageShown = false;
@@ -123,14 +125,6 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, ERROR, "No se ha cargado ninguna imagen");
 		});
 	}
-
-	private void initProcess() {
-		respuesta.setLength(0);
-		status = "INICIADA";
-		pollActive = true;
-        completionMessageShown = false;
-        lastChatResponse.set(null);
-	}
 	
 	// Método que será llamado por el poll para "forzar" la actualización
     // No hace nada especial, solo sirve para que el poll ejecute una acción JSF
@@ -149,13 +143,6 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
     		JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, ERROR, "Ocurrió un error");
         }
     }
-
-	private void deleteTempFileIfExists() {
-		if (StringUtils.isNotBlank(tempFile)) {
-			AIUtils.deleteTempFile(tempFile);
-			tempFile = StringUtils.EMPTY;
-		}
-	}
     
     // Opcional: cancelar la suscripción al destruir la vista
     @PreDestroy
@@ -163,6 +150,21 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
         cancelSubscription();
         deleteTempFileIfExists();
     }
+    
+    private void initProcess() {
+		respuesta.setLength(0);
+		status = "INICIADA";
+		pollActive = true;
+        completionMessageShown = false;
+        lastChatResponse.set(null);
+	}
+
+	private void deleteTempFileIfExists() {
+		if (StringUtils.isNotBlank(tempFile)) {
+			AIUtils.deleteTempFile(tempFile);
+			tempFile = StringUtils.EMPTY;
+		}
+	}
 
 	private void cancelSubscription() {
 		if (subscription != null && !subscription.isDisposed()) {
