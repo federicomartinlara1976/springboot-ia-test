@@ -38,6 +38,11 @@ public class AppBean {
 		String parameter = context.getExternalContext().getRequestParameterMap().get("file");
 
 		if (StringUtils.isNotBlank(parameter)) {	
+			/**
+			 * Si viene parámetro, quiere decir que hay una imagen nueva,
+			 * por lo que tenemos que regenerar el streamedContent. Si el parámetro
+			 * es null, conservará el streamedContent existente.
+			 */
 			streamedContent = CustomStreamedContent.builder()
 					.contentType(AIUtils.getContentType(parameter))
 					.stream(() -> {
