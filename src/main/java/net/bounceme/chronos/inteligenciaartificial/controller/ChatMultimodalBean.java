@@ -76,9 +76,6 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 	
 	public void handleFileUpload(FileUploadEvent event) {
 		try {
-			// Borra el anterior si existe
-			deleteTempFileIfExists();
-			
 			tempFile = AIUtils.createTempFile(event.getFile());
 			log.info("Creado archivo: {}", tempFile);
 			
@@ -141,15 +138,11 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
     	if ("COMPLETADA".equals(status) && !completionMessageShown) {
     		completionMessageShown = true;
     		
-    		deleteTempFileIfExists();
-    		
     		JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Completada", "Respuesta completada");
         } else if ("ERROR".equals(status) && !completionMessageShown) {
         	completionMessageShown = true;
         	
-        	deleteTempFileIfExists();
-    		
-    		JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, ERROR, "Ocurrió un error");
+        	JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, ERROR, "Ocurrió un error");
         }
     }
     
@@ -157,7 +150,6 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
     @PreDestroy
     public void cleanup() {
         cancelSubscription();
-        deleteTempFileIfExists();
     }
     
     public long getTimestamp() {
@@ -170,13 +162,6 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 		pollActive = true;
         completionMessageShown = false;
         lastChatResponse.set(null);
-	}
-
-	private void deleteTempFileIfExists() {
-		if (StringUtils.isNotBlank(tempFile)) {
-			AIUtils.deleteTempFile(tempFile);
-			tempFile = StringUtils.EMPTY;
-		}
 	}
 
 	private void cancelSubscription() {

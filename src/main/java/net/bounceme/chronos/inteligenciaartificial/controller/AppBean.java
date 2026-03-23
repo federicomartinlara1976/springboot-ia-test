@@ -8,6 +8,7 @@ import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
@@ -44,6 +45,7 @@ public class AppBean {
 			 * es null, conservará el streamedContent existente.
 			 */
 			streamedContent = CustomStreamedContent.builder()
+					.name(parameter)
 					.contentType(AIUtils.getContentType(parameter))
 					.stream(() -> {
 						try {
@@ -59,4 +61,9 @@ public class AppBean {
 		
 		return streamedContent;
 	}
+	
+	@PreDestroy
+    public void cleanup() {
+		AIUtils.deleteTempFile(streamedContent.getName());
+    }
 }
