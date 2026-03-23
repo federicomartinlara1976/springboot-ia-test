@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:h="jakarta.faces.html"
+	xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="content">
+		<p:outputPanel styleClass="dashboard">
+		
+			<p:outputPanel styleClass="ui-g-12">
+				<p:toolbar id="toolbar">
+					<p:toolbarGroup align="left">
+						<p:breadCrumb>
+							<p:menuitem value="Inicio" action="index"/>
+				            <p:menuitem value="Tests" action="tests"/>
+				            <p:menuitem value="Test multimodal" disabled="true"/>
+				        </p:breadCrumb>		
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<h5><h:outputText value="Test multimodal"/></h5>
+					</p:toolbarGroup>
+				</p:toolbar>
+			</p:outputPanel>
+			
+			<!-- Formulario de envío al chat -->
+			<p:panel id="peticion" styleClass="ui-g-12 ui-md-12 ui-lg-6">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	             	Pregunta con imagen
+	       		</f:facet>
+	       		
+	       		<f:facet name="actions">
+	         		<p:outputLabel for="models" >Modelos</p:outputLabel>
+					<p:selectOneMenu id="models"
+						value="#{chatBean.selectedChatModel}">
+
+						<f:selectItems value="#{chatBean.options}"/>
+
+						<p:ajax event="valueChange"
+							listener="#{chatBean.modelChanged}"/>
+
+					</p:selectOneMenu>
+		            
+		            <p:commandButton id="send" icon="pi pi-replay" process="@form" update="respuesta, updater, messages"
+		            	actionListener="#{chatMultimodalBean.enviar}"
+						styleClass="edit-button rounded-button ui-button-success"
+						disabled="#{chatMultimodalBean.status eq 'RUNNING'}"/>
+		            
+				</f:facet>
+	              
+				<div class="ui-g ui-fluid">
+					<p:fileUpload id="upload" listener="#{chatMultimodalBean.handleFileUpload}"
+						mode="advanced" multiple="false"
+	                    accept=".gif,.jpg,.jpeg,.png"
+	                    update="messages, peticion"
+	                    styleClass="field ui-g-12 ui-md-12 ui-lg-9">
+           				<p:validateFile sizeLimit="10000000" fileLimit="1" allowTypes="/(\.|\/)(gif|jpeg|jpg|png)$/" contentType="true" />
+        			</p:fileUpload>  
+					
+					<p:commandButton icon="pi pi-eye" update="imageDialog"
+						oncomplete="PF('imageDialog').show()"
+						styleClass="edit-button rounded-button ui-button-success ui-lg-3"
+						process="@this" rendered="#{chatMultimodalBean.imagenCargada eq true}">
+						<f:param name="file"
+							value="#{chatMultimodalBean.tempFile}" />
+					</p:commandButton>
+					
+					<div class="field ui-g-12 ui-md-12 ui-lg-12">
+						<p:outputLabel for="pregunta" value="Pregunta"/>
+						<p:inputTextarea id="pregunta" value="#{chatMultimodalBean.mensaje}"
+								placeholder="Escribe el mensaje..." 
+								rows="10" cols="50" widgetVar="mensajeWidget"/>
+					</div>
+				</div>
+	
+			</p:panel>
+			
+			<!-- Respuesta del chat -->
+			<p:panel id="respuesta" styleClass="ui-g-12 ui-md-12 ui-lg-6">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	                  <h:outputText value="Respuesta"/>
+	         	</f:facet>
+	
+				<div class="ui-g ui-fluid">
+					<div class="ui-g ui-fluid">
+						<div class="ui-g-12 overflow" style="height:650px;">
+	        				<h:outputText value="#{chatMultimodalBean.htmlContent}" escape="false" />
+						</div>
+					</div>
+				</div>
+	
+			</p:panel>
+			
+			<!--  
+				Se usa un poll que vaya actualizando la respuesta 
+			    cada 50ms ya que se obtiene de forma reactiva 
+			-->
+    		<p:poll id="updater" interval="50" intervalType="millisecond" 
+    			update="send,respuesta,messages" 
+            	listener="#{chatMultimodalBean.checkUpdates}" 
+            	autoStart="true" 
+            	stop="#{not chatMultimodalBean.pollActive}" />
+		</p:outputPanel>
+		
+		<p:dialog id="imageDialog" header="Imagen" showEffect="fade"
+			modal="true" widgetVar="imageDialog" responsive="true" position="center"
+			resizable="false" appendTo="@(form)">
+			<p:outputPanel id="info-content" class="ui-fluid">
+				<div class="field ui-g-12">
+					<p:graphicImage id="image" value="#{appBean.image}" cache="false" width="480"/>
+				</div>
+			</p:outputPanel>
+		</p:dialog>
+		
+	</ui:define>
+</ui:composition>

@@ -12,7 +12,7 @@
 	
 	<groupId>net.bounceme.chronos.inteligenciaartificial</groupId>
 	<artifactId>springboot-ia-test</artifactId>
-	<version>1.0.18</version>
+	<version>1.0.19</version>
 	<name>springboot-ia-test</name>
 	<description>Servicio para probar funcionalidades de motores de IA</description>
 	<packaging>war</packaging>
@@ -114,11 +114,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
 		
 		<dependency>
@@ -229,6 +224,18 @@
 		    <artifactId>commons-collections4</artifactId>
 		    <version>4.5.0</version>
 		    <scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.3</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>net.bounceme.chronos.libs</groupId>
+			<artifactId>chronos-utils</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 

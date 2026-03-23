@@ -22,14 +22,11 @@
 
 <h:body id="mainbody">
 	<f:view>
-		<h:form prependId="false">
+		<h:form prependId="false" enctype="multipart/form-data">
 
 			<p:outputPanel id="mainLayoutPane">
 
-				<p:growl id="messages" showDetail="true" sticky="false">
-					<p:autoUpdate />
-				</p:growl>
-
+				<p:growl id="messages" showDetail="true" keepAlive="true"/>
 
 				<p:outputPanel id="layoutWrapper" layout="block"
 					styleClass="layout-wrapper menu-layout-static">
