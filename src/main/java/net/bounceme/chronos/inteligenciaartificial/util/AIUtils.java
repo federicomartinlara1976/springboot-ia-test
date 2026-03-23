@@ -112,6 +112,16 @@ public class AIUtils {
 	    }
 	}
 	
+	public String getContentType(String filePath) {
+	    String extension = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
+	    switch (extension) {
+	        case "png": return "image/png";
+	        case "jpg", "jpeg": return "image/jpeg";
+	        case "gif": return "image/gif";
+	        default: return "application/octet-stream";
+	    }
+	}
+	
 	private MessageDTO crearDTO(ChatMessage request, ChatMessage response) {
 	    MessageDTO dto = new MessageDTO();
 	    dto.setTitle(ellipsis(request.getText(), 40));

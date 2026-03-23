@@ -57,6 +57,9 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 	@Setter
 	private String tempFile;
 	
+	@Getter
+	private Boolean imagenCargada;
+	
 	private volatile boolean completionMessageShown = false;
 	
 	// Para guardar el último ChatResponse y extraer metadatos al final
@@ -73,7 +76,13 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 	
 	public void handleFileUpload(FileUploadEvent event) {
 		try {
+			// Borra el anterior si existe
+			deleteTempFileIfExists();
+			
 			tempFile = AIUtils.createTempFile(event.getFile());
+			log.info("Creado archivo: {}", tempFile);
+			
+			imagenCargada = true;
 			JsfHelper.writeMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha subido la imagen.");
 		} catch (Exception e) {
 			log.error("ERROR: ", e);
@@ -151,6 +160,10 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
         deleteTempFileIfExists();
     }
     
+    public long getTimestamp() {
+        return System.currentTimeMillis();
+    }
+
     private void initProcess() {
 		respuesta.setLength(0);
 		status = "INICIADA";

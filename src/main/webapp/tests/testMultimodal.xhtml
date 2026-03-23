@@ -51,14 +51,23 @@
 				</f:facet>
 	              
 				<div class="ui-g ui-fluid">
-					<div class="field ui-g-12 ui-md-12 ui-lg-12">
-						<p:fileUpload id="upload" listener="#{chatMultimodalBean.handleFileUpload}"
-							mode="advanced" multiple="false"
-		                    accept=".gif,.jpg,.jpeg,.png"
-		                    update="messages, peticion">
-            				<p:validateFile sizeLimit="10000000" fileLimit="1" allowTypes="/(\.|\/)(gif|jpeg|jpg|png)$/" contentType="true" />
-        				</p:fileUpload> 
-					</div>
+					<p:fileUpload id="upload" listener="#{chatMultimodalBean.handleFileUpload}"
+						mode="advanced" multiple="false"
+	                    accept=".gif,.jpg,.jpeg,.png"
+	                    update="messages, peticion"
+	                    styleClass="field ui-g-12 ui-md-12 ui-lg-9">
+           				<p:validateFile sizeLimit="10000000" fileLimit="1" allowTypes="/(\.|\/)(gif|jpeg|jpg|png)$/" contentType="true" />
+        			</p:fileUpload>  
+					
+					<p:commandButton icon="pi pi-eye" update="imageDialog"
+						oncomplete="PF('imageDialog').show()"
+						styleClass="edit-button rounded-button ui-button-success ui-lg-3"
+						process="@this" rendered="#{chatMultimodalBean.imagenCargada eq true}">
+						<f:param name="file"
+							value="#{chatMultimodalBean.tempFile}" />
+						<f:param name="t" value="#{chatMultimodalBean.timestamp}" />
+					</p:commandButton>
+					
 					<div class="field ui-g-12 ui-md-12 ui-lg-12">
 						<p:outputLabel for="pregunta" value="Pregunta"/>
 						<p:inputTextarea id="pregunta" value="#{chatMultimodalBean.mensaje}"
@@ -96,6 +105,16 @@
             	autoStart="true" 
             	stop="#{not chatMultimodalBean.pollActive}" />
 		</p:outputPanel>
+		
+		<p:dialog id="imageDialog" header="Imagen" showEffect="fade"
+			modal="true" widgetVar="imageDialog" responsive="true" position="center"
+			resizable="false" appendTo="@(form)">
+			<p:outputPanel id="info-content" class="ui-fluid">
+				<div class="field ui-g-12">
+					<p:graphicImage id="image" value="#{appBean.image}" cache="false" width="480"/>
+				</div>
+			</p:outputPanel>
+		</p:dialog>
 		
 	</ui:define>
 </ui:composition>
