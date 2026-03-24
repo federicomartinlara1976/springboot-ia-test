@@ -8,6 +8,20 @@
 
 	<ui:define name="content">
 		<p:outputPanel styleClass="dashboard">
+			<p:outputPanel styleClass="ui-g-12">
+				<p:toolbar id="toolbar">
+					<p:toolbarGroup align="left">
+						<p:breadCrumb>
+				            <p:menuitem value="Inicio" action="index"/>
+				            <p:menuitem value="Astronomía" disabled="true"/>
+				        </p:breadCrumb>	
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<h5><h:outputText value="Astronomía"/></h5>
+					</p:toolbarGroup>
+				</p:toolbar>
+			</p:outputPanel>
+		
 			<!-- Tarjeta de bienvenida -->
 			<p:panel styleClass="ui-g-12 ui-md-12 ui-lg-12">
 				<f:facet name="header">
