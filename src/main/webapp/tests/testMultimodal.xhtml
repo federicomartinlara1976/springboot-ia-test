@@ -105,12 +105,16 @@
             	stop="#{not chatMultimodalBean.pollActive}" />
 		</p:outputPanel>
 		
-		<p:dialog id="imageDialog" header="Imagen" showEffect="fade"
+		<p:dialog id="imageDialog" showEffect="fade"
 			modal="true" widgetVar="imageDialog" responsive="true" position="center"
 			resizable="false" appendTo="@(form)">
+			<f:facet name="header">
+				<i class="pi pi-image"></i>
+	            <h:outputText value="#{imageBean.currentImagePath}" />	
+			</f:facet>
 			<p:outputPanel id="info-content" class="ui-fluid">
 				<div class="field ui-g-12">
-					<p:graphicImage id="image" value="#{appBean.image}" cache="false" width="480"/>
+					<p:graphicImage id="image" value="#{imageBean.image}" cache="false" width="640"/>
 				</div>
 			</p:outputPanel>
 		</p:dialog>

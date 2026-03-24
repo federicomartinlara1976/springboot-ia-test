@@ -3,7 +3,6 @@ package net.bounceme.chronos.inteligenciaartificial.controller;
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -65,8 +64,11 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 	// Para guardar el último ChatResponse y extraer metadatos al final
     private transient AtomicReference<ChatResponse> lastChatResponse;
     
-    public ChatMultimodalBean(ChatService chatService) {
-		this.chatService = chatService;
+    private ImageBean imageBean;
+    
+    public ChatMultimodalBean(ImageBean imageBean, ChatService chatService) {
+		this.imageBean = imageBean;
+    	this.chatService = chatService;
 	}
 
 	@PostConstruct
@@ -77,6 +79,7 @@ public class ChatMultimodalBean extends ChatSelectorBean implements Serializable
 	public void handleFileUpload(FileUploadEvent event) {
 		try {
 			tempFile = AIUtils.createTempFile(event.getFile());
+			imageBean.setCurrentImagePath(tempFile); // Guardar en sesión
 			log.info("Creado archivo: {}", tempFile);
 			
 			imagenCargada = true;
