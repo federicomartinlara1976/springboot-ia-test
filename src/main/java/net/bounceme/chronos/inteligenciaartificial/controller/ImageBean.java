@@ -32,7 +32,7 @@ public class ImageBean implements Serializable {
         }
         
         return DefaultStreamedContent.builder()
-                .contentType(AIUtils.getContentType(currentImagePath))
+                .contentType(AIUtils.getContentType(currentImagePath).getType())
                 .stream(() -> {
                     try {
                     	log.info("Mostrar: {}", currentImagePath);
