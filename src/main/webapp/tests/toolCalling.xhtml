@@ -24,73 +24,70 @@
 				</p:toolbar>
 			</p:outputPanel>
 			
-			<p:outputPanel styleClass="ui-g-12 ui-md-12 ui-lg-4">
-				<!-- Formulario de envío al chat -->
-				<p:panel id="peticion" styleClass="ui-g-12 ui-md-12 ui-lg-12">
-					<f:facet name="header">
-						<i class="pi pi-send"></i>
-		             	Pregunta
-		       		</f:facet>
-		              
-		         	<f:facet name="actions">
-		         		<p:outputLabel for="models" >Modelos</p:outputLabel>
-						<p:selectOneMenu id="models"
-							value="#{toolCallingChatBean.selectedChatModel}">
+			<!-- Formulario de envío al chat -->
+			<p:panel id="peticion" styleClass="ui-g-12 ui-md-12 ui-lg-4">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	             	Pregunta
+	       		</f:facet>
+	              
+	         	<f:facet name="actions">
+	         		<p:outputLabel for="models" >Modelos</p:outputLabel>
+					<p:selectOneMenu id="models"
+						value="#{toolCallingChatBean.selectedChatModel}">
+
+						<f:selectItems value="#{toolCallingChatBean.options}"/>
+
+						<p:ajax event="valueChange"
+							listener="#{toolCallingChatBean.modelChanged}"/>
+
+					</p:selectOneMenu>
+		            
+		            <p:commandButton id="send" icon="pi pi-send" process="mensaje @this" update="respuesta,updater"
+		            	actionListener="#{toolCallingChatBean.enviar}"
+						styleClass="edit-button rounded-button ui-button-success"
+						disabled="#{toolCallingChatBean.status eq 'RUNNING'}" />
+		            
+				</f:facet>
 	
-							<f:selectItems value="#{toolCallingChatBean.options}"/>
-	
-							<p:ajax event="valueChange"
-								listener="#{toolCallingChatBean.modelChanged}"/>
-	
-						</p:selectOneMenu>
-			            
-			            <p:commandButton id="send" icon="pi pi-send" process="mensaje @this" update="respuesta,updater"
-			            	actionListener="#{toolCallingChatBean.enviar}"
-							styleClass="edit-button rounded-button ui-button-success"
-							disabled="#{toolCallingChatBean.status eq 'RUNNING'}" />
-			            
-					</f:facet>
-		
-					<div class="ui-g ui-fluid">
-						<div class="ui-g-12">
-							<p:inputTextarea id="mensaje" value="#{toolCallingChatBean.mensaje}"
-								placeholder="Escribe el mensaje..." 
-								rows="10" cols="50" widgetVar="mensajeWidget" 
-								disabled="#{toolCallingChatBean.status eq 'RUNNING'}"/>
-						</div>
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+						<p:inputTextarea id="mensaje" value="#{toolCallingChatBean.mensaje}"
+							placeholder="Escribe el mensaje..." 
+							rows="10" cols="50" widgetVar="mensajeWidget" 
+							disabled="#{toolCallingChatBean.status eq 'RUNNING'}"/>
 					</div>
-		
-				</p:panel>
-				
-			</p:outputPanel>
+				</div>
+	
+			</p:panel>
 			
-			<p:outputPanel styleClass="ui-g-12 ui-md-12 ui-lg-8">
-				<!-- Respuesta del chat -->
-				<p:panel id="respuesta" styleClass="ui-g-12 ui-md-12 ui-lg-12">
-					<f:facet name="header">
-						<i class="pi pi-send"></i>
-		                  Respuesta
-		         	</f:facet>
-		
-					<div class="ui-g ui-fluid">
-						<div class="ui-g-12 overflow" style="height:650px;">
-	        				<h:outputText value="#{toolCallingChatBean.htmlContent}" escape="false" />
-						</div>
+		</p:outputPanel>
+			
+		<p:outputPanel styleClass="ui-g-12 ui-md-12 ui-lg-8">
+			<!-- Respuesta del chat -->
+			<p:panel id="respuesta" styleClass="ui-g-12 ui-md-12 ui-lg-12">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	                  Respuesta
+	         	</f:facet>
+	
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12 overflow" style="height:650px;">
+        				<h:outputText value="#{toolCallingChatBean.htmlContent}" escape="false" />
 					</div>
-		
-				</p:panel>
-				
-				<!--  
-					Se usa un poll que vaya actualizando la respuesta 
-				    cada 50ms ya que se obtiene de forma reactiva 
-				-->
-	    		<p:poll id="updater" interval="50" intervalType="millisecond" 
-	    			update="peticion,respuesta" 
-	            	listener="#{toolCallingChatBean.checkUpdates}" 
-	            	autoStart="true" 
-	            	stop="#{not toolCallingChatBean.pollActive}" />
-			</p:outputPanel>
+				</div>
+	
+			</p:panel>
 			
+			<!--  
+				Se usa un poll que vaya actualizando la respuesta 
+			    cada 50ms ya que se obtiene de forma reactiva 
+			-->
+    		<p:poll id="updater" interval="50" intervalType="millisecond" 
+    			update="peticion,respuesta" 
+            	listener="#{toolCallingChatBean.checkUpdates}" 
+            	autoStart="true" 
+            	stop="#{not toolCallingChatBean.pollActive}" />
 		</p:outputPanel>
 		
 	</ui:define>
