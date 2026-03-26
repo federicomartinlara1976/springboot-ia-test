@@ -413,5 +413,5 @@ footer span {
 }
 
 .card-img-top {
-	width: 128px;
+	width: 128px!important;
 }
