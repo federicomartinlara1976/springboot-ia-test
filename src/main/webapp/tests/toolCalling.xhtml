@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:h="jakarta.faces.html"
+	xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="content">
+		<p:outputPanel styleClass="dashboard">
+		
+			<p:outputPanel styleClass="ui-g-12">
+				<p:toolbar id="toolbar">
+					<p:toolbarGroup align="left">
+						<p:breadCrumb>
+							<p:menuitem value="Inicio" action="index"/>
+				            <p:menuitem value="Tests" action="tests"/>
+				            <p:menuitem value="Tool calling" disabled="true"/>
+				        </p:breadCrumb>		
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<h5><h:outputText value="Tool calling"/></h5>
+					</p:toolbarGroup>
+				</p:toolbar>
+			</p:outputPanel>
+			
+		</p:outputPanel>
+		
+	</ui:define>
+</ui:composition>
