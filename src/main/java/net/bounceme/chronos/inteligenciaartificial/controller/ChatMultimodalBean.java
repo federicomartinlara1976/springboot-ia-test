@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import net.bounceme.chronos.inteligenciaartificial.controller.api.AbstractChatBean;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
 import net.bounceme.chronos.inteligenciaartificial.util.AIUtils;
 import net.bounceme.chronos.inteligenciaartificial.util.JsfHelper;
@@ -80,11 +81,11 @@ public class ChatMultimodalBean extends AbstractChatBean implements Serializable
 
     @Override
 	protected void processResponse() {
-		log.info("processResponse not implemented for this bean");
+		log.debug("processResponse not implemented for this bean");
 	}
 
 	@Override
 	protected void postCheckUpdate() {
-		log.info("postCheckUpdate not implemented for this bean");
+		log.debug("postCheckUpdate not implemented for this bean");
 	}
 }

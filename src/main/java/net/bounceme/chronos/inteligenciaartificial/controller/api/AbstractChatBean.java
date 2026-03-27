@@ -1,4 +1,4 @@
-package net.bounceme.chronos.inteligenciaartificial.controller;
+package net.bounceme.chronos.inteligenciaartificial.controller.api;
 
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicReference;
@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import net.bounceme.chronos.inteligenciaartificial.controller.ChatSelectorBean;
 import net.bounceme.chronos.inteligenciaartificial.util.JsfHelper;
 import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
@@ -46,7 +47,7 @@ public abstract class AbstractChatBean extends ChatSelectorBean implements Seria
 
 	@PostConstruct
 	protected void init() {
-		log.info("AbstractChatBean init");
+		log.debug("AbstractChatBean init");
 		lastChatResponse = new AtomicReference<>();
 	}
 	
@@ -114,7 +115,7 @@ public abstract class AbstractChatBean extends ChatSelectorBean implements Seria
     // Opcional: cancelar la suscripción al destruir la vista
     @PreDestroy
     public void cleanup() {
-    	log.info("AbstractChatBean cleanup");
+    	log.debug("AbstractChatBean cleanup");
         cancelSubscription();
     }
 

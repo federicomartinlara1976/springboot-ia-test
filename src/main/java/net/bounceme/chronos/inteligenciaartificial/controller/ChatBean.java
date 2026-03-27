@@ -29,6 +29,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import net.bounceme.chronos.inteligenciaartificial.controller.api.AbstractChatBean;
 import net.bounceme.chronos.inteligenciaartificial.dto.ConversationDTO;
 import net.bounceme.chronos.inteligenciaartificial.dto.MessageDTO;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;

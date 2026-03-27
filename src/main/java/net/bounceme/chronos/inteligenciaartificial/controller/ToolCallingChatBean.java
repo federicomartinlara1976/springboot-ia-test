@@ -10,6 +10,7 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import net.bounceme.chronos.inteligenciaartificial.controller.api.AbstractChatBean;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
 
 @Component
@@ -39,12 +40,12 @@ public class ToolCallingChatBean extends AbstractChatBean implements Serializabl
 
 	@Override
 	protected void processResponse() {
-		log.info("processResponse not implemented for this bean");
+		log.debug("processResponse not implemented for this bean");
 	}
 
 	@Override
 	protected void postCheckUpdate() {
-		log.info("postCheckUpdate not implemented for this bean");
+		log.debug("postCheckUpdate not implemented for this bean");
 	}
     
 }
