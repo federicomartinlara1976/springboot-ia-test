@@ -77,10 +77,6 @@ public class ChatMultimodalBean extends AbstractChatBean implements Serializable
 			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, ERROR, "No se ha cargado ninguna imagen");
 		});
 	}
-    
-    public long getTimestamp() {
-        return System.currentTimeMillis();
-    }
 
     @Override
 	protected void processResponse() {
