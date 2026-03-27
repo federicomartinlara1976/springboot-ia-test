@@ -41,6 +41,7 @@ public class ChatMultimodalBean extends AbstractChatBean implements Serializable
     private ImageBean imageBean;
     
     public ChatMultimodalBean(ImageBean imageBean, ChatService chatService) {
+    	super();
 		this.imageBean = imageBean;
     	this.chatService = chatService;
 	}
