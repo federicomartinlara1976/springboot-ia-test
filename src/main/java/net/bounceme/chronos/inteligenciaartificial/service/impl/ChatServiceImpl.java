@@ -23,6 +23,7 @@ import net.bounceme.chronos.inteligenciaartificial.model.Message;
 import net.bounceme.chronos.inteligenciaartificial.repository.ConversationRepository;
 import net.bounceme.chronos.inteligenciaartificial.repository.MessageRepository;
 import net.bounceme.chronos.inteligenciaartificial.service.ChatService;
+import net.bounceme.chronos.inteligenciaartificial.tools.DateTimeTools;
 import reactor.core.publisher.Flux;
 
 @Service
@@ -36,12 +37,16 @@ public class ChatServiceImpl implements ChatService {
 	
 	private MessageRepository messageRepository;
 	
+	private DateTimeTools dateTimeTools;
+	
 	private ModelMapper modelMapper;
 	
 	public ChatServiceImpl(ConversationRepository conversationRepository, 
-			MessageRepository messageRepository, ModelMapper modelMapper) {
+			MessageRepository messageRepository, DateTimeTools dateTimeTools, 
+			ModelMapper modelMapper) {
 		this.conversationRepository = conversationRepository;
 		this.messageRepository = messageRepository;
+		this.dateTimeTools = dateTimeTools;
 		this.modelMapper = modelMapper;
 	}
 
@@ -66,6 +71,14 @@ public class ChatServiceImpl implements ChatService {
                 .stream()
                 .chatResponse(); // <--- ESTO DEVUELVE UN FLUX de chatResponse
     }
+    
+    @Override
+	public Flux<ChatResponse> generationStreamWithTools(Prompt prompt, ChatClient chatClient) {
+    	return chatClient.prompt(prompt)
+    			.tools(dateTimeTools)
+                .stream()
+                .chatResponse(); // <--- ESTO DEVUELVE UN FLUX de chatResponse
+	}
 
 	@Override
 	@Transactional

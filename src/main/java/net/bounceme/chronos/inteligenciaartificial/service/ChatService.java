@@ -17,6 +17,8 @@ public interface ChatService {
 	
 	Flux<ChatResponse> generationStream(Prompt prompt, ChatClient chatClient);
 	
+	Flux<ChatResponse> generationStreamWithTools(Prompt prompt, ChatClient chatClient);
+	
 	ChatResponseMetadata getChatResponseMetadata();
 
 	void save(ConversationDTO selectedConversation);

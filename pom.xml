@@ -12,7 +12,7 @@
 	
 	<groupId>net.bounceme.chronos.inteligenciaartificial</groupId>
 	<artifactId>springboot-ia-test</artifactId>
-	<version>1.0.19</version>
+	<version>1.0.20</version>
 	<name>springboot-ia-test</name>
 	<description>Servicio para probar funcionalidades de motores de IA</description>
 	<packaging>war</packaging>
@@ -254,7 +254,9 @@
 							<artifactId>lombok</artifactId>
 						</path>
 					</annotationProcessorPaths>
-				</configuration>
+                    <source>21</source>
+                    <target>21</target>
+                </configuration>
 			</plugin>
 			
 			<plugin>

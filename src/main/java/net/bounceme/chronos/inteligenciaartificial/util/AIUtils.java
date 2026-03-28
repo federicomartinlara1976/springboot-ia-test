@@ -18,13 +18,13 @@ import org.primefaces.model.file.UploadedFile;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.content.Media;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.util.MimeTypeUtils;
 
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.inteligenciaartificial.dto.MessageDTO;
 import net.bounceme.chronos.inteligenciaartificial.model.ChatMessage;
+import net.bounceme.chronos.inteligenciaartificial.support.ImageType;
 import net.bounceme.chronos.utils.io.IOUtils;
 
 @UtilityClass
@@ -106,20 +106,15 @@ public class AIUtils {
 	            }
 	        };
 	        
-	        return Optional.of(new Media(MimeTypeUtils.IMAGE_JPEG, imageResource)); // Ajusta el MimeType según tu imagen
+	        return Optional.of(new Media(getContentType(tempFile).getMimeType(), imageResource)); // Ajusta el MimeType según tu imagen
 	    } catch (Exception e) {
             return Optional.empty();
 	    }
 	}
 	
-	public String getContentType(String filePath) {
+	public ImageType getContentType(String filePath) {
 	    String extension = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
-	    switch (extension) {
-	        case "png": return "image/png";
-	        case "jpg", "jpeg": return "image/jpeg";
-	        case "gif": return "image/gif";
-	        default: return "application/octet-stream";
-	    }
+	    return ImageType.getByExtension(extension);
 	}
 	
 	private MessageDTO crearDTO(ChatMessage request, ChatMessage response) {

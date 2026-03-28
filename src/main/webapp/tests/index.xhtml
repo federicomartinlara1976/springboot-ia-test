@@ -8,7 +8,7 @@
 
 	<ui:define name="content">
 		<p:outputPanel styleClass="dashboard">
-			<p:outputPanel styleClass="ui-g-12" style="padding: 1em;">
+			<p:outputPanel styleClass="ui-g-12">
 				<p:toolbar id="toolbar">
 					<p:toolbarGroup align="left">
 						<p:breadCrumb>
@@ -33,9 +33,8 @@
         				<p:outputPanel styleClass="ui-g-12 ui-lg-3">
         					<div class="card shadow">
         						<p:commandLink action="testEntidad">
-	        						<p:graphicImage styleClass="card-img-top" title="Chat"
-										value="#{resource['images/usuario.png']}"
-										style="width: 128px"/>
+	        						<p:graphicImage styleClass="card-img-top" title="Devolver una entidad"
+										value="#{resource['images/usuario.png']}"/>
 									<div class="card-body">
 										<h5 class="card-title">Devolver una entidad</h5>
 									</div>
@@ -45,9 +44,8 @@
         				<p:outputPanel styleClass="ui-g-12 ui-lg-3">
         					<div class="card shadow">
         						<p:commandLink action="testListEntidad">
-	        						<p:graphicImage styleClass="card-img-top" title="Chat"
-										value="#{resource['images/dna-test.png']}"
-										style="width: 128px"/>
+	        						<p:graphicImage styleClass="card-img-top" title="Devolver una lista de entidades"
+										value="#{resource['images/dna-test.png']}"/>
 									<div class="card-body">
 										<h5 class="card-title">Devolver una lista de entidades</h5>
 									</div>
@@ -57,9 +55,8 @@
         				<p:outputPanel styleClass="ui-g-12 ui-lg-3">
         					<div class="card shadow">
         						<p:commandLink action="testEntidadFormato">
-	        						<p:graphicImage styleClass="card-img-top" title="Chat"
-										value="#{resource['images/usuario.png']}"
-										style="width: 128px"/>
+	        						<p:graphicImage styleClass="card-img-top" title="Películas de un actor"
+										value="#{resource['images/usuario.png']}"/>
 									<div class="card-body">
 										<h5 class="card-title">Películas de un actor</h5>
 									</div>
@@ -69,9 +66,8 @@
         				<p:outputPanel styleClass="ui-g-12 ui-lg-3">
         					<div class="card shadow">
         						<p:commandLink action="testListaFestivos">
-	        						<p:graphicImage styleClass="card-img-top" title="Chat"
-										value="#{resource['images/abril.png']}"
-										style="width: 128px"/>
+	        						<p:graphicImage styleClass="card-img-top" title="Lista de festivos"
+										value="#{resource['images/abril.png']}"/>
 									<div class="card-body">
 										<h5 class="card-title">Lista de festivos</h5>
 									</div>
@@ -81,11 +77,21 @@
         				<p:outputPanel styleClass="ui-g-12 ui-lg-3">
         					<div class="card shadow">
         						<p:commandLink action="testMultimodal">
-	        						<p:graphicImage styleClass="card-img-top" title="Chat"
-										value="#{resource['images/scheme.png']}"
-										style="width: 128px"/>
+	        						<p:graphicImage styleClass="card-img-top" title="Test multimodal"
+										value="#{resource['images/scheme.png']}"/>
 									<div class="card-body">
 										<h5 class="card-title">Test multimodal</h5>
+									</div>
+								</p:commandLink>
+        					</div>
+        				</p:outputPanel>
+        				<p:outputPanel styleClass="ui-g-12 ui-lg-3">
+        					<div class="card shadow">
+        						<p:commandLink action="toolCalling">
+	        						<p:graphicImage styleClass="card-img-top" title="Tool calling"
+										value="#{resource['images/wrench.png']}"/>
+									<div class="card-body">
+										<h5 class="card-title">Tool calling</h5>
 									</div>
 								</p:commandLink>
         					</div>

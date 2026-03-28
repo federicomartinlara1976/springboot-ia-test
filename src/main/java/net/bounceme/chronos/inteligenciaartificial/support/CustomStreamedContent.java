@@ -38,10 +38,5 @@ public class CustomStreamedContent implements StreamedContent, Serializable {
     
     @Getter
     private Callbacks.SerializableConsumer<OutputStream> writer;
-    
-    public void resetStream(Callbacks.SerializableSupplier<InputStream> stream) {
-    	this.stream = null;
-    	this.stream = stream;
-    }
 
 }
