@@ -49,8 +49,6 @@ public class ChatBean extends AbstractChatBean implements Serializable {
 	
 	private transient ChatService chatService;
 	
-	private StringBuilder respuesta = new StringBuilder();
-	
 	private transient ChatMemory chatMemory;
     
     @Getter

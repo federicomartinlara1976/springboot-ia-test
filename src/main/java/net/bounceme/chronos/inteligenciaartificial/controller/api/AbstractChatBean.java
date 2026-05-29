@@ -33,7 +33,7 @@ public abstract class AbstractChatBean extends ChatSelectorBean implements Seria
 	@Getter 
 	protected volatile boolean pollActive = false;
 	
-	private StringBuilder respuesta = new StringBuilder();
+	protected StringBuilder respuesta = new StringBuilder();
 	
 	private transient Disposable subscription; // para poder cancelar si es necesario
 	
