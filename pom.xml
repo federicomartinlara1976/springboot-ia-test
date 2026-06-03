@@ -195,10 +195,9 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 		
-		<!-- Mistral devuelve la respuesta en formato markdown. Necesitamos
+		<!-- Los motores de IA devuelven la respuesta en formato markdown. Necesitamos
 		esta dependencia para hacer el parseo de markdown a HTML -->
 		<dependency>
 		    <groupId>com.vladsch.flexmark</groupId>
