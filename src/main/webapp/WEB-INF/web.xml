@@ -5,7 +5,7 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee 
          https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     
-    <display-name>Mi Aplicación EAP</display-name>
+    <display-name>Springboot IA test</display-name>
     
     <!-- Configuración JSF -->
     <context-param>
