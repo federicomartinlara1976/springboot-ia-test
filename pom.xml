@@ -39,6 +39,7 @@
 		<spring-ai.version>1.1.2</spring-ai.version>
 		<spring-cloud.version>2025.0.1</spring-cloud.version>
 		<joinfaces.version>5.5.0</joinfaces.version>
+		<chronoslibs.version>1.0.0</chronoslibs.version>
 	</properties>
 	
 	<dependencyManagement>
@@ -234,7 +235,13 @@
 		<dependency>
 			<groupId>net.bounceme.chronos.libs</groupId>
 			<artifactId>chronos-utils</artifactId>
-			<version>1.0.0</version>
+			<version>${chronoslibs.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>net.bounceme.chronos.libs</groupId>
+			<artifactId>chronos-calc-utils</artifactId>
+			<version>${chronoslibs.version}</version>
 		</dependency>
 	</dependencies>
 
