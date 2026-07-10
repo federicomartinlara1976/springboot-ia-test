@@ -1,13 +1,13 @@
 package net.bounceme.chronos.inteligenciaartificial.config;
 
-import org.springframework.ai.chat.client.AdvisorParams;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.deepseek.DeepSeekChatModel;
 import org.springframework.ai.mistralai.MistralAiChatModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+
+import net.bounceme.chronos.inteligenciaartificial.util.ChatUtils;
 
 /**
  * Configuración de modelos de IA. Se hace en una clase separada
@@ -25,7 +25,7 @@ public class ChatModelsConfiguration {
 	@Bean
 	@Primary
     ChatClient mistralAiChatClient(MistralAiChatModel chatModel) {
-        return buildChatClient(chatModel);
+        return ChatUtils.buildChatClient(chatModel);
     }
 
     /**
@@ -36,18 +36,21 @@ public class ChatModelsConfiguration {
      */
     @Bean
     ChatClient deepseekChatClient(DeepSeekChatModel chatModel) {
-        return buildChatClient(chatModel);
+        return ChatUtils.buildChatClient(chatModel);
     }
     
     /**
-     * Este es el constructor del chat
+     * Proveedor para agente específico y modelo específico
      * 
-     * @param chatModel Proveedor del modelo de IA
+     * @param chatModel
      * @return
      */
-    private static ChatClient buildChatClient(ChatModel chatModel) {
-		return ChatClient.builder(chatModel)
-        		.defaultAdvisors(AdvisorParams.ENABLE_NATIVE_STRUCTURED_OUTPUT)
-        		.build();
-	}
+    @Bean
+	ChatClient astronomiaAgenteChatClient(MistralAiChatModel chatModel) {
+        return ChatUtils.buildDefaultChatClient(chatModel, 
+        		"Eres un asistente experto en astronomía. Tu objetivo es ayudar a los usuarios " +
+                "a crear scripts de Octave para simulaciones y cálculos astronómicos. " +
+                "Cuando necesites ejecutar código, usa la herramienta 'ejecutarOctave'. " +
+                "Si el código falla, analiza el error, corrígelo y vuelve a intentarlo.");
+    }
 }
