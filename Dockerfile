@@ -20,7 +20,9 @@ EXPOSE 8094
 # 4. REGISTRO: Activa logs de GC en STDOUT (útil para debugging)
 # --------------------------------------------------------------
 ENTRYPOINT ["java", \
-            "-XX:+UseG1GC", \
+            "-XX:+UseZGC", \ 
+			"-XX:+ZGenerational", \
+			"-Xmx12g", \
             "-XX:MaxRAMPercentage=70.0", \
             "-XX:InitialRAMPercentage=70.0", \
             "-XX:MaxMetaspaceSize=256m", \
