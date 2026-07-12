@@ -17,7 +17,11 @@ public interface ChatService {
 	
 	Flux<ChatResponse> generationStream(Prompt prompt, ChatClient chatClient);
 	
-	Flux<ChatResponse> generationStreamWithTools(Prompt prompt, ChatClient chatClient);
+	Flux<ChatResponse> generationStreamWithDefaultTools(Prompt prompt, ChatClient chatClient);
+	
+	Flux<ChatResponse> generationStreamWithTool(Prompt prompt, ChatClient chatClient, Object tools);
+	
+	Flux<ChatResponse> generationStreamWithTools(Prompt prompt, ChatClient chatClient, Object... tools);
 	
 	ChatResponseMetadata getChatResponseMetadata();
 

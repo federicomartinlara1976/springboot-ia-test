@@ -73,9 +73,25 @@ public class ChatServiceImpl implements ChatService {
     }
     
     @Override
-	public Flux<ChatResponse> generationStreamWithTools(Prompt prompt, ChatClient chatClient) {
+	public Flux<ChatResponse> generationStreamWithDefaultTools(Prompt prompt, ChatClient chatClient) {
     	return chatClient.prompt(prompt)
     			.tools(dateTimeTools)
+                .stream()
+                .chatResponse(); // <--- ESTO DEVUELVE UN FLUX de chatResponse
+	}
+    
+    @Override
+	public Flux<ChatResponse> generationStreamWithTool(Prompt prompt, ChatClient chatClient, Object tools) {
+    	return chatClient.prompt(prompt)
+    			.tools(tools)
+                .stream()
+                .chatResponse(); // <--- ESTO DEVUELVE UN FLUX de chatResponse
+	}
+    
+    @Override
+	public Flux<ChatResponse> generationStreamWithTools(Prompt prompt, ChatClient chatClient, Object... tools) {
+    	return chatClient.prompt(prompt)
+    			.tools(tools)
                 .stream()
                 .chatResponse(); // <--- ESTO DEVUELVE UN FLUX de chatResponse
 	}
