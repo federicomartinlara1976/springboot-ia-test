@@ -21,9 +21,9 @@ public class AstronomiaTools {
 		// Load the astronomy package
 		calcService.execute("pkg load astronomia");
 		
-		// Test if load is correct recovering the package version
+		// Test if load is correct by recovering the package version
 		calcService.execute("astronomia_version = astronomia_version()");
 		String packageVersion = calcService.getString("astronomia_version");
-		log.info("Astronomia version: {}", packageVersion);
+		log.debug("Astronomia version: {}", packageVersion);
 	}
 }
