@@ -10,7 +10,10 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Configuration
+@Slf4j
 public class TomcatVirtualThreadConfig {
 
 	@Bean
@@ -20,8 +23,9 @@ public class TomcatVirtualThreadConfig {
             ExecutorService executorService = Executors.newVirtualThreadPerTaskExecutor();
             ProtocolHandler protocolHandler = connector.getProtocolHandler();
             
-            if (protocolHandler instanceof AbstractProtocol) {
+            if (protocolHandler instanceof AbstractProtocol<?> abstractProtocol) {
             	((AbstractProtocol<?>) protocolHandler).setExecutor(executorService);
+            	log.info("Tomcat Executor: {}", abstractProtocol.getExecutor());
             }
 		};
 	}
