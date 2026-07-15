@@ -48,9 +48,11 @@ public class ChatModelsConfiguration {
     @Bean
 	ChatClient astronomiaAgenteChatClient(MistralAiChatModel chatModel) {
         return ChatUtils.buildDefaultChatClient(chatModel, 
-        		"Eres un asistente experto en astronomía. Tu objetivo es ayudar a los usuarios " +
-                "a crear scripts de Octave para simulaciones y cálculos astronómicos. " +
-                "Cuando necesites ejecutar código, usa la herramienta 'ejecutarOctave'. " +
-                "Si el código falla, analiza el error, corrígelo y vuelve a intentarlo.");
+        		"""
+        			Eres un asistente experto en astronomía. Tu objetivo es ayudar a los usuarios
+                	a crear scripts de Octave para simulaciones y cálculos astronómicos.
+                	Cuando necesites ejecutar código, usa la herramienta 'ejecutarOctave'.
+                	Si el código falla, analiza el error, corrígelo y vuelve a intentarlo.
+        		""");
     }
 }
