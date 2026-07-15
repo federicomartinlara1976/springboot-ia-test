@@ -24,7 +24,7 @@ public class TomcatVirtualThreadConfig {
             ProtocolHandler protocolHandler = connector.getProtocolHandler();
             
             if (protocolHandler instanceof AbstractProtocol<?> abstractProtocol) {
-            	((AbstractProtocol<?>) protocolHandler).setExecutor(executorService);
+            	((AbstractProtocol<?>) protocolHandler).setExecutor(new TomcatExecutorAdapter(executorService));
             	log.info("Tomcat Executor: {}", abstractProtocol.getExecutor());
             }
 		};

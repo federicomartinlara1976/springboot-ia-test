@@ -20,62 +20,55 @@ public class TomcatExecutorAdapter implements Executor {
 
 	@Override
 	public void execute(Runnable command) {
+		log.debug("Execute {}", command);
 		executorService.execute(command);
 	}
 
 	@Override
 	public void addLifecycleListener(LifecycleListener listener) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public LifecycleListener[] findLifecycleListeners() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void removeLifecycleListener(LifecycleListener listener) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void init() throws LifecycleException {
-		log.info("init");
+		log.debug("init");
 	}
 
 	@Override
 	public void start() throws LifecycleException {
-		log.info("destroy");
+		log.debug("destroy");
 	}
 
 	@Override
 	public void stop() throws LifecycleException {
-		log.info("stop");
+		log.debug("stop");
 	}
 
 	@Override
 	public void destroy() throws LifecycleException {
-		log.info("destroy");
+		log.debug("destroy");
 	}
 
 	@Override
 	public LifecycleState getState() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getStateName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
